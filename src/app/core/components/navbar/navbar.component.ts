@@ -13,6 +13,7 @@ import { AuthService } from '../../services/auth.service';
 import { authState } from '@angular/fire/auth';
 import { SidebarService } from '../../services/sidebar.service';
 import { ToastrService } from 'ngx-toastr';
+import { SITE_CONFIG } from '../../../config/site-config';
 @Component({
   selector: 'app-navbar',
   imports: [CommonModule, RouterModule],
@@ -20,6 +21,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
+  siteData = SITE_CONFIG;
   public authService = inject(AuthService);
   public sidebarService = inject(SidebarService); // Service inject ki
   private router = inject(Router);

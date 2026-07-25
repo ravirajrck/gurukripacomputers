@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, OnDestroy, HostListener } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  OnDestroy,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
@@ -8,6 +14,7 @@ import { NoDataComponent } from '../../../core/components/shared/no-data/no-data
 import { ProductCardComponent } from '../../../core/components/shared/product-card/product-card.component';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
+import { SITE_CONFIG } from '../../../config/site-config';
 
 @Component({
   selector: 'app-customer-store',
@@ -17,6 +24,8 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./customer-store.component.css'],
 })
 export class CustomerStoreComponent implements OnInit, OnDestroy {
+  siteData = SITE_CONFIG;
+
   // Data Arrays
   productsList: any[] = [];
   categoriesList: any[] = [];
@@ -26,7 +35,7 @@ export class CustomerStoreComponent implements OnInit, OnDestroy {
   searchQuery: string = '';
   selectedCategory: string = 'all';
   isLoading: boolean = true;
-  
+
   // Category Popup Dropdown State
   isCategoryDropdownOpen: boolean = false;
 
@@ -94,8 +103,10 @@ export class CustomerStoreComponent implements OnInit, OnDestroy {
     if (this.selectedCategory === 'all') return 'All Categories';
     if (this.selectedCategory === 'featured') return 'Featured Products';
     if (this.selectedCategory === 'popular') return 'Popular Products';
-    
-    const found = this.categoriesList.find(c => c.id === this.selectedCategory);
+
+    const found = this.categoriesList.find(
+      (c) => c.id === this.selectedCategory,
+    );
     return found ? found.name : 'Select Category';
   }
 
@@ -164,8 +175,10 @@ ${product.description}
 ${product.images?.map((img: any, i: number) => (img.url ? `Image ${i + 1}: ${img.url}` : '')).join('\n') || ''}
 
 Please let me know about the availability!`;
-    const whatsappUrl = `https://wa.me/919644692189?text=${encodeURIComponent(textMessage)}`;
-    window.open(whatsappUrl, '_blank');
+    window.open(
+      `https://wa.me/${this.siteData?.phone}?text=${encodeURIComponent(textMessage)}`,
+      '_blank',
+    );
   }
 
   // Navigate to Product Details

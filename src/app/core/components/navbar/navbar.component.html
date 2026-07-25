@@ -13,10 +13,10 @@
   <!-- Mobile Trigger -->
   <div class="md:hidden flex items-center p-0 m-0 justify-center">
     <a
-      href="tel:+919876543210"
+      [href]="'tel:' + siteData?.phone"
       class="text-[14px] text-slate-600 hover:text-[#FF7620] tracking-widest transition-all"
     >
-      Helpline Number -9876543210
+      Helpline Number {{siteData?.phone}}
     </a>
   </div>
 
@@ -31,10 +31,10 @@
       <!-- Row 1: Helpline Number -->
       <div class="flex items-center p-0 m-0">
         <a
-          href="tel:+919876543210"
+          [href]="'tel:' + siteData?.phone"
           class="text-[14px] text-slate-600 hover:text-[#FF7620] tracking-widest transition-all"
         >
-          Helpline Number -9876543210
+          Helpline Number {{ siteData?.phone }}
         </a>
       </div>
 

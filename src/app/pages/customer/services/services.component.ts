@@ -9,6 +9,7 @@ import {
 
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from '../../../core/services/data.service';
+import { SITE_CONFIG } from '../../../config/site-config';
 @Component({
   selector: 'app-services',
   imports: [CommonModule, ReactiveFormsModule],
@@ -16,6 +17,7 @@ import { DataService } from '../../../core/services/data.service';
   styleUrl: './services.component.css',
 })
 export class ServicesComponent {
+  siteData = SITE_CONFIG;
   private dataService = inject(DataService);
   private fb = inject(FormBuilder);
   private toastr = inject(ToastrService);
@@ -27,8 +29,12 @@ export class ServicesComponent {
   isSubmitting = false;
 
   inquiryForm!: FormGroup;
+  minDate: string = '';
 
   ngOnInit() {
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0];
+
     this.initForm();
     this.loadServices();
   }
@@ -38,6 +44,8 @@ export class ServicesComponent {
       name: ['', [Validators.required, Validators.minLength(2)]],
       phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       email: ['', [Validators.email]],
+      address: ['', [Validators.required, Validators.minLength(5)]],
+      serviceDate: ['', [Validators.required]],
       message: ['', [Validators.required, Validators.minLength(10)]],
     });
   }
@@ -120,7 +128,7 @@ export class ServicesComponent {
     this.selectedService = null;
   }
 
-async submitInquiry() {
+  async submitInquiry() {
     if (this.inquiryForm.invalid) {
       this.inquiryForm.markAllAsTouched();
       this.toastr.warning(
@@ -138,12 +146,12 @@ async submitInquiry() {
         serviceId: this.selectedService?.id || 'general',
         serviceTitle: this.selectedService?.title || 'General Inquiry',
         status: 'Pending',
-        createdAt: new Date()
+        createdAt: new Date(),
       };
 
       // 1. Save to Firebase
       await this.dataService.submitServiceInquiry(payload);
-      
+
       this.toastr.success(
         'Your inquiry has been submitted successfully! Redirecting to WhatsApp...',
         'Request Sent',
@@ -151,9 +159,9 @@ async submitInquiry() {
 
       // 2. Generate WhatsApp Message URL
       // Apna WhatsApp number yahan dalein (Country code ke sath, bina '+' ke. Jaise: 919876543210)
-      const adminWhatsAppNumber = '9644692189'; 
+      const adminWhatsAppNumber = this?.siteData?.phone;
 
-      const whatsappMessage = 
+      const whatsappMessage =
         `*New Service Inquiry Booking!*%0A%0A` +
         `*Service:* ${payload.serviceTitle}%0A` +
         `*Name:* ${formValues.name}%0A` +
@@ -170,7 +178,6 @@ async submitInquiry() {
       setTimeout(() => {
         window.open(whatsappUrl, '_blank');
       }, 1000);
-
     } catch (error) {
       console.error('Error submitting inquiry:', error);
       this.toastr.error(

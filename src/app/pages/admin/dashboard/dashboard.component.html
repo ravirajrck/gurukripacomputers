@@ -294,17 +294,17 @@
 
     <div class="overflow-x-auto">
       <table
-        class="w-full text-left text-sm text-slate-600 table-fixed min-w-[850px]"
+        class="w-full text-left text-sm text-slate-600 table-fixed min-w-[750px]"
       >
         <thead>
           <tr
             class="border-b border-slate-100 text-xs font-semibold uppercase text-slate-400 tracking-widest bg-slate-50/50"
           >
             <th class="py-4 px-4 w-[6%] text-center">No.</th>
-            <th class="py-4 px-6 w-[24%]">Client / User</th>
-            <th class="py-4 px-6 w-[30%]">Service Details</th>
-            <th class="py-4 px-6 w-[20%] text-center">Status</th>
-            <th class="py-4 px-6 w-[20%] text-center">Actions</th>
+            <th class="py-4 px-6 w-[36%]">Client & Address Details</th>
+            <th class="py-4 px-6 w-[34%]">Service & Date Details</th>
+            <th class="py-4 px-6 w-[14%] text-center">Status</th>
+            <th class="py-4 px-6 w-[10%] text-center">Actions</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-100">
@@ -312,28 +312,47 @@
             *ngFor="let req of serviceRequestsList; let i = index"
             class="hover:bg-slate-50 transition-colors duration-200"
           >
-            <td class="py-4 px-4 text-center">
+            <!-- Index No. -->
+            <td class="py-4 px-4 text-center align-top">
               <span class="font-bold text-slate-500 text-xs font-mono">{{
                 i + 1
               }}</span>
             </td>
-            <td class="py-4 px-6">
+
+            <!-- Client / User & Address (Combined & Shifted below) -->
+            <td class="py-4 px-6 align-top">
               <p class="font-semibold text-slate-900 text-sm truncate">
                 {{ req.name || req.clientName || "N/A" }}
               </p>
-              <p class="text-xs text-slate-400 mt-1 truncate">
-                {{ req.email || req.phone || "No contact provided" }}
+              <p class="text-xs text-slate-500 mt-0.5 truncate">
+                📞 {{ req.email || req.phone || "No contact" }}
+              </p>
+              <p
+                class="text-xs text-slate-600 mt-1 truncate bg-slate-100/70 px-2 py-1 rounded-md inline-block max-w-full"
+              >
+                📍 {{ req.address || req.location || "No address provided" }}
               </p>
             </td>
-            <td class="py-4 px-6">
+
+            <!-- Service Details & Date (Combined & Shifted below) -->
+            <td class="py-4 px-6 align-top">
               <p class="font-semibold text-slate-900 text-sm truncate">
                 {{ req.serviceName || req.title || "General Request" }}
               </p>
-              <p class="text-xs text-slate-400 mt-1 truncate">
-                {{ req.description || req.message || "No description" }}
+              <p class="text-xs text-slate-500 mt-0.5 line-clamp-1">
+                💬 {{ req.description || req.message || "No description" }}
+              </p>
+              <p class="text-xs font-medium text-[#FF7620] mt-1">
+                📅 Date:
+                {{
+                  (req.serviceDate || req.date | date: "mediumDate") ||
+                    "Not specified"
+                }}
               </p>
             </td>
-            <td class="py-4 px-6 text-center">
+
+            <!-- Status -->
+            <td class="py-4 px-6 text-center align-top">
               <select
                 [(ngModel)]="req.status"
                 (change)="updateServiceRequestStatus(req)"
@@ -355,7 +374,9 @@
                 <option value="Cancelled">Cancelled</option>
               </select>
             </td>
-            <td class="py-4 px-6 text-center">
+
+            <!-- Actions -->
+            <td class="py-4 px-6 text-center align-top">
               <button
                 (click)="removeServiceRequest(req.id)"
                 class="text-[10px] font-semibold bg-red-50 hover:bg-red-100 text-red-600 px-3 py-2 rounded-lg transition-all uppercase tracking-wider cursor-pointer"
@@ -364,6 +385,8 @@
               </button>
             </td>
           </tr>
+
+          <!-- Empty State -->
           <tr *ngIf="serviceRequestsList.length === 0">
             <td
               colspan="5"
@@ -379,13 +402,13 @@
 
   <div
     *ngIf="showCategoryModal"
-    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-all"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 pt-20 sm:pt-24 bg-black/80 backdrop-blur-md transition-all"
   >
     <div
-      class="glass-panel bg-cyber-card/95 border border-cyber-primary/30 w-full max-w-md rounded-2xl shadow-[0_0_50px_rgba(0,240,255,0.15)] overflow-hidden"
+      class="glass-panel bg-cyber-card/95 border border-cyber-primary/30 w-full max-w-md rounded-2xl shadow-[0_0_50px_rgba(0,240,255,0.15)] overflow-hidden flex flex-col max-h-[85vh] sm:max-h-[88vh]"
     >
       <div
-        class="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-black/40"
+        class="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-black/40 shrink-0"
       >
         <h2 class="text-lg font-black text-white tracking-wider uppercase">
           Manage Categories
@@ -399,7 +422,7 @@
       </div>
 
       <div
-        class="p-6 space-y-6 bg-white rounded-2xl shadow-xl border border-slate-100"
+        class="p-6 space-y-6 bg-white rounded-b-2xl shadow-xl border border-slate-100 overflow-y-auto flex-1"
       >
         <!-- Add/Edit Form -->
         <form (ngSubmit)="onSaveCategory()" class="space-y-3">

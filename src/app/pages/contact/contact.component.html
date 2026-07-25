@@ -1,55 +1,102 @@
 <div class="max-w-5xl mx-auto px-6 py-12">
   <div class="grid md:grid-cols-2 gap-12 items-start">
-    
     <!-- LEFT SIDE: Contact Info -->
     <div class="space-y-8">
       <div>
-        <h1 class="text-4xl font-black uppercase tracking-tight mb-2">Contact Us</h1>
-        <p class="text-slate-500">We are here to help you with your tech requirements. Reach out to us for any enquiry.</p>
+        <h1 class="text-4xl font-black uppercase tracking-tight mb-2">
+          Contact Us
+        </h1>
+        <p class="text-slate-500">
+          We are here to help you with your tech requirements. Reach out to us
+          for any enquiry.
+        </p>
       </div>
 
       <div class="space-y-6">
-        <a href="tel:+919876543210" class="flex items-center gap-4 group">
-          <div class="w-12 h-12 flex items-center justify-center bg-slate-100 rounded-xl group-hover:bg-orange-50 transition-colors">📞</div>
+        <a
+          [href]="'tel:' + siteData?.phone"
+          class="flex items-center gap-4 group"
+        >
+          <div
+            class="w-12 h-12 flex items-center justify-center bg-slate-100 rounded-xl group-hover:bg-orange-50 transition-colors"
+          >
+            📞
+          </div>
           <div>
             <p class="text-xs font-bold uppercase text-slate-400">Call Us</p>
-            <p class="font-bold text-slate-900">+91 98765-43210</p>
+            <p class="font-bold text-slate-900">{{ siteData?.phone }}</p>
           </div>
         </a>
 
-        <a href="mailto:sanataninfotech@gmail.com" class="flex items-center gap-4 group">
-          <div class="w-12 h-12 flex items-center justify-center bg-slate-100 rounded-xl group-hover:bg-orange-50 transition-colors">✉️</div>
+        <a
+          [href]="'mailto:' + siteData?.email"
+          class="flex items-center gap-4 group"
+        >
+          <div
+            class="w-12 h-12 flex items-center justify-center bg-slate-100 rounded-xl group-hover:bg-orange-50 transition-colors"
+          >
+            ✉️
+          </div>
           <div>
             <p class="text-xs font-bold uppercase text-slate-400">Email Us</p>
-            <p class="font-bold text-slate-900">sanataninfotechgmail.com</p>
+            <p class="font-bold text-slate-900">{{ siteData?.email }}</p>
           </div>
         </a>
       </div>
 
       <div class="p-6 bg-slate-900 text-white rounded-2xl">
-        <p class="text-xs font-bold uppercase text-slate-400 mb-2">Store Location</p>
-        <p class="font-medium text-sm leading-relaxed">New Radha-Wallbh Market, Khargone, Madhya Pradesh (451001)</p>
+        <p class="text-xs font-bold uppercase text-slate-400 mb-2">
+          Store Location
+        </p>
+        <p class="font-medium text-sm leading-relaxed">
+          {{ siteData?.address }}
+        </p>
       </div>
     </div>
 
     <!-- RIGHT SIDE: Simple Form -->
     <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
       <h2 class="text-xl font-black uppercase mb-6">Enquiry Form</h2>
-      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-4">
+
+      <!-- ACTION ME APNI FORMSPREE ID DALNI HAI -->
+      <form
+        action="https://formspree.io/f/YOUR_FORM_ID"
+        method="POST"
+        class="space-y-4"
+      >
         <div>
-          <input type="text" name="name" placeholder="Your Name" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-[#FF7620]">
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            required
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-[#FF7620]"
+          />
         </div>
         <div>
-          <input type="text" name="product" placeholder="Your Contact Number" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-[#FF7620]">
+          <input
+            type="text"
+            name="phone"
+            placeholder="Your Contact Number"
+            required
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-[#FF7620]"
+          />
         </div>
         <div>
-          <textarea name="message" rows="3" placeholder="How can we help?" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-[#FF7620]"></textarea>
+          <textarea
+            name="message"
+            rows="3"
+            placeholder="How can we help?"
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-[#FF7620]"
+          ></textarea>
         </div>
-        <button type="submit" class="w-full bg-slate-900 text-white font-bold py-4 rounded-xl cursor-pointer hover:bg-[#FF7620] transition-colors">
+        <button
+          type="submit"
+          class="w-full bg-slate-900 text-white font-bold py-4 rounded-xl cursor-pointer hover:bg-[#FF7620] transition-colors"
+        >
           Send Enquiry
         </button>
       </form>
     </div>
-
   </div>
 </div>

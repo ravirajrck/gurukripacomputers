@@ -12,6 +12,7 @@ import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { SidebarService } from '../../services/sidebar.service';
 import { ToastrService } from 'ngx-toastr';
+import { SITE_CONFIG } from '../../../config/site-config';
 
 @Component({
   selector: 'app-sidebar',
@@ -20,6 +21,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent {
+  siteData = SITE_CONFIG;
   public authService = inject(AuthService);
   private router = inject(Router);
   private toastr = inject(ToastrService);

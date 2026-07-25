@@ -1,159 +1,152 @@
-<div
-  class="min-h-screen bg-slate-50 text-slate-900 p-4 sm:p-6 md:p-12 relative overflow-hidden font-sans"
+<main
+  class="max-w-[1600px] w-full mx-auto px-6 py-8 flex-1 flex flex-col relative z-10"
 >
-  <!-- Background Glow Effect (Soft Orange Light) -->
   <div
-    class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[300px] sm:h-[400px] bg-[#FF7620]/10 rounded-full blur-[140px] pointer-events-none"
-  ></div>
-
-  <!-- Hero Section -->
-  <div class="max-w-6xl mx-auto mb-12 sm:mb-16 text-center relative z-10">
-    <span
-      class="inline-flex items-center text-[#FF7620] font-black text-[10px] sm:text-xs uppercase tracking-widest bg-[#FF7620]/10 px-4 py-2 rounded-full border border-[#FF7620]/20 shadow-sm"
-    >
-      <i class="fa-solid fa-shield-halved mr-1.5"></i> Advanced Security &
-      Surveillance Solutions
-    </span>
-    <h1
-      class="text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-wider uppercase mt-5 leading-tight"
-    >
-      Professional CCTV Camera
-      <span class="text-[#FF7620]">Installation & Services</span>
-    </h1>
-    <p
-      class="text-xs sm:text-sm md:text-base text-slate-600 mt-3 max-w-2xl mx-auto font-medium leading-relaxed px-2"
-    >
-      Complete security solutions for homes, offices, shops, and industries.
-      From new installations to troubleshooting, repairing, and mobile viewing
-      setups—we fix all issues!
-    </p>
-  </div>
-
-<!-- CCTV Types / Gallery Showcase Section -->
-  <div class="max-w-6xl mx-auto mb-16 sm:mb-20 relative z-10 px-4 sm:px-0">
-    <div class="text-center mb-10 sm:mb-12">
-      <span class="text-[#FF7620] text-xs sm:text-sm font-bold uppercase tracking-widest bg-orange-50 px-3 py-1 rounded-full border border-orange-100">
-        Advanced Security Solutions
-      </span>
-      <h2 class="text-2xl sm:text-3xl font-black uppercase tracking-tight text-slate-900 mt-2">
-        We Deal In All Types of CCTV Systems
-      </h2>
-      <p class="text-xs sm:text-sm text-slate-500 mt-1 uppercase tracking-widest font-medium">
-        Choose the right surveillance protection for your space
+    class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10 bg-cyber-card p-1 rounded-2xl"
+  >
+    <div>
+      <h1 class="text-3xl font-bold text-slate-900 tracking-wider uppercase">
+        Troubleshooting Solutions
+      </h1>
+      <p class="text-sm font-medium text-slate-500 mt-1">
+        Complete security setup, wiring & mobile viewing for homes and offices.
       </p>
     </div>
+  </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6">
-      
-      <!-- 1. Bullet Camera / Outdoor Security -->
-      <div class="bg-white border border-slate-200/80 rounded-2xl overflow-hidden group hover:border-[#FF7620] transition-all duration-300 shadow-lg hover:shadow-2xl hover:-translate-y-1">
-        <div class="h-48 sm:h-52 overflow-hidden relative bg-slate-900">
+  <!-- CCTV Types Showcase Section -->
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-30">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <!-- 1. Bullet Camera -->
+      <div
+        class="bg-white border border-slate-200/80 rounded-xl overflow-hidden group hover:border-[#FF7620] transition-all shadow-sm hover:shadow-md"
+      >
+        <div class="h-32 sm:h-40 overflow-hidden relative bg-slate-900">
           <img
-            src="https://images.unsplash.com/photo-1557324232-b8917d4c3dcd?auto=format&fit=crop&q=80&w=600"
-            alt="Outdoor Security Bullet Camera"
-            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-85 group-hover:opacity-100"
+            src="s3.png"
+            alt="Bullet Camera"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
           />
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
-          <span class="absolute top-3 right-3 bg-slate-900/90 backdrop-blur-md text-[#FF7620] text-[10px] font-black px-2.5 py-1 rounded-lg uppercase border border-slate-700 shadow">
-            Weatherproof
+          <span
+            class="absolute top-2 right-2 bg-slate-900/80 text-[#FF7620] text-[9px] font-bold px-2 py-0.5 rounded uppercase"
+          >
+            Outdoor
           </span>
         </div>
-        <div class="p-5">
-          <h3 class="font-extrabold text-base text-slate-900 mb-1.5 group-hover:text-[#FF7620] transition-colors">
+        <div class="p-3 sm:p-4">
+          <h3
+            class="font-bold text-xs sm:text-lg text-slate-900 group-hover:text-[#FF7620] transition-colors"
+          >
             Bullet Cameras
           </h3>
-          <p class="text-xs text-slate-600 leading-relaxed">
-            Long-distance outdoor monitoring with strong weather-resistant bodies and night vision.
+          <p class="text-sm text-slate-500 mt-0.5 leading-snug line-clamp-2">
+            Weather-resistant outdoor night vision setup.
           </p>
         </div>
       </div>
 
-      <!-- 2. Dome & PTZ Cameras -->
-      <div class="bg-white border border-slate-200/80 rounded-2xl overflow-hidden group hover:border-[#FF7620] transition-all duration-300 shadow-lg hover:shadow-2xl hover:-translate-y-1">
-        <div class="h-48 sm:h-52 overflow-hidden relative bg-slate-900">
+      <!-- 2. Dome & PTZ -->
+      <div
+        class="bg-white border border-slate-200/80 rounded-xl overflow-hidden group hover:border-[#FF7620] transition-all shadow-sm hover:shadow-md"
+      >
+        <div class="h-32 sm:h-40 overflow-hidden relative bg-slate-900">
           <img
-            src="https://images.unsplash.com/photo-1563630423388-5d83897ffc8e?auto=format&fit=crop&q=80&w=600"
-            alt="Dome & PTZ Security Cameras"
-            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-85 group-hover:opacity-100"
+            src="s2.png"
+            alt="Dome & PTZ Camera"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
           />
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
-          <span class="absolute top-3 right-3 bg-slate-900/90 backdrop-blur-md text-[#FF7620] text-[10px] font-black px-2.5 py-1 rounded-lg uppercase border border-slate-700 shadow">
-            Indoor / 360°
+          <span
+            class="absolute top-2 right-2 bg-slate-900/80 text-[#FF7620] text-[9px] font-bold px-2 py-0.5 rounded uppercase"
+          >
+            360° PTZ
           </span>
         </div>
-        <div class="p-5">
-          <h3 class="font-extrabold text-base text-slate-900 mb-1.5 group-hover:text-[#FF7620] transition-colors">
-            Dome & PTZ Cameras
+        <div class="p-3 sm:p-4">
+          <h3
+            class="font-bold text-xs sm:text-lg text-slate-900 group-hover:text-[#FF7620] transition-colors"
+          >
+            Dome & PTZ
           </h3>
-          <p class="text-xs text-slate-600 leading-relaxed">
-            360-degree rotation and clear indoor surveillance with remote smartphone control.
+          <p class="text-sm text-slate-500 mt-0.5 leading-snug line-clamp-2">
+            Indoor rotation with mobile control access.
           </p>
         </div>
       </div>
 
-      <!-- 3. Control Room / Surveillance System -->
-      <div class="bg-white border border-slate-200/80 rounded-2xl overflow-hidden group hover:border-[#FF7620] transition-all duration-300 shadow-lg hover:shadow-2xl hover:-translate-y-1">
-        <div class="h-48 sm:h-52 overflow-hidden relative bg-slate-900">
+      <!-- 3. DVR / NVR Setup -->
+      <div
+        class="bg-white border border-slate-200/80 rounded-xl overflow-hidden group hover:border-[#FF7620] transition-all shadow-sm hover:shadow-md"
+      >
+        <div class="h-32 sm:h-40 overflow-hidden relative bg-slate-900">
           <img
-            src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=600"
-            alt="Surveillance Control Room & NVR Setup"
-            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-85 group-hover:opacity-100"
+            src="s1.png"
+            alt="DVR Setup"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
           />
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
-          <span class="absolute top-3 right-3 bg-slate-900/90 backdrop-blur-md text-[#FF7620] text-[10px] font-black px-2.5 py-1 rounded-lg uppercase border border-slate-700 shadow">
+          <span
+            class="absolute top-2 right-2 bg-slate-900/80 text-[#FF7620] text-[9px] font-bold px-2 py-0.5 rounded uppercase"
+          >
+            Storage
+          </span>
+        </div>
+        <div class="p-3 sm:p-4">
+          <h3
+            class="font-bold text-xs sm:text-lg text-slate-900 group-hover:text-[#FF7620] transition-colors"
+          >
             DVR / NVR Setup
-          </span>
-        </div>
-        <div class="p-5">
-          <h3 class="font-extrabold text-base text-slate-900 mb-1.5 group-hover:text-[#FF7620] transition-colors">
-            Surveillance Rooms
           </h3>
-          <p class="text-xs text-slate-600 leading-relaxed">
-            Multi-channel recording setups, hard disk storage optimization, and live monitoring screens.
+          <p class="text-sm text-slate-500 mt-0.5 leading-snug line-clamp-2">
+            Multi-channel recording & hard disk storage.
           </p>
         </div>
       </div>
 
-      <!-- 4. Technical Engineering & Wiring -->
-      <div class="bg-white border border-slate-200/80 rounded-2xl overflow-hidden group hover:border-[#FF7620] transition-all duration-300 shadow-lg hover:shadow-2xl hover:-translate-y-1">
-        <div class="h-48 sm:h-52 overflow-hidden relative bg-slate-900">
+      <!-- 4. Repair & Wiring -->
+      <div
+        class="bg-white border border-slate-200/80 rounded-xl overflow-hidden group hover:border-[#FF7620] transition-all shadow-sm hover:shadow-md"
+      >
+        <div class="h-32 sm:h-40 overflow-hidden relative bg-slate-900">
           <img
-            src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=600"
-            alt="CCTV Technician Repairing and Wiring"
-            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-85 group-hover:opacity-100"
+            src="s4.png"
+            alt="Repair & Wiring"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
           />
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
-          <span class="absolute top-3 right-3 bg-slate-900/90 backdrop-blur-md text-[#FF7620] text-[10px] font-black px-2.5 py-1 rounded-lg uppercase border border-slate-700 shadow">
-            Expert Repair
+          <span
+            class="absolute top-2 right-2 bg-slate-900/80 text-[#FF7620] text-[9px] font-bold px-2 py-0.5 rounded uppercase"
+          >
+            Service
           </span>
         </div>
-        <div class="p-5">
-          <h3 class="font-extrabold text-base text-slate-900 mb-1.5 group-hover:text-[#FF7620] transition-colors">
-            Repairing & Wiring
+        <div class="p-3 sm:p-4">
+          <h3
+            class="font-bold text-xs sm:text-lg text-slate-900 group-hover:text-[#FF7620] transition-colors"
+          >
+            Repair & Wiring
           </h3>
-          <p class="text-xs text-slate-600 leading-relaxed">
-            Fixing power supply issues, cable damage, blurry lenses, and professional concealed wiring.
+          <p class="text-sm text-slate-500 mt-0.5 leading-snug line-clamp-2">
+            Fixing power, cable faults & blurry lenses.
           </p>
         </div>
       </div>
-
     </div>
   </div>
   <!-- Services & Problem Solving Grid -->
-  <div class="max-w-6xl mx-auto mb-16 relative z-10">
-    <div class="text-center mb-8 sm:mb-10">
-      <h2
-        class="text-xl sm:text-2xl font-black uppercase tracking-wider text-slate-900"
-      >
-        Our Services & Troubleshooting Solutions
-      </h2>
-      <p
-        class="text-[10px] sm:text-xs text-slate-500 mt-1 uppercase tracking-widest font-semibold"
-      >
+
+  <div
+    class="flex flex-col md:flex-row justify-between items-start mt-12 md:items-center gap-6 mb-10 bg-cyber-card p-1 rounded-2xl"
+  >
+    <div>
+      <h1 class="text-3xl font-bold text-slate-900 tracking-wider uppercase">
+        Our Services
+      </h1>
+      <p class="text-sm font-medium text-slate-500 mt-1">
         Got any issue? We fix everything related to surveillance
       </p>
     </div>
+  </div>
 
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-30">
     <!-- Loader / Shimmer -->
     <div
       *ngIf="loading"
@@ -194,17 +187,15 @@
           class="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-slate-100 flex items-center justify-between gap-2"
         >
           <span
-            class="text-[10px] sm:text-xs font-bold text-[#FF7620] uppercase tracking-widest bg-orange-500/10 px-2.5 sm:px-3 py-1 rounded-lg"
+            class="text-sm sm:text-sm font-bold text-[#FF7620] uppercase tracking-widest bg-orange-500/10 px-2.5 sm:px-3 py-1 rounded-lg"
           >
-               <i
-              class="font-extrabold fa-solid fa-indian-rupee-sign text-[10px]"
-            ></i>
-            {{ service.priceRange }} onwards
+            <i class="font-bold fa-solid fa-indian-rupee-sign text-sm"></i>
+            {{ service.priceRange }}
           </span>
           <button
             type="button"
             (click)="openInquiryModal(service)"
-            class="px-4 sm:px-5 py-2.5 bg-slate-900 hover:bg-[#FF7620] text-white font-bold text-[10px] sm:text-xs uppercase tracking-wider rounded-xl transition-all duration-300 cursor-pointer shadow-md border  shrink-0"
+            class="px-4 sm:px-5 py-2.5 bg-slate-900 hover:bg-[#FF7620] text-white font-bold text-[10px] sm:text-xs uppercase tracking-wider rounded-xl transition-all duration-300 cursor-pointer shadow-md border shrink-0"
           >
             Book Service
           </button>
@@ -213,161 +204,207 @@
     </div>
   </div>
 
-  <!-- INQUIRY MODAL (Phone Optimized with Sticky Footer Button) -->
+<!-- INQUIRY MODAL (Fixed Navbar Overlap Issue) -->
+<div
+  *ngIf="showModal"
+  class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 pt-20 sm:pt-24 bg-slate-950/60 backdrop-blur-sm transition-all"
+>
   <div
-    *ngIf="showModal"
-    class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/60 backdrop-blur-sm transition-all"
+    class="bg-white border border-slate-200 w-full max-w-lg rounded-3xl shadow-2xl flex flex-col max-h-[85vh] sm:max-h-[88vh] overflow-hidden relative animate-in fade-in zoom-in-95 duration-200"
   >
+    <!-- Modal Header (Fixed) -->
     <div
-      class="bg-white border border-slate-200 w-full max-w-lg rounded-3xl shadow-2xl flex flex-col max-h-[92vh] overflow-hidden relative animate-in fade-in zoom-in-95 duration-200"
+      class="px-5 sm:px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50 shrink-0"
     >
-      <!-- Modal Header (Fixed) -->
-      <div
-        class="px-5 sm:px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50 shrink-0"
-      >
-        <div>
-          <span
-            class="text-[10px] font-bold text-[#FF7620] uppercase tracking-widest"
-            >Service Booking Request</span
-          >
-          <h2
-            class="text-base sm:text-lg font-black text-slate-900 tracking-wider mt-0.5"
-          >
-            {{ selectedService?.title }}
-          </h2>
-        </div>
-        <button
-          type="button"
-          (click)="closeModal()"
-          class="text-slate-400 hover:text-slate-900 text-2xl font-black w-9 h-9 rounded-full flex items-center justify-center hover:bg-slate-200 transition-all cursor-pointer"
+      <div>
+        <span
+          class="text-[10px] font-bold text-[#FF7620] uppercase tracking-widest"
+          >Service Booking Request</span
         >
-          &times;
-        </button>
+        <h2
+          class="text-base sm:text-lg font-black text-slate-900 tracking-wider mt-0.5"
+        >
+          {{ selectedService?.title }}
+        </h2>
       </div>
-
-      <!-- Modal Form (Scrollable Body) -->
-      <form
-        [formGroup]="inquiryForm"
-        (ngSubmit)="submitInquiry()"
-        class="flex flex-col flex-1 overflow-y-auto"
+      <button
+        type="button"
+        (click)="closeModal()"
+        class="text-slate-400 hover:text-slate-900 text-2xl font-black w-9 h-9 rounded-full flex items-center justify-center hover:bg-slate-200 transition-all cursor-pointer"
       >
-        <div class="p-5 sm:p-6 space-y-4">
-          <!-- User Name -->
+        &times;
+      </button>
+    </div>
+
+    <!-- Modal Form (Scrollable Body) -->
+    <form
+      [formGroup]="inquiryForm"
+      (ngSubmit)="submitInquiry()"
+      class="flex flex-col flex-1 overflow-y-auto"
+    >
+      <div class="p-5 sm:p-6 space-y-4">
+        <!-- User Name -->
+        <div>
+          <label
+            class="block text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5"
+            >Your Name *</label
+          >
+          <input
+            type="text"
+            formControlName="name"
+            placeholder="Enter your full name"
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] outline-none transition-all"
+          />
+          <div
+            *ngIf="
+              inquiryForm.get('name')?.invalid &&
+              inquiryForm.get('name')?.touched
+            "
+            class="text-rose-500 text-xs mt-1 font-medium"
+          >
+            Name is required.
+          </div>
+        </div>
+
+        <!-- Phone / Email -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label
               class="block text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5"
-              >Your Name *</label
+              >Phone Number *</label
             >
             <input
-              type="text"
-              formControlName="name"
-              placeholder="Enter your full name"
+              type="tel"
+              formControlName="phone"
+              placeholder="9876543210"
               class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] outline-none transition-all"
             />
             <div
               *ngIf="
-                inquiryForm.get('name')?.invalid &&
-                inquiryForm.get('name')?.touched
+                inquiryForm.get('phone')?.invalid &&
+                inquiryForm.get('phone')?.touched
               "
               class="text-rose-500 text-xs mt-1 font-medium"
             >
-              Name is required.
+              Valid 10-digit number required.
             </div>
           </div>
 
-          <!-- Phone / Email -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label
-                class="block text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5"
-                >Phone Number *</label
-              >
-              <input
-                type="tel"
-                formControlName="phone"
-                placeholder="9876543210"
-                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] outline-none transition-all"
-              />
-              <div
-                *ngIf="
-                  inquiryForm.get('phone')?.invalid &&
-                  inquiryForm.get('phone')?.touched
-                "
-                class="text-rose-500 text-xs mt-1 font-medium"
-              >
-                Valid 10-digit number required.
-              </div>
-            </div>
-
-            <div>
-              <label
-                class="block text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5"
-                >Email Address</label
-              >
-              <input
-                type="email"
-                formControlName="email"
-                placeholder="name@example.com"
-                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] outline-none transition-all"
-              />
-            </div>
-          </div>
-
-          <!-- Problem / Requirements -->
           <div>
             <label
               class="block text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5"
-              >Describe Your Requirement / Problem *</label
+              >Email Address</label
             >
-            <textarea
-              formControlName="message"
-              rows="3"
-              placeholder="E.g., Need 4 cameras installed, or DVR not recording / offline issue..."
-              class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] outline-none resize-none transition-all"
-            ></textarea>
-            <div
-              *ngIf="
-                inquiryForm.get('message')?.invalid &&
-                inquiryForm.get('message')?.touched
-              "
-              class="text-rose-500 text-xs mt-1 font-medium"
-            >
-              Please provide details (at least 10 characters).
-            </div>
+            <input
+              type="email"
+              formControlName="email"
+              placeholder="name@example.com"
+              class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] outline-none transition-all"
+            />
           </div>
         </div>
 
-        <!-- Sticky Footer with Submit Button (Always Fully Visible on Phone) -->
-        <div
-          class="p-4 sm:p-6 bg-slate-50 border-t border-slate-100 mt-auto shrink-0"
-        >
-          <button
-            type="submit"
-            [disabled]="isSubmitting"
-            class="w-full bg-[#FF7620] hover:bg-orange-600 text-white font-black uppercase text-xs tracking-widest py-3.5 sm:py-4 rounded-xl shadow-lg shadow-orange-500/20 transition-all duration-300 flex items-center justify-center cursor-pointer disabled:opacity-50"
+        <!-- Address Field -->
+        <div>
+          <label
+            class="block text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5"
+            >Installation / Service Address *</label
           >
-            <span *ngIf="isSubmitting" class="flex items-center gap-2">
-              <svg class="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24">
-                <circle
-                  class="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                ></circle>
-                <path
-                  class="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v8H4z"
-                ></path>
-              </svg>
-              Submitting Request...
-            </span>
-            <span *ngIf="!isSubmitting">Submit Service Request</span>
-          </button>
+          <textarea
+            formControlName="address"
+            rows="2"
+            placeholder="Enter complete address (Area, City, Landmark)..."
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] outline-none resize-none transition-all"
+          ></textarea>
+          <div
+            *ngIf="
+              inquiryForm.get('address')?.invalid &&
+              inquiryForm.get('address')?.touched
+            "
+            class="text-rose-500 text-xs mt-1 font-medium"
+          >
+            Address is required (at least 5 characters).
+          </div>
         </div>
-      </form>
-    </div>
+
+        <!-- Preferred Service Date -->
+        <div>
+          <label
+            class="block text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5"
+            >Preferred Service Date *</label
+          >
+          <input
+            type="date"
+            formControlName="serviceDate"
+            [min]="minDate"
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] outline-none transition-all"
+          />
+          <div
+            *ngIf="
+              inquiryForm.get('serviceDate')?.invalid &&
+              inquiryForm.get('serviceDate')?.touched
+            "
+            class="text-rose-500 text-xs mt-1 font-medium"
+          >
+            Please select a valid service date.
+          </div>
+        </div>
+
+        <!-- Problem / Requirements -->
+        <div>
+          <label
+            class="block text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5"
+            >Describe Your Requirement / Problem *</label
+          >
+          <textarea
+            formControlName="message"
+            rows="3"
+            placeholder="E.g., Need 4 cameras installed, or DVR not recording / offline issue..."
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] outline-none resize-none transition-all"
+          ></textarea>
+          <div
+            *ngIf="
+              inquiryForm.get('message')?.invalid &&
+              inquiryForm.get('message')?.touched
+            "
+            class="text-rose-500 text-xs mt-1 font-medium"
+          >
+            Please provide details (at least 10 characters).
+          </div>
+        </div>
+      </div>
+
+      <!-- Sticky Footer with Submit Button -->
+      <div
+        class="p-4 sm:p-6 bg-slate-50 border-t border-slate-100 mt-auto shrink-0"
+      >
+        <button
+          type="submit"
+          [disabled]="isSubmitting"
+          class="w-full bg-[#FF7620] hover:bg-orange-600 text-white font-black uppercase text-xs tracking-widest py-3.5 sm:py-4 rounded-xl shadow-lg shadow-orange-500/20 transition-all duration-300 flex items-center justify-center cursor-pointer disabled:opacity-50"
+        >
+          <span *ngIf="isSubmitting" class="flex items-center gap-2">
+            <svg class="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24">
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v8H4z"
+              ></path>
+            </svg>
+            Submitting Request...
+          </span>
+          <span *ngIf="!isSubmitting">Submit Service Request</span>
+        </button>
+      </div>
+    </form>
   </div>
 </div>
+</main>

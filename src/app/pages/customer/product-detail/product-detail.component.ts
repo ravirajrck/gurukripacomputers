@@ -9,6 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../../core/services/data.service';
 import { CommonModule, Location } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { SITE_CONFIG } from '../../../config/site-config';
 
 @Component({
   selector: 'app-product-detail',
@@ -18,10 +20,12 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProductDetailComponent implements OnInit {
+  siteData = SITE_CONFIG;
   private route = inject(ActivatedRoute);
   private dataService = inject(DataService);
+  private toastr = inject(ToastrService);
   private location = inject(Location);
-    isLoading = false;
+  isLoading = false;
   @ViewChild('swiperRef') swiperRef: ElementRef | undefined;
 
   product: any = null;
@@ -65,11 +69,26 @@ export class ProductDetailComponent implements OnInit {
   }
 
   orderOnWhatsApp() {
-    const message = `Hi! I am interested in this product: ${this.product.name}. 
-  Could you please provide more details and current availability?`;
+    const currentUrl =
+      window.location.origin + '/store/product/' + this.product.id;
+    const textMessage = `Hello! I want to order this product:
+*🔗 Product Link:*
+${currentUrl}
 
+*📦 Product Details:*
+*Name:* ${this.product.name}
+*Price:* ₹${this.product.price}
+*Original Price:* ₹${this.product.originalPrice}
+
+*📝 Description:*
+${this.product.description}
+
+*🖼️ Images:*
+${this.product.images?.map((img: any, i: number) => (img.url ? `Image ${i + 1}: ${img.url}` : '')).join('\n') || ''}
+
+Please let me know about the availability!`;
     window.open(
-      `https://wa.me/YOUR_NUMBER?text=${encodeURIComponent(message)}`,
+      `https://wa.me/${this.siteData?.phone}?text=${encodeURIComponent(textMessage)}`,
       '_blank',
     );
   }
@@ -94,14 +113,18 @@ export class ProductDetailComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
 
-
   toggleSaved() {
     if (this.isLoading) return;
     this.isLoading = true;
 
     // Data service call
-    this.dataService.toggleSavedLocal(this.product);
+    const isSaved: any = this.dataService.toggleSavedLocal(this.product);
 
+    if (isSaved) {
+      this.toastr.success('Product saved successfully!', 'Success');
+    } else {
+      this.toastr.info('Product removed successfully!', 'Removed');
+    }
     // Thoda sa visual loading effect dikhane ke baad loader hata dein
     setTimeout(() => {
       this.isLoading = false;
