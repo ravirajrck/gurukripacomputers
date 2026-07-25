@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
   private authService = inject(AuthService);
   private toastr = inject(ToastrService);
   private router = inject(Router);
- 
+
   // Category State
   newCategoryName = '';
   categoriesList: any[] = [];
@@ -76,7 +76,8 @@ export class DashboardComponent implements OnInit {
         next: (data: any) => {
           this.serviceRequestsList = data || [];
         },
-        error: (err: any) => console.error('Failed to load service requests', err)
+        error: (err: any) =>
+          console.error('Failed to load service requests', err),
       });
     } else {
       this.serviceRequestsList = [];
@@ -108,17 +109,31 @@ export class DashboardComponent implements OnInit {
     const trimmedName = this.newCategoryName.trim();
     if (!trimmedName) return;
 
+    // Agar edit mode mein hain aur purani category isDelete === false hai, toh block karein
+    if (this.isEditingCategory) {
+      const currentCat = this.categoriesList.find(
+        (c) => c.id === this.currentEditingCategoryId,
+      );
+      if (currentCat && currentCat.isDelete === false) {
+        this.toastr.error(
+          'This category is protected and cannot be modified!',
+          'Action Denied',
+        );
+        return;
+      }
+    }
+
     // 1. Duplicate Category Check (Case-insensitive)
     const categoryExists = this.categoriesList.some(
       (cat) =>
         cat.name.toLowerCase() === trimmedName.toLowerCase() &&
-        (!this.isEditingCategory || cat.id !== this.currentEditingCategoryId)
+        (!this.isEditingCategory || cat.id !== this.currentEditingCategoryId),
     );
 
     if (categoryExists) {
       this.toastr.warning(
         `Category "${trimmedName}" already exists! Please use a different name.`,
-        'Duplicate Category'
+        'Duplicate Category',
       );
       return;
     }
@@ -143,6 +158,15 @@ export class DashboardComponent implements OnInit {
   }
 
   editCategory(category: any) {
+    // 🛡️ Security Check: Agar isDelete false hai toh edit allow mat karo
+    if (category.isDelete === false) {
+      this.toastr.error(
+        'This category is protected and cannot be edited.',
+        'Access Denied',
+      );
+      return;
+    }
+
     this.isEditingCategory = true;
     this.currentEditingCategoryId = category.id;
     this.newCategoryName = category.name;
@@ -155,15 +179,25 @@ export class DashboardComponent implements OnInit {
   }
 
   async removeCategory(id: string, categoryName: string) {
+    // Find category to check isDelete status
+    const categoryToRemove = this.categoriesList.find((c) => c.id === id);
+    if (categoryToRemove && categoryToRemove.isDelete === false) {
+      this.toastr.error(
+        'This category is protected and cannot be deleted.',
+        'Access Denied',
+      );
+      return;
+    }
+
     // 2. Check if any product is associated with this category
     const hasAssociatedProducts = this.productsList.some(
-      (prod) => prod.categoryId === id
+      (prod) => prod.categoryId === id,
     );
 
     if (hasAssociatedProducts) {
       this.toastr.error(
         `Cannot delete "${categoryName}" because it has active products assigned to it. Please reassign or delete those products first.`,
-        'Action Denied'
+        'Action Denied',
       );
       return;
     }
@@ -224,7 +258,9 @@ export class DashboardComponent implements OnInit {
         if (typeof service.deleteServiceRequest === 'function') {
           await service.deleteServiceRequest(id);
         }
-        this.serviceRequestsList = this.serviceRequestsList.filter((r) => r.id !== id);
+        this.serviceRequestsList = this.serviceRequestsList.filter(
+          (r) => r.id !== id,
+        );
         this.toastr.success('Service request deleted successfully!', 'Success');
       } catch (err) {
         console.error(err);
@@ -234,7 +270,9 @@ export class DashboardComponent implements OnInit {
   }
 
   viewProduct(productId: string) {
-    this.router.navigate(['/store/product', productId], { queryParams: { type: 'dashboard' } });
+    this.router.navigate(['/store/product', productId], {
+      queryParams: { type: 'dashboard' },
+    });
   }
 
   onImageError(event: any) {

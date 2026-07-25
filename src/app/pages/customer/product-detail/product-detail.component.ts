@@ -8,13 +8,11 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../../core/services/data.service';
 import { CommonModule, Location } from '@angular/common';
-import { FooterComponent } from '../../../core/components/footer/footer.component';
-import { NavbarComponent } from '../../../core/components/navbar/navbar.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [FooterComponent, NavbarComponent, CommonModule],
+  imports: [CommonModule],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

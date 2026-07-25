@@ -1,8 +1,7 @@
-<router-outlet></router-outlet>
-
 <main
   class="max-w-[1600px] w-full mx-auto px-6 py-8 flex-1 flex flex-col relative z-10"
 >
+  <router-outlet></router-outlet>
   <div
     class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10 bg-cyber-card p-1 rounded-2xl"
   >
@@ -275,20 +274,32 @@
   </div>
 
   <!-- SERVICE REQUESTS SECTION -->
-  <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden mt-8">
-    <div class="px-6 py-5 border-b border-slate-100 bg-slate-50/50 flex flex-wrap justify-between items-center gap-4">
+  <div
+    class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden mt-8"
+  >
+    <div
+      class="px-6 py-5 border-b border-slate-100 bg-slate-50/50 flex flex-wrap justify-between items-center gap-4"
+    >
       <div class="flex items-center space-x-6">
-        <h3 class="text-sm font-semibold text-slate-900 uppercase tracking-widest">
+        <h3
+          class="text-sm font-semibold text-slate-900 uppercase tracking-widest"
+        >
           Service Requests:
-          <span class="text-[#FF7620] text-lg font-semibold ml-1">{{ serviceRequestsList.length }}</span>
+          <span class="text-[#FF7620] text-lg font-semibold ml-1">{{
+            serviceRequestsList.length
+          }}</span>
         </h3>
       </div>
     </div>
 
     <div class="overflow-x-auto">
-      <table class="w-full text-left text-sm text-slate-600 table-fixed min-w-[850px]">
+      <table
+        class="w-full text-left text-sm text-slate-600 table-fixed min-w-[850px]"
+      >
         <thead>
-          <tr class="border-b border-slate-100 text-xs font-semibold uppercase text-slate-400 tracking-widest bg-slate-50/50">
+          <tr
+            class="border-b border-slate-100 text-xs font-semibold uppercase text-slate-400 tracking-widest bg-slate-50/50"
+          >
             <th class="py-4 px-4 w-[6%] text-center">No.</th>
             <th class="py-4 px-6 w-[24%]">Client / User</th>
             <th class="py-4 px-6 w-[30%]">Service Details</th>
@@ -297,17 +308,30 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-100">
-          <tr *ngFor="let req of serviceRequestsList; let i = index" class="hover:bg-slate-50 transition-colors duration-200">
+          <tr
+            *ngFor="let req of serviceRequestsList; let i = index"
+            class="hover:bg-slate-50 transition-colors duration-200"
+          >
             <td class="py-4 px-4 text-center">
-              <span class="font-bold text-slate-500 text-xs font-mono">{{ i + 1 }}</span>
+              <span class="font-bold text-slate-500 text-xs font-mono">{{
+                i + 1
+              }}</span>
             </td>
             <td class="py-4 px-6">
-              <p class="font-semibold text-slate-900 text-sm truncate">{{ req.name || req.clientName || 'N/A' }}</p>
-              <p class="text-xs text-slate-400 mt-1 truncate">{{ req.email || req.phone || 'No contact provided' }}</p>
+              <p class="font-semibold text-slate-900 text-sm truncate">
+                {{ req.name || req.clientName || "N/A" }}
+              </p>
+              <p class="text-xs text-slate-400 mt-1 truncate">
+                {{ req.email || req.phone || "No contact provided" }}
+              </p>
             </td>
             <td class="py-4 px-6">
-              <p class="font-semibold text-slate-900 text-sm truncate">{{ req.serviceName || req.title || 'General Request' }}</p>
-              <p class="text-xs text-slate-400 mt-1 truncate">{{ req.description || req.message || 'No description' }}</p>
+              <p class="font-semibold text-slate-900 text-sm truncate">
+                {{ req.serviceName || req.title || "General Request" }}
+              </p>
+              <p class="text-xs text-slate-400 mt-1 truncate">
+                {{ req.description || req.message || "No description" }}
+              </p>
             </td>
             <td class="py-4 px-6 text-center">
               <select
@@ -315,10 +339,14 @@
                 (change)="updateServiceRequestStatus(req)"
                 class="text-xs font-bold px-3 py-1.5 rounded-lg border transition-all cursor-pointer outline-none shadow-sm"
                 [ngClass]="{
-                  'bg-amber-50 text-amber-700 border-amber-200 focus:ring-amber-500': req.status === 'Pending',
-                  'bg-blue-50 text-blue-700 border-blue-200 focus:ring-blue-500': req.status === 'In Progress',
-                  'bg-emerald-50 text-emerald-700 border-emerald-200 focus:ring-emerald-500': req.status === 'Completed',
-                  'bg-rose-50 text-rose-700 border-rose-200 focus:ring-rose-500': req.status === 'Cancelled'
+                  'bg-amber-50 text-amber-700 border-amber-200 focus:ring-amber-500':
+                    req.status === 'Pending',
+                  'bg-blue-50 text-blue-700 border-blue-200 focus:ring-blue-500':
+                    req.status === 'In Progress',
+                  'bg-emerald-50 text-emerald-700 border-emerald-200 focus:ring-emerald-500':
+                    req.status === 'Completed',
+                  'bg-rose-50 text-rose-700 border-rose-200 focus:ring-rose-500':
+                    req.status === 'Cancelled',
                 }"
               >
                 <option value="Pending">Pending</option>
@@ -337,7 +365,10 @@
             </td>
           </tr>
           <tr *ngIf="serviceRequestsList.length === 0">
-            <td colspan="5" class="text-center py-10 text-gray-500 text-xs font-mono uppercase tracking-wide">
+            <td
+              colspan="5"
+              class="text-center py-10 text-gray-500 text-xs font-mono uppercase tracking-wide"
+            >
               No service requests found.
             </td>
           </tr>
@@ -416,11 +447,21 @@
               *ngFor="let cat of categoriesList"
               class="flex justify-between items-center bg-slate-50/50 hover:bg-slate-100 border border-slate-100 rounded-xl p-3 transition-colors group"
             >
-              <span class="text-sm font-semibold text-slate-800 truncate pr-2">
-                {{ cat.name }}
-              </span>
-              <!-- Action Buttons (Visible on hover for cleaner look) -->
+              <div class="flex items-center space-x-2 truncate pr-2">
+                <span class="text-sm font-semibold text-slate-800 truncate">
+                  {{ cat.name }}
+                </span>
+                <!-- Badge for protected categories -->
+                <span
+                  *ngIf="cat.isDelete === false"
+                  class="text-[10px] bg-slate-200 text-slate-600 px-1.5 py-0.5 rounded font-medium"
+                  >Protected</span
+                >
+              </div>
+
+              <!-- Action Buttons (Visible only if isDelete is true or undefined/not false) -->
               <div
+                *ngIf="cat.isDelete !== false"
                 class="flex space-x-3 text-xs opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
               >
                 <button

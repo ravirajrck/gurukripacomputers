@@ -10,8 +10,13 @@ import {
   getDoc,
   getDocs,
   setDoc,
+  query,
+  limit,
+  orderBy,
+  where,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -122,7 +127,6 @@ export class DataService {
   }
 
   // ====== SERVICES & INQUIRIES ======
-  
   async getServices(): Promise<any[]> {
     const servicesRef = collection(this.firestore, 'services');
     const snapshot = await getDocs(servicesRef);
@@ -133,10 +137,10 @@ export class DataService {
     const promises = servicesArray.map(async (service) => {
       const serviceDocRef = doc(this.firestore, `services/${service.id}`);
       const { id, ...dataToSave } = service;
-      
+
       return setDoc(serviceDocRef, {
         ...dataToSave,
-        createdAt: new Date()
+        createdAt: new Date(),
       });
     });
 
@@ -148,11 +152,9 @@ export class DataService {
     const inquiriesRef = collection(this.firestore, 'serviceInquiries');
     return addDoc(inquiriesRef, {
       ...inquiryData,
-      createdAt: new Date()
+      createdAt: new Date(),
     });
   }
-
-  // ====== SERVICE REQUESTS / INQUIRIES MANAGEMENT ======
 
   getServiceRequests(): Observable<any[]> {
     const inquiriesRef = collection(this.firestore, 'serviceInquiries');
@@ -167,5 +169,42 @@ export class DataService {
   deleteServiceRequest(requestId: string) {
     const requestDocRef = doc(this.firestore, `serviceInquiries/${requestId}`);
     return deleteDoc(requestDocRef);
+  }
+
+  getFeaturedProducts(categoryId: string): Observable<any[]> {
+    const productsRef = collection(this.firestore, 'products');
+    const q = query(
+      productsRef,
+      where('categoryId', '==', categoryId),
+      limit(6),
+    );
+
+    return (collectionData(q, { idField: 'id' }) as Observable<any[]>).pipe(
+      map((products) => products || []),
+      catchError((error) => {
+        console.error('Error fetching featured products:', error);
+        return of([]);
+      }),
+    );
+  }
+
+  // ====== POPULAR PRODUCTS (Using Category ID) ======
+  getPopularProducts(categoryId: string): Observable<any[]> {
+    const productsRef = collection(this.firestore, 'products');
+
+    // Yahan 'categoryId' field ke sath '==' karke us ID se match karenge
+    const q = query(
+      productsRef,
+      where('categoryId', '==', categoryId),
+      limit(6),
+    );
+
+    return (collectionData(q, { idField: 'id' }) as Observable<any[]>).pipe(
+      map((products) => products || []),
+      catchError((error) => {
+        console.error('Error fetching popular products:', error);
+        return of([]);
+      }),
+    );
   }
 }

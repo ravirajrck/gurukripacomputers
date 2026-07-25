@@ -1,46 +1,58 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-// 🔥 Firestore dependencies import kiya
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
-import { FooterComponent } from '../../../core/components/footer/footer.component';
-import { Router } from '@angular/router';
-import { NavbarComponent } from '../../../core/components/navbar/navbar.component';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from '../../../core/services/data.service';
 import { NoDataComponent } from '../../../core/components/shared/no-data/no-data.component';
 import { ProductCardComponent } from '../../../core/components/shared/product-card/product-card.component';
 import { ToastrService } from 'ngx-toastr';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-customer-store',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    FooterComponent,
-    NavbarComponent,
-    NoDataComponent,
-    ProductCardComponent,
-  ], // 👈 NgModel error nahi aayegi
+  imports: [CommonModule, FormsModule, NoDataComponent, ProductCardComponent],
   templateUrl: './customer-store.component.html',
   styleUrls: ['./customer-store.component.css'],
 })
-export class CustomerStoreComponent implements OnInit {
-  // Data Array Elements
+export class CustomerStoreComponent implements OnInit, OnDestroy {
+  // Data Arrays
   productsList: any[] = [];
   categoriesList: any[] = [];
   savedItems: any[] = [];
+
   // Filtering & Loader States
   searchQuery: string = '';
   selectedCategory: string = 'all';
-  isLoading: boolean = true; // ⚡ Shimmer control variable
+  isLoading: boolean = true;
+  
+  // Category Popup Dropdown State
+  isCategoryDropdownOpen: boolean = false;
+
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private toastr = inject(ToastrService);
+  private dataService = inject(DataService);
+  private destroy$ = new Subject<void>();
+
   constructor(private firestore: Firestore) {}
 
   ngOnInit(): void {
     this.loadCategoriesFromFirestore();
     this.loadProductsFromFirestore();
+
+    // ⚡ URL se Query Params (category, featured, popular) ko turant catch karein
+    this.route.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((params) => {
+        const catParam = params['category'];
+        if (catParam) {
+          this.selectedCategory = catParam;
+        } else {
+          this.selectedCategory = 'all';
+        }
+      });
   }
 
   // Firestore: Load Categories
@@ -54,17 +66,13 @@ export class CustomerStoreComponent implements OnInit {
     });
   }
 
-  // CustomerStoreComponent ke andar
-
-  // Jab products load ho jayein
+  // Firestore: Load Products
   loadProductsFromFirestore() {
     const productsCollection = collection(this.firestore, 'products');
     collectionData(productsCollection, { idField: 'id' }).subscribe({
       next: (res: any[]) => {
         this.productsList = res;
         this.isLoading = false;
-
-        // Yahan call karein taki saved items update ho jayein
         this.updateSavedList();
       },
       error: (err) => {
@@ -81,19 +89,51 @@ export class CustomerStoreComponent implements OnInit {
     );
   }
 
-  // ⚡ Live Filter Core Logic
+  // Helper method to display selected category name on the toggle button
+  getSelectedCategoryName(): string {
+    if (this.selectedCategory === 'all') return 'All Categories';
+    if (this.selectedCategory === 'featured') return 'Featured Products';
+    if (this.selectedCategory === 'popular') return 'Popular Products';
+    
+    const found = this.categoriesList.find(c => c.id === this.selectedCategory);
+    return found ? found.name : 'Select Category';
+  }
+
+  // Close dropdown when clicking outside
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.relative')) {
+      this.isCategoryDropdownOpen = false;
+    }
+  }
+
+  // ⚡ Live Filter Logic (Category ID & Special Flags Match)
   get filteredProducts() {
     let output = this.productsList;
 
-    // 1. Category Filter Toggling
-    if (this.selectedCategory !== 'all') {
-      output = output.filter(
-        (prod) => prod.categoryId === this.selectedCategory,
-      );
+    // 1. Category / Type Filter Toggling
+    if (this.selectedCategory && this.selectedCategory !== 'all') {
+      if (this.selectedCategory === 'featured') {
+        output = output.filter(
+          (prod) => prod.isFeatured === true || prod.featured === true,
+        );
+      } else if (this.selectedCategory === 'popular') {
+        output = output.filter(
+          (prod) => prod.isPopular === true || prod.popular === true,
+        );
+      } else {
+        // Yahan product ke 'categoryId' ko URL se aayi hui 'selectedCategory' (ID) se match kar rahe hain
+        output = output.filter(
+          (prod) =>
+            String(prod.categoryId).trim() ===
+            String(this.selectedCategory).trim(),
+        );
+      }
     }
 
     // 2. Realtime Keyboard Input Search
-    if (this.searchQuery.trim()) {
+    if (this.searchQuery && this.searchQuery.trim()) {
       const query = this.searchQuery.toLowerCase().trim();
       output = output.filter(
         (prod) =>
@@ -107,7 +147,7 @@ export class CustomerStoreComponent implements OnInit {
 
   // WhatsApp Checkout Action Link
   onOrderNow(product: any) {
-    const currentUrl = window.location.href + '/product/' + product.id;
+    const currentUrl = window.location.origin + '/store/product/' + product.id;
     const textMessage = `Hello! I want to order this product:
 *🔗 Product Link:*
 ${currentUrl}
@@ -121,14 +161,14 @@ ${currentUrl}
 ${product.description}
 
 *🖼️ Images:*
-${product.images.map((img: any, i: number) => (img.url ? `Image ${i + 1}: ${img.url}` : '')).join('\n')}
+${product.images?.map((img: any, i: number) => (img.url ? `Image ${i + 1}: ${img.url}` : '')).join('\n') || ''}
 
 Please let me know about the availability!`;
-    const whatsappUrl = `https://wa.me/919644692189?text=${encodeURIComponent(textMessage)}`; // 👈 XXXXXXXXXX ki jagah apna link phone number daal dena
+    const whatsappUrl = `https://wa.me/919644692189?text=${encodeURIComponent(textMessage)}`;
     window.open(whatsappUrl, '_blank');
   }
 
-  // Navigate karne ka function
+  // Navigate to Product Details
   viewProduct(productId: string) {
     this.router.navigate(['/store/product', productId], {
       queryParams: { type: 'store' },
@@ -136,18 +176,14 @@ Please let me know about the availability!`;
   }
 
   onImageError(event: any) {
-    // अगर इमेज लोड नहीं हो पाती, तो उसे 'noimage.png' से रिप्लेस कर दें
     event.target.src = 'noimage.png';
   }
 
-  private dataService = inject(DataService); // DataService inject kiya
-
   // Save/Toggle Logic
   toggleSaved(prod: any, event: Event) {
-    event.stopPropagation(); // Parent card click na ho
+    event.stopPropagation();
     const isSaved: any = this.dataService.toggleSavedLocal(prod);
 
-    // Toast Notification logic
     if (isSaved) {
       this.toastr.success('Product saved successfully!', 'Success');
     } else {
@@ -155,8 +191,14 @@ Please let me know about the availability!`;
     }
   }
 
-  // Check karne ke liye ki product saved hai ya nahi
+  // Check if product is saved
   isSaved(productId: string): boolean {
     return this.dataService.isProductSaved(productId);
+  }
+
+  // Cleanup on destroy
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -10,7 +10,7 @@
         class="w-10 h-10 rounded-full border border-slate-300 flex items-center justify-center group-hover:bg-[#FF7620]/10 group-hover:border-[#FF7620] transition-all shrink-0 relative"
       >
         <div class="absolute inset-0 flex items-center justify-center pb-0">
-        <i class="fa-solid fa-arrow-left text-sm"></i>
+          <i class="fa-solid fa-arrow-left text-sm"></i>
         </div>
       </div>
       <span class="font-bold tracking-widest text-sm"
@@ -89,31 +89,7 @@
       <div
         class="bg-white border border-slate-100 p-8 rounded-3xl shadow-sm relative overflow-hidden"
       >
-        <!-- Stock Status Badge (In Stock ya Out of Stock) -->
-        <div class="mb-4">
-          <!-- Jab Product In Stock ho -->
-          <span
-            *ngIf="product.inStock !== false"
-            class="bg-emerald-50 text-emerald-600 font-bold text-xs uppercase px-3 py-1.5 rounded-lg tracking-wider border border-emerald-200 inline-flex items-center gap-1.5"
-          >
-            <span
-              class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"
-            ></span>
-            In Stock
-          </span>
-
-          <!-- Jab Product Out of Stock ho -->
-          <span
-            *ngIf="product.inStock === false"
-            class="bg-orange-100 text-orange-600 font-bold text-xs uppercase px-3 py-1.5 rounded-lg tracking-wider border border-orange-200 inline-flex items-center gap-1.5"
-          >
-            <span class="w-2 h-2 rounded-full bg-orange-500"></span>
-            Currently Out of Stock
-          </span>
-        </div>
-        <h1
-          class="text-2xl font-semibold text-slate-900 uppercase tracking-tighter mb-4"
-        >
+        <h1 class="text-2xl font-normal text-slate-900 tracking-tighter mb-4">
           {{ product.name }}
         </h1>
 
@@ -142,6 +118,29 @@
               style="text-decoration: line-through !important"
             ></i>
             <span class="ms-1">{{ product.originalPrice }}</span>
+          </span>
+        </div>
+
+        <!-- Stock Status Badge (In Stock ya Out of Stock) -->
+        <div class="mb-4 mt-4">
+          <!-- Jab Product In Stock ho -->
+          <span
+            *ngIf="product.inStock !== false"
+            class="bg-emerald-50 text-emerald-600 font-bold text-xs uppercase px-3 py-1.5 rounded-lg tracking-wider border border-emerald-200 inline-flex items-center gap-1.5"
+          >
+            <span
+              class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"
+            ></span>
+            In Stock
+          </span>
+
+          <!-- Jab Product Out of Stock ho -->
+          <span
+            *ngIf="product.inStock === false"
+            class="bg-orange-100 text-orange-600 font-bold text-xs uppercase px-3 py-1.5 rounded-lg tracking-wider border border-orange-200 inline-flex items-center gap-1.5"
+          >
+            <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+            Currently Out of Stock
           </span>
         </div>
 
@@ -205,12 +204,12 @@
               </svg>
             </button>
 
-        <button
-  (click)="shareProduct()"
-  class="py-4 bg-white border border-slate-200 text-slate-600 rounded-xl hover:border-[#FF7620] hover:text-[#FF7620] transition-all flex items-center justify-center cursor-pointer overflow-hidden"
->
-<i class="fa-regular fa-share-from-square text-xl"></i>
-</button>
+            <button
+              (click)="shareProduct()"
+              class="py-4 bg-white border border-slate-200 text-slate-600 rounded-xl hover:border-[#FF7620] hover:text-[#FF7620] transition-all flex items-center justify-center cursor-pointer overflow-hidden"
+            >
+              <i class="fa-regular fa-share-from-square text-xl"></i>
+            </button>
           </div>
         </div>
 
