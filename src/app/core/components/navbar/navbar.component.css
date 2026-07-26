@@ -4,3 +4,12 @@
   border-bottom: 2px solid #e5ff00;
   font-weight: bold;
 }
+
+.active-tab {
+  color: #ff7620 !important;
+}
+
+.active-tab svg {
+  transform: scale(1.1);
+  transition: all;
+}

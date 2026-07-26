@@ -39,7 +39,9 @@
     <div class="mt-6 pt-4 border-t border-slate-100 flex flex-col space-y-0.5">
       <!-- Home -->
       <a
-        routerLink="/store/home"
+        routerLink=""
+        routerLinkActive="active-tab"
+        [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
         class="flex items-center gap-3 text-s font-semibold text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
       >
@@ -63,6 +65,8 @@
       <a
         *ngIf="isLoggedIn$ | async"
         routerLink="/admin/dashboard"
+        routerLinkActive="active-tab"
+        [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
         class="flex items-center gap-3 text-s font-semibold text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
       >
@@ -85,6 +89,8 @@
       <!-- Store -->
       <a
         routerLink="/store"
+        routerLinkActive="active-tab"
+        [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
         class="flex items-center gap-3 text-s font-semibold text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
       >
@@ -106,7 +112,9 @@
 
       <!-- Services (Added right after Store) -->
       <a
-        routerLink="/store/services"
+        routerLink="/services"
+        routerLinkActive="active-tab"
+        [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
         class="flex items-center gap-3 text-s font-semibold text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
       >
@@ -135,6 +143,8 @@
       <!-- Saved -->
       <a
         routerLink="/store/saved"
+        routerLinkActive="active-tab"
+        [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
         class="flex items-center gap-3 text-s font-semibold text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
       >
@@ -180,28 +190,36 @@
     <!-- Policy Links -->
     <div class="mt-6 pt-4 border-t border-slate-100 flex flex-col space-y-0.5">
       <a
-        routerLink="/store/about"
+        routerLink="/about"
+        routerLinkActive="active-tab"
+        [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
         class="flex items-center justify-between text-s text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
       >
         About Us
       </a>
       <a
-        routerLink="/store/privacy"
+        routerLink="/privacy"
+        routerLinkActive="active-tab"
+        [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
         class="flex items-center justify-between text-s text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
       >
         Privacy Policy
       </a>
       <a
-        routerLink="/store/terms"
+        routerLink="/terms"
+        routerLinkActive="active-tab"
+        [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
         class="flex items-center justify-between text-s text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
       >
         Terms & Conditions
       </a>
       <a
-        routerLink="/store/contact"
+        routerLink="/contact"
+        routerLinkActive="active-tab"
+        [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
         class="flex items-center justify-between text-s text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
       >

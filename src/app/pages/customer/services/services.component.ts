@@ -157,24 +157,25 @@ export class ServicesComponent {
         'Request Sent',
       );
 
-      // 2. Generate WhatsApp Message URL
-      // Apna WhatsApp number yahan dalein (Country code ke sath, bina '+' ke. Jaise: 919876543210)
+      // 2. Generate Clean Formatted WhatsApp Message with Proper Encoding
       const adminWhatsAppNumber = this?.siteData?.phone;
 
-      const whatsappMessage =
-        `*New Service Inquiry Booking!*%0A%0A` +
-        `*Service:* ${payload.serviceTitle}%0A` +
-        `*Name:* ${formValues.name}%0A` +
-        `*Phone:* ${formValues.phone}%0A` +
-        `*Email:* ${formValues.email || 'N/A'}%0A` +
+      // Raw message string
+      const rawMessage =
+        `*New Service Inquiry Booking!*\n\n` +
+        `*Service:* ${payload.serviceTitle}\n` +
+        `*Name:* ${formValues.name}\n` +
+        `*Phone:* ${formValues.phone}\n` +
+        `*Email:* ${formValues.email || 'N/A'}\n` +
         `*Requirement:* ${formValues.message}`;
 
-      const whatsappUrl = `https://wa.me/${adminWhatsAppNumber}?text=${whatsappMessage}`;
+      // encodeURIComponent ensure karega ki koi bhi data/text beech me chute nahi
+      const encodedMessage = encodeURIComponent(rawMessage);
+      const whatsappUrl = `https://wa.me/${adminWhatsAppNumber}?text=${encodedMessage}`;
 
       // 3. Close Modal and Open WhatsApp in new tab
       this.closeModal();
 
-      // Thoda delay dekar WhatsApp open karein taaki toastr message ache se dikhe
       setTimeout(() => {
         window.open(whatsappUrl, '_blank');
       }, 1000);

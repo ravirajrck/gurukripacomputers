@@ -233,16 +233,16 @@
         class="bg-white/90 backdrop-blur-md p-4 sm:p-6 rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 flex flex-col items-center text-center group hover:border-[#FF7620] hover:-translate-y-1.5 transition-all cursor-pointer"
       >
         <div
-          class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-orange-50 flex items-center justify-center text-2xl sm:text-3xl mb-3 group-hover:scale-110 transition-transform"
+          class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-orange-50 flex items-center justify-center text-3xl sm:text-3xl mb-3 group-hover:scale-110 transition-transform"
         >
           {{ cat.icon }}
         </div>
         <span
-          class="font-bold text-xs sm:text-sm text-slate-800 group-hover:text-[#FF7620] transition-colors"
+          class="font-bold text-lg sm:text-sm text-slate-800 group-hover:text-[#FF7620] transition-colors"
         >
           {{ cat.name }}
         </span>
-        <span class="text-[10px] text-slate-400 mt-0.5">{{ cat.subtext }}</span>
+        <span class="text-sm sm:text-xs text-slate-400 mt-0.5">{{ cat.subtext }}</span>
       </div>
     </div>
   </section>
@@ -488,169 +488,155 @@
     </div>
   </section> -->
 
-  <!-- BRAND NAMES / LOGOS MARQUEE SECTION (Light Mode & Continuous) -->
-  <section
-    class="py-10 bg-white text-slate-800 overflow-hidden relative border-y border-slate-100 shadow-sm"
-  >
-    <!-- Section Heading -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 mb-6 text-center">
-      <span
-        class="text-xs font-bold text-[#FF7620] uppercase tracking-widest bg-orange-50 px-3 py-1 rounded-full border border-orange-100"
-        >Trusted Brands</span
+<!-- BRAND NAMES / LOGOS MARQUEE SECTION (Light Mode & Continuous) -->
+<section
+  class="py-12 bg-white text-slate-900 overflow-hidden relative border-y border-slate-100 shadow-sm"
+>
+  <!-- Section Heading -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 mb-8 text-center">
+    <span
+      class="text-lg font-bold text-[#FF7620] uppercase tracking-widest px-3.5 py-1.5"
+      >Trusted Brands We Support</span
+    >
+  </div>
+
+  <!-- Marquee Track Wrapper -->
+  <div class="relative w-full overflow-hidden flex whitespace-nowrap group">
+    <!-- Gradient Fade Edges (Light Mode) -->
+    <div
+      class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"
+    ></div>
+    <div
+      class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"
+    ></div>
+
+    <!-- Marquee Content (First Track) -->
+    <div class="flex animate-marquee items-center gap-10 py-3">
+      <!-- Brand 1 -->
+      <div
+        class="flex items-center px-8 py-4 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-sm min-w-[200px] justify-center hover:border-[#FF7620] hover:bg-orange-50/30 transition-all cursor-pointer"
       >
-    </div>
-
-    <!-- Marquee Track Wrapper -->
-    <div class="relative w-full overflow-hidden flex whitespace-nowrap group">
-      <!-- Gradient Fade Edges (Light Mode) -->
-      <div
-        class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"
-      ></div>
-      <div
-        class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"
-      ></div>
-
-      <!-- Marquee Content (First Track) -->
-      <div class="flex animate-marquee items-center gap-8 py-2">
-        <!-- Brand 1 -->
-        <div
-          class="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-sm min-w-[160px] justify-center hover:border-[#FF7620] transition-colors"
+        <span class="font-black text-lg sm:text-xl tracking-wider text-slate-800 hover:text-[#FF7620] transition-colors"
+          >CP PLUS</span
         >
-          <span class="text-xl">🛡️</span>
-          <span class="font-bold text-sm tracking-wider text-slate-700"
-            >CP PLUS</span
-          >
-        </div>
-
-        <!-- Brand 2 -->
-        <div
-          class="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-sm min-w-[160px] justify-center hover:border-[#FF7620] transition-colors"
-        >
-          <span class="text-xl">📹</span>
-          <span class="font-bold text-sm tracking-wider text-slate-700"
-            >HIKVISION</span
-          >
-        </div>
-
-        <!-- Brand 3 -->
-        <div
-          class="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-sm min-w-[160px] justify-center hover:border-[#FF7620] transition-colors"
-        >
-          <span class="text-xl">💻</span>
-          <span class="font-bold text-sm tracking-wider text-slate-700"
-            >LENOVO</span
-          >
-        </div>
-
-        <!-- Brand 4 -->
-        <div
-          class="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-sm min-w-[160px] justify-center hover:border-[#FF7620] transition-colors"
-        >
-          <span class="text-xl">⚡</span>
-          <span class="font-bold text-sm tracking-wider text-slate-700"
-            >DELL</span
-          >
-        </div>
-
-        <!-- Brand 5 -->
-        <div
-          class="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-sm min-w-[160px] justify-center hover:border-[#FF7620] transition-colors"
-        >
-          <span class="text-xl">🖨️</span>
-          <span class="font-bold text-sm tracking-wider text-slate-700"
-            >HP</span
-          >
-        </div>
-
-        <!-- Brand 6 -->
-        <div
-          class="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-sm min-w-[160px] justify-center hover:border-[#FF7620] transition-colors"
-        >
-          <span class="text-xl">🌐</span>
-          <span class="font-bold text-sm tracking-wider text-slate-700"
-            >TP-LINK</span
-          >
-        </div>
-
-        <!-- Brand 7 -->
-        <div
-          class="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-sm min-w-[160px] justify-center hover:border-[#FF7620] transition-colors"
-        >
-          <span class="text-xl">🔌</span>
-          <span class="font-bold text-sm tracking-wider text-slate-700"
-            >DAHUA</span
-          >
-        </div>
       </div>
 
-      <!-- Duplicate Track for Seamless Infinite Continuous Loop -->
+      <!-- Brand 2 -->
       <div
-        class="flex animate-marquee items-center gap-8 py-2 ml-8"
-        aria-hidden="true"
+        class="flex items-center px-8 py-4 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-sm min-w-[200px] justify-center hover:border-[#FF7620] hover:bg-orange-50/30 transition-all cursor-pointer"
       >
-        <div
-          class="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-sm min-w-[160px] justify-center hover:border-[#FF7620] transition-colors"
+        <span class="font-black text-lg sm:text-xl tracking-wider text-slate-800 hover:text-[#FF7620] transition-colors"
+          >HIKVISION</span
         >
-          <span class="text-xl">🛡️</span>
-          <span class="font-bold text-sm tracking-wider text-slate-700"
-            >CP PLUS</span
-          >
-        </div>
+      </div>
 
-        <div
-          class="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-sm min-w-[160px] justify-center hover:border-[#FF7620] transition-colors"
+      <!-- Brand 3 -->
+      <div
+        class="flex items-center px-8 py-4 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-sm min-w-[200px] justify-center hover:border-[#FF7620] hover:bg-orange-50/30 transition-all cursor-pointer"
+      >
+        <span class="font-black text-lg sm:text-xl tracking-wider text-slate-800 hover:text-[#FF7620] transition-colors"
+          >LENOVO</span
         >
-          <span class="text-xl">📹</span>
-          <span class="font-bold text-sm tracking-wider text-slate-700"
-            >HIKVISION</span
-          >
-        </div>
+      </div>
 
-        <div
-          class="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-sm min-w-[160px] justify-center hover:border-[#FF7620] transition-colors"
+      <!-- Brand 4 -->
+      <div
+        class="flex items-center px-8 py-4 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-sm min-w-[200px] justify-center hover:border-[#FF7620] hover:bg-orange-50/30 transition-all cursor-pointer"
+      >
+        <span class="font-black text-lg sm:text-xl tracking-wider text-slate-800 hover:text-[#FF7620] transition-colors"
+          >DELL</span
         >
-          <span class="text-xl">💻</span>
-          <span class="font-bold text-sm tracking-wider text-slate-700"
-            >LENOVO</span
-          >
-        </div>
+      </div>
 
-        <div
-          class="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-sm min-w-[160px] justify-center hover:border-[#FF7620] transition-colors"
+      <!-- Brand 5 -->
+      <div
+        class="flex items-center px-8 py-4 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-sm min-w-[200px] justify-center hover:border-[#FF7620] hover:bg-orange-50/30 transition-all cursor-pointer"
+      >
+        <span class="font-black text-lg sm:text-xl tracking-wider text-slate-800 hover:text-[#FF7620] transition-colors"
+          >HP</span
         >
-          <span class="text-xl">⚡</span>
-          <span class="font-bold text-sm tracking-wider text-slate-700"
-            >DELL</span
-          >
-        </div>
+      </div>
 
-        <div
-          class="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-sm min-w-[160px] justify-center hover:border-[#FF7620] transition-colors"
+      <!-- Brand 6 -->
+      <div
+        class="flex items-center px-8 py-4 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-sm min-w-[200px] justify-center hover:border-[#FF7620] hover:bg-orange-50/30 transition-all cursor-pointer"
+      >
+        <span class="font-black text-lg sm:text-xl tracking-wider text-slate-800 hover:text-[#FF7620] transition-colors"
+          >TP-LINK</span
         >
-          <span class="text-xl">🖨️</span>
-          <span class="font-bold text-sm tracking-wider text-slate-700"
-            >HP</span
-          >
-        </div>
+      </div>
 
-        <div
-          class="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-sm min-w-[160px] justify-center hover:border-[#FF7620] transition-colors"
+      <!-- Brand 7 -->
+      <div
+        class="flex items-center px-8 py-4 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-sm min-w-[200px] justify-center hover:border-[#FF7620] hover:bg-orange-50/30 transition-all cursor-pointer"
+      >
+        <span class="font-black text-lg sm:text-xl tracking-wider text-slate-800 hover:text-[#FF7620] transition-colors"
+          >DAHUA</span
         >
-          <span class="text-xl">🌐</span>
-          <span class="font-bold text-sm tracking-wider text-slate-700"
-            >TP-LINK</span
-          >
-        </div>
-
-        <div
-          class="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-sm min-w-[160px] justify-center hover:border-[#FF7620] transition-colors"
-        >
-          <span class="text-xl">🔌</span>
-          <span class="font-bold text-sm tracking-wider text-slate-700"
-            >DAHUA</span
-          >
-        </div>
       </div>
     </div>
-  </section>
+
+    <!-- Duplicate Track for Seamless Infinite Continuous Loop -->
+    <div
+      class="flex animate-marquee items-center gap-10 py-3 ml-10"
+      aria-hidden="true"
+    >
+      <div
+        class="flex items-center px-8 py-4 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-sm min-w-[200px] justify-center hover:border-[#FF7620] hover:bg-orange-50/30 transition-all cursor-pointer"
+      >
+        <span class="font-black text-lg sm:text-xl tracking-wider text-slate-800 hover:text-[#FF7620] transition-colors"
+          >CP PLUS</span
+        >
+      </div>
+
+      <div
+        class="flex items-center px-8 py-4 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-sm min-w-[200px] justify-center hover:border-[#FF7620] hover:bg-orange-50/30 transition-all cursor-pointer"
+      >
+        <span class="font-black text-lg sm:text-xl tracking-wider text-slate-800 hover:text-[#FF7620] transition-colors"
+          >HIKVISION</span
+        >
+      </div>
+
+      <div
+        class="flex items-center px-8 py-4 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-sm min-w-[200px] justify-center hover:border-[#FF7620] hover:bg-orange-50/30 transition-all cursor-pointer"
+      >
+        <span class="font-black text-lg sm:text-xl tracking-wider text-slate-800 hover:text-[#FF7620] transition-colors"
+          >LENOVO</span
+        >
+      </div>
+
+      <div
+        class="flex items-center px-8 py-4 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-sm min-w-[200px] justify-center hover:border-[#FF7620] hover:bg-orange-50/30 transition-all cursor-pointer"
+      >
+        <span class="font-black text-lg sm:text-xl tracking-wider text-slate-800 hover:text-[#FF7620] transition-colors"
+          >DELL</span
+        >
+      </div>
+
+      <div
+        class="flex items-center px-8 py-4 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-sm min-w-[200px] justify-center hover:border-[#FF7620] hover:bg-orange-50/30 transition-all cursor-pointer"
+      >
+        <span class="font-black text-lg sm:text-xl tracking-wider text-slate-800 hover:text-[#FF7620] transition-colors"
+          >HP</span
+        >
+      </div>
+
+      <div
+        class="flex items-center px-8 py-4 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-sm min-w-[200px] justify-center hover:border-[#FF7620] hover:bg-orange-50/30 transition-all cursor-pointer"
+      >
+        <span class="font-black text-lg sm:text-xl tracking-wider text-slate-800 hover:text-[#FF7620] transition-colors"
+          >TP-LINK</span
+        >
+      </div>
+
+      <div
+        class="flex items-center px-8 py-4 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-sm min-w-[200px] justify-center hover:border-[#FF7620] hover:bg-orange-50/30 transition-all cursor-pointer"
+      >
+        <span class="font-black text-lg sm:text-xl tracking-wider text-slate-800 hover:text-[#FF7620] transition-colors"
+          >DAHUA</span
+        >
+      </div>
+    </div>
+  </div>
+</section>
 </div>

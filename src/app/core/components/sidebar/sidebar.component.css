@@ -15,3 +15,13 @@
 .animate-out {
   animation: slideOut 0.2s ease-in forwards;
 }
+
+.active-tab {
+  color: #FF7620 !important;
+}
+
+.active-tab svg {
+  transform: scale(1.1); 
+  transition: all;
+
+}

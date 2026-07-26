@@ -1,5 +1,5 @@
 <header
-  class="sticky top-0 z-50 bg-white border-b border-orange-100 px-6 md:px-12 py-2 relative"
+  class="sticky top-0 z-50 bg-white border-b border-orange-100 px-6 md:px-12 py-2 "
 >
   <!-- Loading Bar -->
   <div
@@ -14,9 +14,9 @@
   <div class="md:hidden flex items-center p-0 m-0 justify-center">
     <a
       [href]="'tel:' + siteData?.phone"
-      class="text-[14px] text-slate-600 hover:text-[#FF7620] tracking-widest transition-all"
+      class="text-[14px] font-bold text-slate-600 hover:text-[#FF7620] tracking-widest transition-all"
     >
-      Helpline Number {{siteData?.phone}}
+      Helpline Number {{ siteData?.phone }}
     </a>
   </div>
 
@@ -32,7 +32,7 @@
       <div class="flex items-center p-0 m-0">
         <a
           [href]="'tel:' + siteData?.phone"
-          class="text-[14px] text-slate-600 hover:text-[#FF7620] tracking-widest transition-all"
+          class="text-[14px] font-bold text-slate-600 hover:text-[#FF7620] tracking-widest transition-all"
         >
           Helpline Number {{ siteData?.phone }}
         </a>
@@ -41,7 +41,9 @@
       <!-- Row 2: Navigation Links -->
       <div class="flex items-center space-x-6">
         <a
-          routerLink="/store/home"
+          routerLink="/"
+          routerLinkActive="active-tab"
+          [routerLinkActiveOptions]="{ exact: true }"
           routerLinkActive="text-[#FF7620]"
           class="text-s font-semibold uppercase tracking-widest text-slate-600 hover:text-[#FF7620] transition-all"
         >
@@ -50,6 +52,8 @@
         <a
           *ngIf="isLoggedIn$ | async"
           routerLink="/admin/dashboard"
+          routerLinkActive="active-tab"
+          [routerLinkActiveOptions]="{ exact: true }"
           routerLinkActive="text-[#FF7620]"
           class="text-s font-semibold uppercase tracking-widest text-slate-600 hover:text-[#FF7620] transition-all"
         >
@@ -58,13 +62,17 @@
 
         <a
           routerLink="/store"
+          routerLinkActive="active-tab"
+          [routerLinkActiveOptions]="{ exact: true }"
           routerLinkActive="text-[#FF7620]"
           class="text-s font-semibold uppercase tracking-widest text-slate-600 hover:text-[#FF7620] transition-all"
         >
           Store
         </a>
         <a
-          routerLink="/store/services"
+          routerLink="/services"
+          routerLinkActive="active-tab"
+          [routerLinkActiveOptions]="{ exact: true }"
           routerLinkActive="text-[#FF7620]"
           class="text-s font-semibold uppercase tracking-widest text-slate-600 hover:text-[#FF7620] transition-all"
         >
@@ -73,7 +81,9 @@
 
         <a
           routerLink="/store/saved"
-          class="flex items-center font-semibold space-x-2 text-s font-bold uppercase tracking-widest text-[#FF7620] bg-orange-50 border border-orange-200 px-4 py-2 rounded-full hover:bg-orange-100 transition-all"
+          routerLinkActive="active-tab"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="flex items-center font-semibold space-x-2 text-s  uppercase tracking-widest text-[#FF7620] bg-orange-50 border border-orange-200 px-4 py-2 rounded-full hover:bg-orange-100 transition-all"
         >
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
             <path
@@ -86,7 +96,7 @@
         <a
           *ngIf="isLoggedIn$ | async"
           (click)="onLogout()"
-          class="flex items-center font-semibold space-x-2 text-s font-bold uppercase tracking-widest text-[#FF7620] bg-orange-50 border border-orange-200 px-4 py-2 rounded-full hover:bg-orange-100 transition-all cursor-pointer"
+          class="flex items-center font-semibold space-x-2 text-s  uppercase tracking-widest text-[#FF7620] bg-orange-50 border border-orange-200 px-4 py-2 rounded-full hover:bg-orange-100 transition-all cursor-pointer"
         >
           <svg
             class="w-5 h-5"
@@ -103,11 +113,10 @@
           </svg>
           <span>Logout</span>
         </a>
-
         <a
-          *ngIf="!(isLoggedIn$ | async)"
+          *ngIf="!(isLoggedIn$ | async) "
           routerLink="/admin-login"
-          class="text-s font-bold uppercase font-semibold tracking-widest text-slate-600 hover:text-[#FF7620] transition-all"
+          class="text-s  uppercase font-semibold tracking-widest text-slate-600 hover:text-[#FF7620] transition-all"
         >
           Login
         </a>

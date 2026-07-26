@@ -26,15 +26,18 @@ export const routes: Routes = [
       { path: '', component: CustomerStoreComponent },
       { path: 'product/:id', component: ProductDetailComponent },
       { path: 'saved', component: SavedProductsComponent },
-      { path: 'home', component: LandingPageComponent },
-      { path: 'about', component: AboutComponent },
-      { path: 'privacy', component: PrivacyComponent },
-      { path: 'terms', component: TermsComponent },
-      { path: 'contact', component: ContactComponent },
-      { path: 'services', component: ServicesComponent },
     ],
   },
 
+  {
+    path: '',
+    component: LandingPageComponent,
+  },
+  { path: 'about', component: AboutComponent },
+  { path: 'privacy', component: PrivacyComponent },
+  { path: 'terms', component: TermsComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'services', component: ServicesComponent },
   // Suggestion
   {
     path: 'admin',
@@ -47,8 +50,6 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
-
-  { path: '', redirectTo: 'store', pathMatch: 'full' }, // Default store load hoga
   {
     path: 'admin-login',
     component: LoginComponent,

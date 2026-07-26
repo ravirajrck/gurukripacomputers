@@ -4,8 +4,9 @@
 >
   <!-- Home -->
   <a
-    routerLink="/store/home"
+    routerLink="/"
     routerLinkActive="active-tab"
+     [routerLinkActiveOptions]="{ exact: true }"
     class="flex flex-col items-center gap-1 text-slate-400 hover:text-[#FF7620] transition-all duration-300 p-2 cursor-pointer active:scale-95 group"
   >
     <svg
@@ -54,8 +55,9 @@
 
   <!-- Services (Added in Mobile Nav) -->
   <a
-    routerLink="/store/services"
+    routerLink="/services"
     routerLinkActive="active-tab"
+     [routerLinkActiveOptions]="{ exact: true }"
     class="flex flex-col items-center gap-1 text-slate-400 hover:text-[#FF7620] transition-all duration-300 p-2 cursor-pointer active:scale-95 group"
   >
     <svg
@@ -86,6 +88,7 @@
   <a
     routerLink="/store/saved"
     routerLinkActive="active-tab"
+     [routerLinkActiveOptions]="{ exact: true }"
     class="flex flex-col items-center gap-1 text-slate-400 hover:text-[#FF7620] transition-all duration-300 p-2 cursor-pointer active:scale-95 group"
   >
     <svg
@@ -132,7 +135,7 @@
       <ul class="text-slate-400 space-y-2">
         <li>
           <a
-            routerLink="/store/home"
+            routerLink="/"
             class="hover:text-[#FF7620] transition-colors cursor-pointer"
             >Home</a
           >
@@ -147,7 +150,7 @@
         <!-- Services (Added in Quick Links) -->
         <li>
           <a
-            routerLink="/store/services"
+            routerLink="/services"
             class="hover:text-[#FF7620] transition-colors cursor-pointer"
             >Services</a
           >
@@ -171,7 +174,7 @@
       <ul class="text-slate-400 space-y-3">
         <li>
           <a
-            routerLink="/store/about"
+            routerLink="/about"
             class="hover:text-[#FF7620] hover:translate-x-1 transition-all inline-block cursor-pointer"
           >
             About Us
@@ -179,7 +182,7 @@
         </li>
         <li>
           <a
-            routerLink="/store/privacy"
+            routerLink="/privacy"
             class="hover:text-[#FF7620] hover:translate-x-1 transition-all inline-block cursor-pointer"
           >
             Privacy Policy
@@ -187,7 +190,7 @@
         </li>
         <li>
           <a
-            routerLink="/store/terms"
+            routerLink="/terms"
             class="hover:text-[#FF7620] hover:translate-x-1 transition-all inline-block cursor-pointer"
           >
             Terms & Conditions
@@ -195,7 +198,7 @@
         </li>
         <li>
           <a
-            routerLink="/store/contact"
+            routerLink="/contact"
             class="hover:text-[#FF7620] hover:translate-x-1 transition-all inline-block cursor-pointer"
           >
             Contact Us
