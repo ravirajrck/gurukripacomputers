@@ -166,6 +166,8 @@ export class ServicesComponent {
         `*Service:* ${payload.serviceTitle}\n` +
         `*Name:* ${formValues.name}\n` +
         `*Phone:* ${formValues.phone}\n` +
+         `*Address:* ${formValues.address}\n` +
+        `*Date:* ${formValues.serviceDate}\n` +
         `*Email:* ${formValues.email || 'N/A'}\n` +
         `*Requirement:* ${formValues.message}`;
 
