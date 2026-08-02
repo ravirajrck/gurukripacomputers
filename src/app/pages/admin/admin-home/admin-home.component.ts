@@ -1,14 +1,10 @@
-import { Component, inject } from '@angular/core';
-import { Router, RouterModule } from "@angular/router";
-import { AuthService } from '../../../core/services/auth.service';
-import { NavbarComponent } from "../../../core/components/navbar/navbar.component";
+import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin-home',
-  imports: [RouterModule, NavbarComponent],
+  imports: [RouterModule],
   templateUrl: './admin-home.component.html',
-  styleUrl: './admin-home.component.css'
+  styleUrl: './admin-home.component.css',
 })
-export class AdminHomeComponent {
-
-}
+export class AdminHomeComponent {}

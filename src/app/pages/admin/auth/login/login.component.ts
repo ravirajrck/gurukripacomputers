@@ -12,8 +12,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  email = 'rck@gmail.com';
-  password = '123123';
+  email = 'deep@gmail.com';
+  password = 'rck@96446gfx';
   isLoading: boolean = false;
   private authService = inject(AuthService);
   private toastr = inject(ToastrService);

@@ -8,7 +8,7 @@ import { ProductDetailComponent } from './pages/customer/product-detail/product-
 import { HomeComponent } from './pages/customer/home/home.component';
 import { AdminHomeComponent } from './pages/admin/admin-home/admin-home.component';
 import { SavedProductsComponent } from './pages/customer/saved-products/saved-products.component';
-import { AddProductComponent } from './pages/admin/add-product/add-product.component';
+import { AddProductComponent } from './pages/admin/product-management/add-product/add-product.component';
 import { authGuard } from './core/guards/auth.guard';
 import { guestGuard } from './core/guards/guest.guard';
 import { LandingPageComponent } from './pages/customer/landing-page/landing-page.component';
@@ -17,6 +17,10 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { PrivacyComponent } from './pages/privacy/privacy.component';
 import { TermsComponent } from './pages/terms/terms.component';
 import { ServicesComponent } from './pages/customer/services/services.component';
+import { OrderListComponent } from './pages/admin/order-management/product-list/order-list/order-list.component';
+import { ServiceListComponent } from './pages/admin/service-management/service-list/service-list.component';
+import { CategoriesListComponent } from './pages/admin/category-management/categories-list/categories-list.component';
+import { ProductListComponent } from './pages/admin/product-management/product-list/product-list.component';
 
 export const routes: Routes = [
   {
@@ -44,6 +48,11 @@ export const routes: Routes = [
     canActivate: [authGuard],
     component: AdminHomeComponent,
     children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'products', component: ProductListComponent },
+      { path: 'categories', component: CategoriesListComponent },
+      { path: 'services', component: ServiceListComponent },
+      { path: 'orders', component: OrderListComponent },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'manage-product', component: AddProductComponent },
       { path: 'manage-product/:id', component: AddProductComponent },

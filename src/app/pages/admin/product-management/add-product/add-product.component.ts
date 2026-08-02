@@ -9,7 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Location } from '@angular/common';
-import { DataService } from '../../../core/services/data.service';
+import { DataService } from '../../../../core/services/data.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 

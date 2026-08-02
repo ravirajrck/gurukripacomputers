@@ -1,0 +1,110 @@
+<div
+  class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden"
+>
+  <div
+    class="px-6 py-5 border-b border-slate-100 bg-slate-50/50 flex items-center space-x-6"
+  >
+    <h3 class="text-sm font-semibold text-slate-900 uppercase tracking-widest">
+      Service Requests:
+      <span class="text-[#FF7620] text-lg font-semibold ml-1">{{
+        serviceRequestsList.length
+      }}</span>
+    </h3>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table
+      class="w-full text-left text-sm text-slate-600 table-fixed min-w-[750px]"
+    >
+      <thead>
+        <tr
+          class="border-b border-slate-100 text-xs font-semibold uppercase text-slate-400 tracking-widest bg-slate-50/50"
+        >
+          <th class="py-4 px-4 w-[6%] text-center">No.</th>
+          <th class="py-4 px-6 w-[36%]">Client & Address Details</th>
+          <th class="py-4 px-6 w-[34%]">Service & Date Details</th>
+          <th class="py-4 px-6 w-[14%] text-center">Status</th>
+          <th class="py-4 px-6 w-[10%] text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">
+        <tr
+          *ngFor="let req of serviceRequestsList; let i = index"
+          class="hover:bg-slate-50 transition-colors"
+        >
+          <td class="py-4 px-4 text-center align-top">
+            <span class="font-bold text-slate-500 text-xs font-mono">{{
+              i + 1
+            }}</span>
+          </td>
+          <td class="py-4 px-6 align-top">
+            <p class="font-semibold text-slate-900 text-sm truncate">
+              {{ req.name || req.clientName || "N/A" }}
+            </p>
+            <p class="text-xs text-slate-500 mt-0.5 truncate">
+              📞 {{ req.email || req.phone || "No contact" }}
+            </p>
+            <p
+              class="text-xs text-slate-600 mt-1 truncate bg-slate-100 px-2 py-1 rounded-md inline-block"
+            >
+              📍 {{ req.address || req.location || "No address" }}
+            </p>
+          </td>
+          <td class="py-4 px-6 align-top">
+            <p class="font-semibold text-slate-900 text-sm truncate">
+              {{ req.serviceName || req.title || "General Request" }}
+            </p>
+            <p class="text-xs text-slate-500 mt-0.5 line-clamp-1">
+              💬 {{ req.description || req.message || "No description" }}
+            </p>
+            <p class="text-xs font-medium text-[#FF7620] mt-1">
+              📅 Date:
+              {{
+                (req.serviceDate || req.date | date: "mediumDate") ||
+                  "Not specified"
+              }}
+            </p>
+          </td>
+          <td class="py-4 px-6 text-center align-top">
+            <select
+              [(ngModel)]="req.status"
+              (change)="updateServiceRequestStatus(req)"
+              class="text-xs font-bold px-3 py-1.5 rounded-lg border cursor-pointer outline-none shadow-sm"
+              [ngClass]="{
+                'bg-amber-50 text-amber-700 border-amber-200':
+                  req.status === 'Pending',
+                'bg-blue-50 text-blue-700 border-blue-200':
+                  req.status === 'In Progress',
+                'bg-emerald-50 text-emerald-700 border-emerald-200':
+                  req.status === 'Completed',
+                'bg-rose-50 text-rose-700 border-rose-200':
+                  req.status === 'Cancelled',
+              }"
+            >
+              <option value="Pending">Pending</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </td>
+          <td class="py-4 px-6 text-center align-top">
+            <button
+              (click)="removeServiceRequest(req.id)"
+              class="text-[10px] font-semibold bg-red-50 hover:bg-red-100 text-red-600 px-3 py-2 rounded-lg uppercase cursor-pointer"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="serviceRequestsList.length === 0">
+          <td
+            colspan="5"
+            class="text-center py-10 text-gray-500 text-xs font-mono uppercase"
+          >
+            No service requests found.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

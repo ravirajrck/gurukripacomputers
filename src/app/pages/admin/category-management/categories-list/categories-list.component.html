@@ -1,0 +1,80 @@
+<div
+  class="max-w-3xl mx-auto bg-white border border-slate-200 rounded-2xl shadow-sm p-6 space-y-6"
+>
+  <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+    <h2 class="text-lg font-black text-slate-900 tracking-wider uppercase">
+      Manage Categories
+    </h2>
+  </div>
+
+  <!-- Add/Edit Form -->
+  <form (ngSubmit)="onSaveCategory()" class="space-y-3">
+    <label class="text-sm font-bold text-slate-700 block">Category Name</label>
+    <div class="flex gap-3">
+      <input
+        type="text"
+        [(ngModel)]="newCategoryName"
+        name="catName"
+        placeholder="e.g., Electronics"
+        required
+        class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-[#FF7620]"
+      />
+      <button
+        type="submit"
+        [disabled]="!newCategoryName?.trim()"
+        class="px-6 py-2.5 bg-slate-900 hover:bg-[#FF7620] text-white font-bold rounded-xl text-xs uppercase tracking-wider cursor-pointer disabled:opacity-50"
+      >
+        {{ isEditingCategory ? "Update" : "Add" }}
+      </button>
+    </div>
+    <button
+      type="button"
+      *ngIf="isEditingCategory"
+      (click)="cancelCategoryEdit()"
+      class="text-xs font-medium text-slate-500 hover:text-[#FF7620] block mt-2"
+    >
+      Cancel Editing
+    </button>
+  </form>
+
+  <!-- Categories List -->
+  <div>
+    <h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">
+      Existing Categories ({{ categoriesList.length }})
+    </h4>
+    <div class="space-y-2 max-h-[60vh] overflow-y-auto pr-2">
+      <div
+        *ngFor="let cat of categoriesList"
+        class="flex justify-between items-center bg-slate-50 border border-slate-100 rounded-xl p-3"
+      >
+        <div class="flex items-center space-x-2">
+          <span class="text-sm font-semibold text-slate-800">{{
+            cat.name
+          }}</span>
+          <span
+            *ngIf="cat.isDelete === false"
+            class="text-[10px] bg-slate-200 text-slate-600 px-1.5 py-0.5 rounded font-medium"
+            >Protected</span
+          >
+        </div>
+        <div
+          *ngIf="cat.isDelete !== false"
+          class="flex space-x-3 text-xs font-bold"
+        >
+          <button
+            (click)="editCategory(cat)"
+            class="text-slate-600 hover:text-[#FF7620] cursor-pointer"
+          >
+            Edit
+          </button>
+          <button
+            (click)="removeCategory(cat.id, cat.name)"
+            class="text-red-600 hover:text-red-700 cursor-pointer"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

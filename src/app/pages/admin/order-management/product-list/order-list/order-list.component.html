@@ -1,0 +1,99 @@
+<div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+  <!-- Header bar -->
+  <div class="px-6 py-5 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+    <h3 class="text-sm font-semibold text-slate-900 uppercase tracking-widest">
+      Store Orders: <span class="text-[#FF7620] text-lg font-semibold ml-1">{{ ordersList.length }}</span>
+    </h3>
+  </div>
+
+  <!-- Table Container -->
+  <div class="overflow-x-auto">
+    <table class="w-full text-left text-sm text-slate-600 table-fixed min-w-[950px]">
+      <thead>
+        <tr class="border-b border-slate-100 text-xs font-semibold uppercase text-slate-400 tracking-widest bg-slate-50/50">
+          <th class="py-4 px-4 w-[6%] text-center">No.</th>
+          <th class="py-4 px-6 w-[22%]">Order ID & Customer</th>
+          <th class="py-4 px-6 w-[28%]">Items & Address</th>
+          <th class="py-4 px-6 w-[14%] text-right">Total Amount</th>
+          <th class="py-4 px-6 w-[16%] text-center">Status</th>
+          <th class="py-4 px-6 w-[14%] text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">
+        
+        <!-- Loading State -->
+        <ng-container *ngIf="loadingOrders">
+          <tr *ngFor="let item of [1, 2]" class="animate-pulse">
+            <td colspan="6" class="py-4 px-4 text-center"><div class="h-6 bg-slate-100 rounded w-full"></div></td>
+          </tr>
+        </ng-container>
+
+        <!-- Orders Data Row -->
+        <tr *ngFor="let ord of ordersList; let i = index" class="hover:bg-slate-50 transition-colors">
+          <td class="py-4 px-4 text-center align-top">
+            <span class="font-bold text-slate-500 text-xs font-mono">{{ i + 1 }}</span>
+          </td>
+          
+          <td class="py-4 px-6 align-top">
+            <p class="font-black text-slate-900 text-xs font-mono bg-slate-100 px-2 py-0.5 rounded inline-block">{{ ord.id }}</p>
+            <p class="font-semibold text-slate-900 text-sm mt-1.5 truncate">{{ ord.customerName }}</p>
+            <p class="text-xs text-slate-500 mt-0.5">📞 {{ ord.phone }}</p>
+            <p class="text-[11px] text-slate-400 mt-0.5">💳 {{ ord.paymentMethod }}</p>
+          </td>
+
+          <td class="py-4 px-6 align-top">
+            <div class="space-y-1 mb-2">
+              <div *ngFor="let item of ord.items" class="text-xs font-semibold text-slate-800">
+                • {{ item.name }} <span class="text-slate-500 font-normal">(x{{ item.quantity }})</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-600 bg-slate-50 border border-slate-100 p-1.5 rounded-lg truncate">📍 {{ ord.address }}</p>
+            <p class="text-[10px] text-slate-400 mt-1">📅 {{ ord.orderDate | date: 'mediumDate' }}</p>
+          </td>
+
+          <td class="py-4 px-6 text-right align-top font-mono">
+            <span class="text-[#FF7620] font-black text-base">
+              <i class="fa-solid fa-indian-rupee-sign text-xs"></i>{{ ord.totalAmount }}
+            </span>
+          </td>
+
+          <td class="py-4 px-6 text-center align-top">
+            <select
+              [(ngModel)]="ord.orderStatus"
+              (change)="updateOrderStatus(ord)"
+              class="text-xs font-bold px-3 py-1.5 rounded-lg border cursor-pointer outline-none shadow-sm transition-all"
+              [ngClass]="{
+                'bg-amber-50 text-amber-700 border-amber-200': ord.orderStatus === 'Pending',
+                'bg-blue-50 text-blue-700 border-blue-200': ord.orderStatus === 'Processing',
+                'bg-emerald-50 text-emerald-700 border-emerald-200': ord.orderStatus === 'Delivered',
+                'bg-rose-50 text-rose-700 border-rose-200': ord.orderStatus === 'Cancelled'
+              }"
+            >
+              <option value="Pending">Pending</option>
+              <option value="Processing">Processing</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </td>
+
+          <td class="py-4 px-6 text-center align-top">
+            <button 
+              (click)="removeOrder(ord.id)" 
+              class="text-[10px] font-semibold bg-red-50 hover:bg-red-100 text-red-600 px-3 py-2 rounded-lg uppercase cursor-pointer transition-colors"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+
+        <!-- Empty State -->
+        <tr *ngIf="!loadingOrders && ordersList.length === 0">
+          <td colspan="6" class="text-center py-16 text-slate-400 text-xs font-mono uppercase tracking-widest">
+            No orders found.
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
