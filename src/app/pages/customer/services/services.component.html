@@ -2,7 +2,7 @@
   class="max-w-[1600px] w-full mx-auto px-6 py-8 flex-1 flex flex-col relative z-10"
 >
   <!-- Troubleshooting Header & Section -->
-  <div class="mb-0">
+  <!-- <div class="mb-0">
     <div
     class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10 bg-cyber-card p-1 rounded-2xl"
     >
@@ -16,10 +16,9 @@
       </div>
     </div>
 
-    <!-- CCTV Types Showcase Section -->
+  
     <div class="w-full relative z-30">
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        <!-- 1. Bullet Camera -->
         <div
           class="bg-white border border-slate-200/80 rounded-xl overflow-hidden group hover:border-[#FF7620] transition-all shadow-sm hover:shadow-md flex flex-col"
         >
@@ -47,7 +46,7 @@
           </div>
         </div>
 
-        <!-- 2. Dome & PTZ -->
+
         <div
           class="bg-white border border-slate-200/80 rounded-xl overflow-hidden group hover:border-[#FF7620] transition-all shadow-sm hover:shadow-md flex flex-col"
         >
@@ -75,7 +74,6 @@
           </div>
         </div>
 
-        <!-- 3. DVR / NVR Setup -->
         <div
           class="bg-white border border-slate-200/80 rounded-xl overflow-hidden group hover:border-[#FF7620] transition-all shadow-sm hover:shadow-md flex flex-col"
         >
@@ -103,7 +101,7 @@
           </div>
         </div>
 
-        <!-- 4. Repair & Wiring -->
+
         <div
           class="bg-white border border-slate-200/80 rounded-xl overflow-hidden group hover:border-[#FF7620] transition-all shadow-sm hover:shadow-md flex flex-col"
         >
@@ -132,19 +130,19 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- Services & Problem Solving Section -->
   <div class="mt-0">
     <div
-    class="flex flex-col md:flex-row justify-between items-start mt-12 md:items-center gap-6 mb-10 bg-cyber-card p-1 rounded-2xl"
+    class="flex flex-col md:flex-row justify-between items-start mt-0 md:items-center gap-6 mb-10 bg-cyber-card p-1 rounded-2xl"
     >
       <div>
       <h1 class="text-3xl font-bold text-slate-900 tracking-wider uppercase">
           Our Services
         </h1>
       <p class="text-sm font-medium text-slate-500 mt-1">
-          Got any issue? We fix everything related to surveillance
+          Got any issue? We fix everything related to below
         </p>
       </div>
     </div>
@@ -153,7 +151,7 @@
       <!-- Loader / Shimmer -->
       <div
         *ngIf="loading"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 animate-pulse"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 sm:gap-8 animate-pulse"
       >
         <div
           *ngFor="let i of [1, 2, 3, 4, 5, 6]"
@@ -164,7 +162,7 @@
       <!-- Services Cards Grid -->
       <div
         *ngIf="!loading"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 sm:gap-8"
       >
         <div
           *ngFor="let service of servicesList"
@@ -177,7 +175,7 @@
               <i [ngClass]="service.icon || 'fa-solid fa-video'"></i>
             </div>
             <h3
-            class="text-lg sm:text-xl font-bold text-slate-900 mb-2 sm:mb-3 tracking-wide"
+            class="text-lg sm:text-lg font-bold text-slate-900 mb-2 sm:mb-3 tracking-wide"
             >
               {{ service.title }}
             </h3>
@@ -189,12 +187,12 @@
           <div
             class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3"
           >
-            <span
+            <!-- <span
               class="text-xs sm:text-sm font-bold text-[#FF7620] uppercase tracking-widest bg-orange-500/10 px-2.5 py-1 rounded-lg flex items-center gap-1"
             >
               <i class="font-bold fa-solid fa-indian-rupee-sign text-xs"></i>
               {{ service.priceRange }}
-            </span>
+            </span> -->
             <button
               type="button"
               (click)="openInquiryModal(service)"
@@ -280,7 +278,7 @@
               <input
                 type="tel"
                 formControlName="phone"
-                placeholder="9876543210"
+                placeholder="Enter your mobile number"
                 class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] outline-none transition-all"
               />
               <div

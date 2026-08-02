@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { NoDataComponent } from '../../../core/components/shared/no-data/no-data.component';
 import { ProductCardComponent } from '../../../core/components/shared/product-card/product-card.component';
 import { ToastrService } from 'ngx-toastr';
+import { SITE_CONFIG } from '../../../config/site-config';
 
 @Component({
   selector: 'app-saved-products',
@@ -15,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './saved-products.component.css',
 })
 export class SavedProductsComponent {
+  siteData = SITE_CONFIG;
   private location = inject(Location);
   private dataService = inject(DataService);
   private toastr = inject(ToastrService);
@@ -49,7 +51,7 @@ export class SavedProductsComponent {
   }
   onOrderNow(product: any) {
     const textMessage = `Hello! I want to order this product:\n\n*Name:* ${product.name}\n*Price:* ₹${product.price}\n\nPlease share confirmation and payment details!`;
-    const whatsappUrl = `https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent(textMessage)}`; // 👈 XXXXXXXXXX ki jagah apna link phone number daal dena
+    const whatsappUrl = `https://wa.me/${this.siteData?.phone}?text=${encodeURIComponent(textMessage)}`;
     window.open(whatsappUrl, '_blank');
   }
 

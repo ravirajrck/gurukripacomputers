@@ -14,6 +14,7 @@ import { register } from 'swiper/element/bundle';
 import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ProductCardComponent } from '../../../core/components/shared/product-card/product-card.component';
+import { SITE_CONFIG } from '../../../config/site-config';
 register();
 
 @Component({
@@ -24,6 +25,7 @@ register();
   styleUrl: './landing-page.component.css',
 })
 export class LandingPageComponent implements OnInit, OnDestroy {
+  siteData = SITE_CONFIG;
   private router = inject(Router);
   private toastr = inject(ToastrService);
   private dataService = inject(DataService);
@@ -49,31 +51,34 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     },
     {
       name: 'Mobiles & Tabs',
-    subtext: 'Smartphones, Tablets, Chargers, Cases, Glass & Power Banks',
+      subtext: 'Smartphones, Tablets, Chargers, Cases, Glass & Power Banks',
       icon: '📱',
       catId: 'gswuNy5hhoe896sAFwHs',
     },
     {
       name: 'Audio & Wear',
-      subtext: 'Earbuds, Bluetooth Speaker, Smartwatches & Neckbands, Headphone, Home Theater',
+      subtext:
+        'Earbuds, Bluetooth Speaker, Smartwatches & Neckbands, Headphone, Home Theater',
       icon: '🎧',
       catId: 'TrUjKtUmjGSAWphuDwX2',
     },
     {
       name: 'Peripherals',
-      subtext: 'Keyboards, Mice, Webcams, Routers, UPS, Hubs, Gamepads & Mousepads',
+      subtext:
+        'Keyboards, Mice, Webcams, Routers, UPS, Hubs, Gamepads & Mousepads',
       icon: '⌨️',
       catId: 'hhTUimwrRZJCW6LBhvcH',
     },
     {
       name: 'CCTV Cameras',
-      subtext: 'Dome, Bullet, Wireless, NVR Kits, IP Cameras & PTZ, Wi-Fi & 360° View',
+      subtext:
+        'Dome, Bullet, Wireless, NVR Kits, IP Cameras & PTZ, Wi-Fi & 360° View',
       icon: '📷',
       catId: 'BpZGJeGg27XtbY7jB2SD',
     },
     {
       name: 'Storage & Memory',
-    subtext: 'SSDs, HDDs, Pen Drives, Memory Cards, RAM & External Drives',
+      subtext: 'SSDs, HDDs, Pen Drives, Memory Cards, RAM & External Drives',
       icon: '🛡️',
       catId: 'nJVKGK1lmJIlcARTBZhK',
     },
@@ -85,7 +90,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     // },
     {
       name: 'Cables & SMPS',
-   subtext: 'Power Cords, HDMI, Data Cables, VGA, SMPS & Adapters',
+      subtext: 'Power Cords, HDMI, Data Cables, VGA, SMPS & Adapters',
       icon: '🔌',
       catId: 'jHKZ35Dadjmdv1N3jk6W',
     },
@@ -95,9 +100,10 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       icon: '🌐',
       catId: 'Fx6y6DnS90z53u613ZrD',
     },
-{
+    {
       name: 'Refurbished & Used',
-      subtext: 'Second Hand Laptops, Refurbished Mobiles, Pre-Owned PCs & Open Box Items',
+      subtext:
+        'Second Hand Laptops, Refurbished Mobiles, Pre-Owned PCs & Open Box Items',
       icon: '♻️',
       catId: 'DzawQCDJOTqgPYnEdeD9',
     },
@@ -115,7 +121,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     },
     {
       name: 'Home Appliances',
-      subtext: 'Refrigerator, Water Purifier, Mixer Grinder, Induction, Electric Chimney',
+      subtext:
+        'Refrigerator, Water Purifier, Mixer Grinder, Induction, Electric Chimney',
       icon: '🏠',
       catId: 'hUtetnDWv68GpPe4EwrZ',
     },
@@ -228,7 +235,8 @@ ${product.description}
 ${product.images.map((img: any, i: number) => (img.url ? `Image ${i + 1}: ${img.url}` : '')).join('\n')}
 
 Please let me know about the availability!`;
-    const whatsappUrl = `https://wa.me/919644692189?text=${encodeURIComponent(textMessage)}`; // 👈 XXXXXXXXXX ki jagah apna link phone number daal dena
+
+    const whatsappUrl = `https://wa.me/${this.siteData?.phone}?text=${encodeURIComponent(textMessage)}`;
     window.open(whatsappUrl, '_blank');
   }
 
