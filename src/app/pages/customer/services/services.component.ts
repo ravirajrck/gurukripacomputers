@@ -128,7 +128,7 @@ export class ServicesComponent {
     this.selectedService = null;
   }
 
-  async submitInquiry() {
+async submitInquiry() {
     if (this.inquiryForm.invalid) {
       this.inquiryForm.markAllAsTouched();
       this.toastr.warning(
@@ -152,12 +152,15 @@ export class ServicesComponent {
       // 1. Save to Firebase
       await this.dataService.submitServiceInquiry(payload);
 
+      // 2. 📈 Update Dashboard Counter (+1 for Service Requests)
+      await this.dataService.updateDashboardCounter('totalServices', 1);
+
       this.toastr.success(
         'Your inquiry has been submitted successfully! Redirecting to WhatsApp...',
         'Request Sent',
       );
 
-      // 2. Generate Clean Formatted WhatsApp Message with Proper Encoding
+      // 3. Generate Clean Formatted WhatsApp Message with Proper Encoding
       const adminWhatsAppNumber = this?.siteData?.phone;
 
       // Raw message string
@@ -175,7 +178,7 @@ export class ServicesComponent {
       const encodedMessage = encodeURIComponent(rawMessage);
       const whatsappUrl = `https://wa.me/${adminWhatsAppNumber}?text=${encodedMessage}`;
 
-      // 3. Close Modal and Open WhatsApp in new tab
+      // 4. Close Modal and Open WhatsApp in new tab
       this.closeModal();
 
       setTimeout(() => {

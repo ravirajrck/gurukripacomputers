@@ -156,29 +156,8 @@ export class CustomerStoreComponent implements OnInit, OnDestroy {
     return output;
   }
 
-  // WhatsApp Checkout Action Link
-  onOrderNow(product: any) {
-    const currentUrl = window.location.origin + '/store/product/' + product.id;
-    const textMessage = `Hello! I want to order this product:
-*🔗 Product Link:*
-${currentUrl}
-
-*📦 Product Details:*
-*Name:* ${product.name}
-*Price:* ₹${product.price}
-*Original Price:* ₹${product.originalPrice}
-
-*📝 Description:*
-${product.description}
-
-*🖼️ Images:*
-${product.images?.map((img: any, i: number) => (img.url ? `Image ${i + 1}: ${img.url}` : '')).join('\n') || ''}
-
-Please let me know about the availability!`;
-    window.open(
-      `https://wa.me/${this.siteData?.phone}?text=${encodeURIComponent(textMessage)}`,
-      '_blank',
-    );
+  onOrderNow(product: any): void {
+    this.dataService.sendProductOnWhatsApp(product);
   }
 
   // Navigate to Product Details

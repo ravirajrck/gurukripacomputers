@@ -195,7 +195,12 @@ export class AddProductComponent {
         await this.dataService.updateProduct(this.productId, productData);
         this.toastr.success('Product updated successfully!', 'Success');
       } else {
+        // 1. Naya product add karein
         await this.dataService.addProduct(productData);
+
+        // 2. Firebase metadata counter me totalProducts ko +1 karein
+        await this.dataService.updateDashboardCounter('totalProducts', 1);
+
         this.toastr.success('Product added successfully!', 'Success');
       }
 

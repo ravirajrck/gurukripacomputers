@@ -57,13 +57,17 @@ export class ServiceListComponent {
     }
   }
 
-  async removeServiceRequest(id: string) {
+async removeServiceRequest(id: string) {
     if (confirm('Are you sure you want to delete this service request?')) {
       try {
         const service = this.dataService as any;
         if (typeof service.deleteServiceRequest === 'function') {
           await service.deleteServiceRequest(id);
         }
+
+        // 📉 Update Dashboard Counter (-1 for Service Requests)
+        await this.dataService.updateDashboardCounter('totalServices', -1);
+
         this.serviceRequestsList = this.serviceRequestsList.filter(
           (r) => r.id !== id,
         );

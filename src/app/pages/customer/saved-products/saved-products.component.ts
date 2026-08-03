@@ -49,10 +49,9 @@ export class SavedProductsComponent {
     }
     this.loadSavedData(); // List ko turant refresh karega
   }
-  onOrderNow(product: any) {
-    const textMessage = `Hello! I want to order this product:\n\n*Name:* ${product.name}\n*Price:* ₹${product.price}\n\nPlease share confirmation and payment details!`;
-    const whatsappUrl = `https://wa.me/${this.siteData?.phone}?text=${encodeURIComponent(textMessage)}`;
-    window.open(whatsappUrl, '_blank');
+
+  onOrderNow(product: any): void {
+    this.dataService.sendProductOnWhatsApp(product);
   }
 
   // Navigate karne ka function

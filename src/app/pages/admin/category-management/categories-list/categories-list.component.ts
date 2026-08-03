@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DataService } from '../../../../core/services/data.service';
 import { AuthService } from '../../../../core/services/auth.service';
@@ -8,34 +8,44 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-categories-list',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './categories-list.component.html',
   styleUrl: './categories-list.component.css',
 })
-export class CategoriesListComponent {
+export class CategoriesListComponent implements OnInit {
   private dataService = inject(DataService);
   private authService = inject(AuthService);
   private toastr = inject(ToastrService);
   private router = inject(Router);
-  currentEditingCategoryId = '';
 
-  categoriesList: any[] = [
-    { id: '1', name: 'Water Purifiers', isDelete: false },
-    { id: '2', name: 'Kitchen Appliances', isDelete: true },
-    { id: '3', name: 'Spare Parts', isDelete: true },
-  ];
-
+  categoriesList: any[] = [];
+  productsList: any[] = []; // Products list for association check
+  
   newCategoryName: string = '';
   isEditingCategory: boolean = false;
-  editingCategoryId: string | null = null;
+  currentEditingCategoryId: string = '';
 
   ngOnInit(): void {
-    // 1. Categories load karein
+    this.loadCategories();
+    this.loadProducts();
+  }
+
+  loadCategories() {
     this.dataService.getCategories().subscribe({
       next: (data) => {
-        this.categoriesList = data;
+        this.categoriesList = data || [];
       },
-      error: (err) => console.error(err),
+      error: (err) => console.error('Error fetching categories:', err),
+    });
+  }
+
+  loadProducts() {
+    this.dataService.getProducts().subscribe({
+      next: (data) => {
+        this.productsList = data || [];
+      },
+      error: (err) => console.error('Error fetching products for validation:', err),
     });
   }
 
@@ -82,10 +92,16 @@ export class CategoriesListComponent {
         this.toastr.success('Category updated successfully!', 'Success');
         this.cancelCategoryEdit();
       } else {
+        // 1. Add Category to Firestore
         await this.dataService.addCategory(trimmedName);
+
+        // 2. 📈 Update Dashboard Counter (+1 for Categories)
+        await this.dataService.updateDashboardCounter('totalCategories', 1);
+
         this.toastr.success('Category added successfully!', 'Success');
         this.newCategoryName = '';
       }
+      this.loadCategories(); // Refresh list
     } catch (err) {
       console.error(err);
       this.toastr.error('Something went wrong. Please try again!', 'Error');
@@ -112,7 +128,7 @@ export class CategoriesListComponent {
     this.currentEditingCategoryId = '';
     this.newCategoryName = '';
   }
-  productsList: any[] = [];
+
   async removeCategory(id: string, categoryName: string) {
     // Find category to check isDelete status
     const categoryToRemove = this.categoriesList.find((c) => c.id === id);
@@ -141,8 +157,14 @@ export class CategoriesListComponent {
       confirm(`Are you sure you want to delete the category "${categoryName}"?`)
     ) {
       try {
+        // 1. Delete Category from Firestore
         await this.dataService.deleteCategory(id);
+
+        // 2. 📉 Update Dashboard Counter (-1 for Categories)
+        await this.dataService.updateDashboardCounter('totalCategories', -1);
+
         this.toastr.success('Category deleted successfully!', 'Success');
+        this.loadCategories(); // Refresh list
       } catch (err) {
         console.error(err);
         this.toastr.error(

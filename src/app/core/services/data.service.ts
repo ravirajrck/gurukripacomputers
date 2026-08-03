@@ -14,15 +14,18 @@ import {
   limit,
   orderBy,
   where,
+  increment,
 } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs';
+import { from, Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { SITE_CONFIG } from '../../config/site-config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
   private firestore = inject(Firestore);
+  siteData = SITE_CONFIG;
 
   // ====== CATEGORIES CRUD ======
   addCategory(categoryName: string) {
@@ -206,5 +209,68 @@ export class DataService {
         return of([]);
       }),
     );
+  }
+
+  sendProductOnWhatsApp(product: any): void {
+    const currentUrl =
+      window.location.origin + '/store/product/' + (product.id || product._id);
+
+    const textMessage = `Hello! I want to order this product:
+
+*🔗 Product Link:*
+${currentUrl}
+
+*📦 Product Details:*
+*Name:*   ${product.name}
+*Price:*   ₹${product.price}
+${product.originalPrice ? `*Original Price:* ₹${product.originalPrice}` : ''}
+
+${
+  product.description
+    ? `*📝 Description:*
+${product.description}`
+    : ''
+}
+Please let me know about the availability!`;
+
+    // Service me stored phone ya parameter wala phone use karein
+    const targetPhone = this.siteData?.phone || '9644692189';
+
+    const whatsappUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(textMessage)}`;
+    window.open(whatsappUrl, '_blank');
+  }
+
+  // 1. Get Dashboard Stats Counts from 'metadata/stats'
+  getDashboardStats(): Observable<any> {
+    const statsRef = doc(this.firestore, 'metadata', 'sO9nMovK2da5JT6DFgZ9');
+    return from(getDoc(statsRef)).pipe(
+      catchError((error) => {
+        console.error('Error fetching dashboard stats:', error);
+        return throwError(
+          () => new Error('Failed to load dashboard stats. Please try again.'),
+        );
+      }),
+    );
+  }
+
+  // 2. Generic Counter Update Method (For Add: +1, For Delete: -1)
+  async updateDashboardCounter(
+    field:
+      | 'totalProducts'
+      | 'totalOrders'
+      | 'totalServices'
+      | 'totalCategories',
+    value: number,
+  ): Promise<boolean> {
+    try {
+      const statsRef = doc(this.firestore, 'metadata', 'sO9nMovK2da5JT6DFgZ9');
+      await updateDoc(statsRef, {
+        [field]: increment(value),
+      });
+      return true;
+    } catch (error) {
+      console.error(`Error updating counter for ${field}:`, error);
+      return false;
+    }
   }
 }

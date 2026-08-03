@@ -93,12 +93,19 @@ export class ProductListComponent {
       queryParams: { type: 'dashboard' },
     });
   }
-
   async removeProduct(id: string, name: string) {
     if (confirm(`Are you sure you want to delete the product "${name}"?`)) {
       try {
+        // 1. Product delete karein
         await this.dataService.deleteProduct(id);
+
+        // 2. Dashboard counter me totalProducts ko -1 karein
+        await this.dataService.updateDashboardCounter('totalProducts', -1);
+
         this.toastr.success('Product deleted successfully!', 'Success');
+
+        // Agar aap local list se bhi turant hatana chahte hain toh ye line add kar sakte hain:
+        // this.productsList = this.productsList.filter(p => p.id !== id);
       } catch (err) {
         console.error(err);
         this.toastr.error(

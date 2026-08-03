@@ -1,35 +1,63 @@
-<main class="max-w-[1600px] w-full mx-auto px-4 sm:px-6 py-8 flex-1 flex flex-col relative z-10">
-  
-  <!-- Page Header -->
-  <div class="mb-6 sm:mb-8 bg-white border border-slate-200/80 p-6 sm:p-8 rounded-3xl shadow-sm">
-    <div class="flex items-center gap-2">
-      <span class="w-2.5 h-2.5 rounded-full bg-[#FF7620] animate-pulse"></span>
-      <span class="text-[11px] font-black uppercase tracking-widest text-[#FF7620]">Management Portal</span>
-    </div>
-    <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight uppercase mt-1">
+<main class="max-w-[1600px] w-full mx-auto px-6 py-8 flex-1 flex flex-col relative z-10">
+  <div>
+    <h1 class="text-3xl font-bold text-slate-900 tracking-wider uppercase">
       Admin Dashboard
     </h1>
-    <p class="text-xs sm:text-sm font-medium text-slate-500 mt-1">
-      Seamlessly manage store operations, inventory, categories, orders, and service requests from one place.
+    <p class="text-sm font-medium text-slate-500 mt-1">
+      Seamlessly manage store operations, inventory, categories, orders, and
+      service requests from one place.
     </p>
   </div>
 
   <!-- Main Grid Layout: Left Sidebar Navigation & Right Content Area -->
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+  <div class="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
     
-    <!-- Left Side Navigation List (Takes 3 Columns on Desktop, Normal flow on Mobile) -->
-    <aside class="w-full lg:col-span-3 bg-white border border-slate-200/80 p-3 rounded-3xl shadow-sm flex flex-col gap-1.5 lg:sticky lg:top-6 relative z-0">
-      <div class="px-4 py-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
+    <!-- 📱 MOBILE VIEW: Premium Custom Dropdown Select Box (Visible only on mobile/tablet) -->
+    <div class="w-full block lg:hidden">
+      <div class="bg-white border border-slate-200/80 p-3.5 rounded-2xl shadow-sm">
+        <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">
+          Navigation Menu
+        </label>
+        
+        <div class="relative">
+          <select 
+            (change)="onMobileNavChange($event)"
+            class="w-full bg-slate-50 border border-slate-200/80 text-slate-900 text-xs font-bold uppercase tracking-wider rounded-xl px-4 py-3.5 appearance-none outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 transition-all cursor-pointer shadow-sm"
+          >
+            <option value="/admin/dashboard" [selected]="router.url === '/admin/dashboard'">📊 Dashboard</option>
+            <option value="/admin/products" [selected]="router.url === '/admin/products'">📦 Products</option>
+            <option value="/admin/categories" [selected]="router.url === '/admin/categories'">📂 Categories</option>
+            <option value="/admin/orders" [selected]="router.url === '/admin/orders'">🛍️ Orders</option>
+            <option value="/admin/services" [selected]="router.url === '/admin/services'">🛠️ Services</option>
+          </select>
+
+          <!-- Custom Dropdown Arrow Icon -->
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+            <i class="fa-solid fa-chevron-down text-xs"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 💻 DESKTOP VIEW: Sidebar Navigation List (Hidden on mobile, visible on lg screens) -->
+    <aside
+      class="w-full lg:col-span-3 bg-white border border-slate-200/80 p-3 rounded-3xl shadow-sm hidden lg:flex flex-col gap-1.5 lg:sticky lg:top-6 relative z-0"
+    >
+      <div
+        class="px-4 py-2 text-[10px] font-black uppercase tracking-widest text-slate-400"
+      >
         Navigation Menu
       </div>
-      
+
       <a
         routerLink="/admin/dashboard"
         routerLinkActive="bg-slate-900 text-white shadow-md shadow-slate-900/10 font-bold"
-        [routerLinkActiveOptions]="{exact: true}"
+        [routerLinkActiveOptions]="{ exact: true }"
         class="flex items-center gap-3 px-4 py-3 rounded-2xl text-xs uppercase tracking-wider text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 transition-all cursor-pointer no-underline group"
       >
-        <i class="fa-solid fa-chart-pie text-sm group-hover:text-[#FF7620] transition-colors"></i>
+        <i
+          class="fa-solid fa-chart-pie text-sm group-hover:text-[#FF7620] transition-colors"
+        ></i>
         <span>Dashboard</span>
       </a>
 
@@ -38,7 +66,9 @@
         routerLinkActive="bg-slate-900 text-white shadow-md shadow-slate-900/10 font-bold"
         class="flex items-center gap-3 px-4 py-3 rounded-2xl text-xs uppercase tracking-wider text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 transition-all cursor-pointer no-underline group"
       >
-        <i class="fa-solid fa-box-open text-sm group-hover:text-[#FF7620] transition-colors"></i>
+        <i
+          class="fa-solid fa-box-open text-sm group-hover:text-[#FF7620] transition-colors"
+        ></i>
         <span>Products</span>
       </a>
 
@@ -47,7 +77,9 @@
         routerLinkActive="bg-slate-900 text-white shadow-md shadow-slate-900/10 font-bold"
         class="flex items-center gap-3 px-4 py-3 rounded-2xl text-xs uppercase tracking-wider text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 transition-all cursor-pointer no-underline group"
       >
-        <i class="fa-solid fa-layer-group text-sm group-hover:text-[#FF7620] transition-colors"></i>
+        <i
+          class="fa-solid fa-layer-group text-sm group-hover:text-[#FF7620] transition-colors"
+        ></i>
         <span>Categories</span>
       </a>
 
@@ -56,7 +88,9 @@
         routerLinkActive="bg-slate-900 text-white shadow-md shadow-slate-900/10 font-bold"
         class="flex items-center gap-3 px-4 py-3 rounded-2xl text-xs uppercase tracking-wider text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 transition-all cursor-pointer no-underline group"
       >
-        <i class="fa-solid fa-shopping-bag text-sm group-hover:text-[#FF7620] transition-colors"></i>
+        <i
+          class="fa-solid fa-shopping-bag text-sm group-hover:text-[#FF7620] transition-colors"
+        ></i>
         <span>Orders</span>
       </a>
 
@@ -65,7 +99,9 @@
         routerLinkActive="bg-slate-900 text-white shadow-md shadow-slate-900/10 font-bold"
         class="flex items-center gap-3 px-4 py-3 rounded-2xl text-xs uppercase tracking-wider text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 transition-all cursor-pointer no-underline group"
       >
-        <i class="fa-solid fa-screwdriver-wrench text-sm group-hover:text-[#FF7620] transition-colors"></i>
+        <i
+          class="fa-solid fa-screwdriver-wrench text-sm group-hover:text-[#FF7620] transition-colors"
+        ></i>
         <span>Services</span>
       </a>
     </aside>
@@ -74,6 +110,5 @@
     <div class="w-full lg:col-span-9 relative z-0">
       <router-outlet></router-outlet>
     </div>
-
   </div>
 </main>

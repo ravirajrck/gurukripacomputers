@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin-home',
@@ -7,4 +7,13 @@ import { RouterModule } from '@angular/router';
   templateUrl: './admin-home.component.html',
   styleUrl: './admin-home.component.css',
 })
-export class AdminHomeComponent {}
+export class AdminHomeComponent {
+  public router = inject(Router);
+
+  onMobileNavChange(event: any): void {
+    const selectedRoute = event.target.value;
+    if (selectedRoute) {
+      this.router.navigate([selectedRoute]);
+    }
+  }
+}
