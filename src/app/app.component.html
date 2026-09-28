@@ -1,4 +1,8 @@
-<app-navbar></app-navbar>
-<app-sidebar></app-sidebar>
+<!-- यह तब ही दिखेगा जब URL में admin नहीं होगा -->
+<app-navbar *ngIf="showNavbarFooter"></app-navbar>
+<app-sidebar *ngIf="showNavbarFooter"></app-sidebar>
+
 <router-outlet></router-outlet>
-<app-footer></app-footer>
+
+<!-- यह भी admin पेज पर नहीं दिखेगा -->
+<app-footer *ngIf="showNavbarFooter"></app-footer>

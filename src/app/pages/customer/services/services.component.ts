@@ -6,48 +6,31 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { MatDialog, MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from '../../../core/services/data.service';
 import { SITE_CONFIG } from '../../../config/site-config';
+import { ServiceBookDialogComponent } from '../service-book-dialog/service-book-dialog.component';
+
+
 @Component({
   selector: 'app-services',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './services.component.html',
   styleUrl: './services.component.css',
 })
-export class ServicesComponent {
+export class ServicesComponent implements OnInit {
   siteData = SITE_CONFIG;
   private dataService = inject(DataService);
-  private fb = inject(FormBuilder);
-  private toastr = inject(ToastrService);
+  private dialog = inject(MatDialog);
 
   servicesList: any[] = [];
   loading = true;
-  showModal = false;
-  selectedService: any = null;
-  isSubmitting = false;
-
-  inquiryForm!: FormGroup;
-  minDate: string = '';
 
   ngOnInit() {
-    const today = new Date();
-    this.minDate = today.toISOString().split('T')[0];
-
-    this.initForm();
     this.loadServices();
-  }
-
-  initForm() {
-    this.inquiryForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
-      email: ['', [Validators.email]],
-      address: ['', [Validators.required, Validators.minLength(5)]],
-      serviceDate: ['', [Validators.required]],
-      message: ['', [Validators.required, Validators.minLength(10)]],
-    });
   }
 
   async loadServices() {
@@ -58,8 +41,6 @@ export class ServicesComponent {
       if (data && data.length > 0) {
         this.servicesList = data;
       } else {
-        // Comprehensive CCTV & Surveillance Services List
-        console.log('ddddddddddddd');
         this.servicesList = [
           {
             id: '1',
@@ -117,83 +98,17 @@ export class ServicesComponent {
       this.loading = false;
     }
   }
+
+  // Open Inquiry Modal via Angular Material Dialog
   openInquiryModal(service: any) {
-    this.selectedService = service;
-    this.showModal = true;
-    this.inquiryForm.reset();
+    this.dialog.open(ServiceBookDialogComponent, {
+      width: '500px',
+      maxWidth: '500px',
+      data: service,
+      panelClass: 'custom-mat-dialog-container'
+    });
   }
 
-  closeModal() {
-    this.showModal = false;
-    this.selectedService = null;
-  }
-
-async submitInquiry() {
-    if (this.inquiryForm.invalid) {
-      this.inquiryForm.markAllAsTouched();
-      this.toastr.warning(
-        'Please fill in all required fields correctly.',
-        'Validation Error',
-      );
-      return;
-    }
-
-    this.isSubmitting = true;
-    try {
-      const formValues = this.inquiryForm.value;
-      const payload = {
-        ...formValues,
-        serviceId: this.selectedService?.id || 'general',
-        serviceTitle: this.selectedService?.title || 'General Inquiry',
-        status: 'Pending',
-        createdAt: new Date(),
-      };
-
-      // 1. Save to Firebase
-      await this.dataService.submitServiceInquiry(payload);
-
-      // 2. 📈 Update Dashboard Counter (+1 for Service Requests)
-      await this.dataService.updateDashboardCounter('totalServices', 1);
-
-      this.toastr.success(
-        'Your inquiry has been submitted successfully! Redirecting to WhatsApp...',
-        'Request Sent',
-      );
-
-      // 3. Generate Clean Formatted WhatsApp Message with Proper Encoding
-      const adminWhatsAppNumber = this?.siteData?.phone;
-
-      // Raw message string
-      const rawMessage =
-        `*New Service Inquiry Booking!*\n\n` +
-        `*Service:* ${payload.serviceTitle}\n` +
-        `*Name:* ${formValues.name}\n` +
-        `*Phone:* ${formValues.phone}\n` +
-         `*Address:* ${formValues.address}\n` +
-        `*Date:* ${formValues.serviceDate}\n` +
-        `*Email:* ${formValues.email || 'N/A'}\n` +
-        `*Requirement:* ${formValues.message}`;
-
-      // encodeURIComponent ensure karega ki koi bhi data/text beech me chute nahi
-      const encodedMessage = encodeURIComponent(rawMessage);
-      const whatsappUrl = `https://wa.me/${adminWhatsAppNumber}?text=${encodedMessage}`;
-
-      // 4. Close Modal and Open WhatsApp in new tab
-      this.closeModal();
-
-      setTimeout(() => {
-        window.open(whatsappUrl, '_blank');
-      }, 1000);
-    } catch (error) {
-      console.error('Error submitting inquiry:', error);
-      this.toastr.error(
-        'Failed to submit inquiry. Please try again later.',
-        'Error',
-      );
-    } finally {
-      this.isSubmitting = false;
-    }
-  }
   async uploadDefaultServicesToFirebase() {
     const defaultServices = [
       {
@@ -249,11 +164,9 @@ async submitInquiry() {
     try {
       await this.dataService.seedServices(defaultServices);
       alert('Services uploaded to Firebase successfully!');
-      this.loadServices(); // Dobara fetch karlo taaki UI par dikh jaye
+      this.loadServices();
     } catch (error) {
       console.error('Error uploading services:', error);
     }
   }
-
-  
 }

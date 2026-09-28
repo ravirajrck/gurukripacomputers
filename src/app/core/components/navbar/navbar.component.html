@@ -1,115 +1,129 @@
 <header
-  class="sticky top-0 z-50 bg-white border-b border-orange-100 px-6 md:px-12 py-2"
+  class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-blue-500/20 px-4 md:px-12 py-3 shadow-[0_4px_20px_rgba(37,99,235,0.03)] transition-all overflow-x-hidden"
 >
-  <!-- Loading Bar -->
+  <!-- Loading Bar (AI Blue Theme) -->
   <div
-    class="absolute bottom-0 left-0 h-[2px] bg-[#FF7620] ease-out transition-all"
+    class="absolute bottom-0 left-0 h-[2.5px] bg-gradient-to-r from-blue-600 to-cyan-500 ease-out transition-all z-10 shadow-[0_0_8px_rgba(59,130,246,0.6)]"
     [class.duration-300]="isLoading"
     [class.duration-0]="!isLoading"
     [class.w-full]="isLoading"
     [class.w-0]="!isLoading"
   ></div>
 
-  <!-- Mobile Trigger -->
-  <div class="md:hidden flex items-center p-0 m-0 justify-center">
-    <a
-      [href]="'tel:' + siteData?.phone"
-      class="text-[14px] font-bold text-slate-600 hover:text-[#FF7620] tracking-widest transition-all inline-flex items-center gap-2 group cursor-pointer py-1 px-3 rounded-xl"
-    >
-      <span
-        class="w-6 h-6 rounded-full text-[#FF7620] flex items-center justify-center text-[10px] group-hover:bg-[#FF7620] group-hover:text-white transition-all"
-      >
-        <i class="fa-solid fa-phone animate-bounce"></i>
-      </span>
-      <span>Helpline Number {{ siteData?.phone }}</span>
-    </a>
-  </div>
-
-  <div class="max-w-[1600px] mx-auto flex justify-between items-center">
+  <div class="max-w-[1600px] mx-auto flex justify-between items-center w-full">
     <!-- Logo -->
-    <a href="/" class="block w-[150px] cursor-pointer" aria-label="Go to Home">
-      <img src="SANATAN3LOGO.svg" alt="Logo" class="w-full h-auto" />
+    <a
+      href="/"
+      class="block w-[120px] md:w-[150px] cursor-pointer shrink-0"
+      aria-label="Go to Home"
+    >
+      <img src="sidelogo.svg" alt="Logo" class="w-full h-auto drop-shadow-sm" />
     </a>
 
-    <!-- Desktop Menu Container -->
-    <div class="hidden md:flex flex-col items-end space-y-2">
-      <!-- Row 1: Helpline Number -->
-      <div class="flex items-center p-0 m-0">
-        <a
-          [href]="'tel:' + siteData?.phone"
-          class="text-[14px] font-bold text-slate-600 hover:text-[#FF7620] tracking-widest transition-all inline-flex items-center gap-2 group cursor-pointer"
-        >
-          <span
-            class="w-7 h-7 rounded-full text-[#FF7620] flex items-center justify-center text-xs group-hover:bg-[#FF7620] group-hover:text-white transition-all shadow-sm"
-          >
-            <i class="fa-solid fa-phone animate-bounce"></i>
-          </span>
-          <span>Helpline Number {{ siteData?.phone }}</span>
-        </a>
-      </div>
-
+    <!-- Desktop Menu Container (Hidden on Mobile) -->
+    <div class="hidden md:flex flex-col items-end space-y-2.5">
       <!-- Row 2: Navigation Links -->
-      <div class="flex items-center space-x-6">
+      <div class="flex items-center gap-6 shrink-0">
+        <!-- Home -->
         <a
           routerLink="/"
-          routerLinkActive="active-tab"
-          [routerLinkActiveOptions]="{ exact: true }"
-          routerLinkActive="text-[#FF7620]"
-          class="text-s font-semibold uppercase tracking-widest text-slate-600 hover:text-[#FF7620] transition-all"
+          [ngClass]="
+            router.url === '/'
+              ? 'text-blue-600 font-bold'
+              : 'text-slate-600 font-semibold'
+          "
+          class="text-xs uppercase tracking-widest hover:text-blue-600 transition-all relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-blue-600 hover:after:w-full after:transition-all"
         >
           Home
         </a>
-        <a
-          *ngIf="isLoggedIn$ | async"
-          routerLink="/admin/dashboard"
-          routerLinkActive="active-tab"
-          [routerLinkActiveOptions]="{ exact: true }"
-          routerLinkActive="text-[#FF7620]"
-          class="text-s font-semibold uppercase tracking-widest text-slate-600 hover:text-[#FF7620] transition-all"
-        >
-          Dashboard
-        </a>
 
+        <!-- Admin -->
+        <!-- <a
+          *ngIf="isLoggedIn$ | async"
+          routerLink="/admin"
+          [ngClass]="
+            router.url.startsWith('/admin')
+              ? 'text-blue-600 font-bold'
+              : 'text-slate-600 font-semibold'
+          "
+          class="text-xs uppercase tracking-widest hover:text-blue-600 transition-all relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-blue-600 hover:after:w-full after:transition-all"
+        >
+          Admin
+        </a> -->
+
+        <!-- Store -->
         <a
           routerLink="/store"
-          routerLinkActive="active-tab"
-          [routerLinkActiveOptions]="{ exact: true }"
-          routerLinkActive="text-[#FF7620]"
-          class="text-s font-semibold uppercase tracking-widest text-slate-600 hover:text-[#FF7620] transition-all"
+          [ngClass]="
+            router.url === '/store'
+              ? 'text-blue-600 font-bold'
+              : 'text-slate-600 font-semibold'
+          "
+          class="text-xs uppercase tracking-widest hover:text-blue-600 transition-all relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-blue-600 hover:after:w-full after:transition-all"
         >
           Store
         </a>
+
+        <!-- Services -->
         <a
           routerLink="/services"
-          routerLinkActive="active-tab"
-          [routerLinkActiveOptions]="{ exact: true }"
-          routerLinkActive="text-[#FF7620]"
-          class="text-s font-semibold uppercase tracking-widest text-slate-600 hover:text-[#FF7620] transition-all"
+          [ngClass]="
+            router.url.startsWith('/services')
+              ? 'text-blue-600 font-bold'
+              : 'text-slate-600 font-semibold'
+          "
+          class="text-xs uppercase tracking-widest hover:text-blue-600 transition-all relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-blue-600 hover:after:w-full after:transition-all"
         >
           Services
         </a>
 
+        <!-- <div class="flex items-center gap-3 shrink-0"> -->
+        <!-- SAVED Button -->
         <a
           routerLink="/store/saved"
-          routerLinkActive="active-tab"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="flex items-center font-semibold space-x-2 text-s uppercase tracking-widest text-[#FF7620] bg-orange-50 border border-orange-200 px-4 py-2 rounded-full hover:bg-orange-100 transition-all"
+          [ngClass]="
+            router.url === '/store/saved'
+              ? '!bg-blue-600 !text-white !border-blue-600 shadow-md shadow-blue-500/20'
+              : 'text-blue-600 bg-blue-50/80 border-blue-200 hover:bg-blue-100 shadow-2xs'
+          "
+          class="flex items-center font-bold space-x-2 text-xs uppercase tracking-widest px-4 py-2 rounded-2xl border transition-all active:scale-95 cursor-pointer shrink-0"
         >
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+          <svg
+            class="w-3.5 h-3.5"
+            [ngClass]="
+              router.url === '/store/saved' ? 'text-white' : 'text-blue-600'
+            "
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
               d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
             />
           </svg>
-          <span>SAVED</span>
+          <span>Saved</span>
         </a>
 
         <a
           *ngIf="isLoggedIn$ | async"
+          routerLink="/admin"
+          [ngClass]="
+            router.url.startsWith('/admin')
+              ? 'text-blue-600 font-bold'
+              : 'text-slate-600 font-semibold'
+          "
+          class="flex items-center font-bold space-x-2 text-xs uppercase tracking-widest text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 px-4 py-2 rounded-2xl hover:shadow-xs transition-all cursor-pointer active:scale-95 shadow-2xs"
+        >
+          <span>ADMIN</span>
+        </a>
+
+        <!-- Logout Button -->
+        <a
+          *ngIf="isLoggedIn$ | async"
           (click)="onLogout()"
-          class="flex items-center font-semibold space-x-2 text-s uppercase tracking-widest text-[#FF7620] bg-orange-50 border border-orange-200 px-4 py-2 rounded-full hover:bg-orange-100 transition-all cursor-pointer"
+          class="flex items-center font-bold space-x-2 text-xs uppercase tracking-widest text-rose-600 bg-rose-50/80 border border-rose-200 px-4 py-2 rounded-2xl hover:bg-rose-100 hover:shadow-xs transition-all cursor-pointer active:scale-95 shadow-2xs"
         >
           <svg
-            class="w-5 h-5"
+            class="w-4 h-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -123,22 +137,32 @@
           </svg>
           <span>Logout</span>
         </a>
+
+        <!-- Login Button -->
         <a
           *ngIf="!(isLoggedIn$ | async)"
           routerLink="/admin-login"
-          class="text-s uppercase font-semibold tracking-widest text-slate-600 hover:text-[#FF7620] transition-all"
+          [ngClass]="
+            router.url.startsWith('/admin-login')
+              ? '!bg-blue-700 shadow-lg'
+              : ''
+          "
+          class="text-xs uppercase font-bold tracking-widest text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 px-5 py-2.5 rounded-2xl shadow-md shadow-blue-500/20 hover:shadow-lg transition-all active:scale-95"
         >
           Login
         </a>
+        <!-- </div> -->
       </div>
     </div>
-    <!-- Mobile Trigger -->
+
+    <!-- Mobile Menu Trigger -->
     <button
       (click)="sidebarService.toggle()"
-      class="md:hidden p-2 text-[#FF7620] rounded-lg hover:bg-orange-50 transition-all cursor-pointer mt-5"
+      class="md:hidden p-2 text-blue-600 bg-blue-50 rounded-xl border border-blue-200 hover:bg-blue-100 transition-all cursor-pointer shadow-2xs shrink-0"
+      aria-label="Toggle Menu"
     >
       <svg
-        class="w-6 h-6"
+        class="w-5 h-5"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"

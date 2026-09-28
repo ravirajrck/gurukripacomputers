@@ -18,7 +18,7 @@
       class="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px] flex items-center justify-center p-2 text-center"
     >
       <span
-        class="bg-orange-400 text-white font-bold text-xs uppercase px-3 py-1.5 rounded-lg shadow-md tracking-wider"
+        class="bg-blue-600 text-white font-bold text-xs uppercase px-3 py-1.5 rounded-lg shadow-md tracking-wider"
       >
         Out of Stock
       </span>
@@ -35,9 +35,9 @@
       <svg
         *ngIf="!isLoading"
         class="w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-300"
-        [class.text-[#FF7620]]="saved"
+        [class.text-blue-600]="saved"
         [class.text-slate-400]="!saved"
-        [class.group-hover:text-[#FF7620]]="!saved"
+        [class.group-hover:text-blue-600]="!saved"
         fill="currentColor"
         viewBox="0 0 24 24"
       >
@@ -48,7 +48,7 @@
 
       <i
         *ngIf="isLoading"
-        class="fa-solid fa-spinner animate-spin text-[#FF7620] text-xl"
+        class="fa-solid fa-spinner animate-spin text-blue-600 text-xl"
       ></i>
     </button>
   </div>
@@ -58,7 +58,7 @@
     <div>
       <!-- Product Name -->
       <h3
-        class="font-normal text-slate-800 text-sm sm:text-base tracking-wide group-hover:text-[#FF7620] transition-colors line-clamp-3 break-all"
+        class="font-normal text-slate-800 text-sm sm:text-base tracking-wide group-hover:text-blue-600 transition-colors line-clamp-3 break-all"
       >
         {{ product.name | titlecase }}
       </h3>
@@ -72,10 +72,10 @@
 
     <!-- Price & Action Section -->
     <div class="flex flex-col gap-2 pt-2.5 mt-2 border-t border-slate-50">
-      <!-- Price Section (Bada aur clear view mobile ke liye) -->
+      <!-- Price Section -->
       <div class="flex items-baseline flex-wrap gap-x-1.5 min-w-0">
         <span
-          class="text-[#FF7620] font-extrabold text-1xl sm:text-lg tracking-tight flex items-center"
+          class="text-blue-600 font-extrabold text-1xl sm:text-lg tracking-tight flex items-center"
         >
           <i class="fa-solid fa-indian-rupee-sign text-sm sm:text-1xl"></i>
           <span class="ms-0.5">{{ product.price }}</span>
@@ -89,7 +89,7 @@
         </span>
       </div>
 
-      <!-- Buy / Sold Out Button -->
+ <!-- Buy / Sold Out Button -->
       <button
         type="button"
         (click)="
@@ -98,9 +98,9 @@
             : $event.stopPropagation()
         "
         [disabled]="product.inStock === false"
-        class="w-full py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-center shrink-0 shadow-sm"
+        class="w-full py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-center shrink-0 shadow-sm"
         [ngClass]="{
-          'bg-slate-900 text-white hover:bg-[#FF7620] cursor-pointer active:scale-95':
+          'bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 shadow-blue-500/25 hover:shadow-md hover:shadow-blue-500/30 cursor-pointer active:scale-95':
             product.inStock !== false,
           'bg-slate-100 text-slate-400 cursor-not-allowed':
             product.inStock === false,

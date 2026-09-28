@@ -1,0 +1,81 @@
+<div class="p-6 bg-white rounded-3xl max-w-md w-full font-sans">
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-slate-900 font-bold text-lg">Enter Your Details</h3>
+    <button (click)="onCancel()" [disabled]="isLoading" class="text-slate-400 hover:text-slate-600 cursor-pointer disabled:opacity-50">
+      <i class="fa-solid fa-xmark text-base"></i>
+    </button>
+  </div>
+
+  <p class="text-sm font-medium text-slate-500 mb-5">
+    Please provide your name and phone number to proceed for enquiry.
+  </p>
+
+  <form (ngSubmit)="onSubmit()" class="space-y-4">
+    <!-- Name Field -->
+    <div>
+      <label class="block text-sm font-semibold text-slate-600 uppercase tracking-wider mb-1.5">Your Name *</label>
+      <input
+        type="text"
+        [(ngModel)]="name"
+        name="userName"
+        #userName="ngModel"
+        [disabled]="isLoading"
+        placeholder="Enter your full name"
+        required
+        class="w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 transition-all font-medium disabled:opacity-50"
+        [ngClass]="{
+          'border-slate-200 focus:border-blue-600 focus:ring-blue-600': !userName.invalid || !userName.touched,
+          'border-rose-300 focus:border-rose-500 focus:ring-rose-500': userName.invalid && userName.touched
+        }"
+      />
+      <span *ngIf="userName.invalid && userName.touched" class="text-[11px] text-rose-500 font-medium mt-1 block">
+        Name is required.
+      </span>
+    </div>
+
+    <!-- Phone Field -->
+    <div>
+      <label class="block text-sm font-semibold text-slate-600 uppercase tracking-wider mb-1.5">Phone / WhatsApp Number *</label>
+      <input
+        type="tel"
+        [(ngModel)]="phone"
+        name="userPhone"
+        #userPhone="ngModel"
+        [disabled]="isLoading"
+        maxlength="10"
+        placeholder="Enter 10-digit mobile number"
+        required
+        pattern="[0-9]{10}"
+        class="w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 transition-all font-medium disabled:opacity-50"
+        [ngClass]="{
+          'border-slate-200 focus:border-blue-600 focus:ring-blue-600': !userPhone.invalid || !userPhone.touched,
+          'border-rose-300 focus:border-rose-500 focus:ring-rose-500': userPhone.invalid && userPhone.touched
+        }"
+      />
+      <span *ngIf="userPhone.invalid && userPhone.touched" class="text-[11px] text-rose-500 font-medium mt-1 block">
+        Please enter a valid 10-digit mobile number.
+      </span>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-3 w-full mt-6">
+      <button
+        type="button"
+        (click)="onCancel()"
+        [disabled]="isLoading"
+        class="flex-1 px-5 py-3 rounded-2xl text-sm font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all cursor-pointer whitespace-nowrap disabled:opacity-50"
+      >
+        Cancel
+      </button>
+      
+      <button
+        type="submit"
+        [disabled]="!name.trim() || phone.length < 10 || isLoading"
+        class="flex-1 px-5 py-3 rounded-2xl text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg shadow-blue-500/25 transition-all cursor-pointer whitespace-nowrap disabled:opacity-50 inline-flex items-center justify-center gap-2"
+      >
+        <i *ngIf="isLoading" class="fa-solid fa-spinner animate-spin text-sm"></i>
+        <span>{{ isLoading ? 'Redirecting...' : 'Proceed to WhatsApp' }}</span>
+      </button>
+    </div>
+  </form>
+</div>

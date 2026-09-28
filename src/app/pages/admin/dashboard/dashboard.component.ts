@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DataService } from '../../../core/services/data.service';
@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-private dataService = inject(DataService);
+  private dataService = inject(DataService);
   private toastr = inject(ToastrService);
 
   // Count Variables
@@ -22,6 +22,13 @@ private dataService = inject(DataService);
   totalOrdersCount: number = 0;
   totalServicesCount: number = 0;
   totalCategoriesCount: number = 0;
+
+  // Invoices & Date Range Filter Variables
+  invoices: any[] = [];
+  startDate: string = '';
+  endDate: string = '';
+  filteredTotalAmount: number = 0;
+  totalFilteredInvoicesCount: number = 0;
 
   // Search State
   searchTerm = '';
@@ -32,6 +39,7 @@ private dataService = inject(DataService);
 
   ngOnInit() {
     this.fetchStats();
+    this.loadInvoicesForDateRange();
   }
 
   fetchStats() {
@@ -59,6 +67,61 @@ private dataService = inject(DataService);
         this.loadingData = false;
       },
     });
+  }
+
+  // Date Range के लिए इन्वॉइस लोड करना
+  loadInvoicesForDateRange() {
+    this.dataService.getInvoices().subscribe({
+      next: (data: any[]) => {
+        this.invoices = data;
+        this.setDefaultDateRange();
+        this.calculateDateRangeTotal();
+      },
+      error: (err) => {
+        console.error('Error loading invoices for date range:', err);
+      }
+    });
+  }
+
+  setDefaultDateRange() {
+    const today = new Date();
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    
+    this.startDate = this.formatDate(firstDay);
+    this.endDate = this.formatDate(today);
+  }
+
+  formatDate(date: Date): string {
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
+  calculateDateRangeTotal() {
+    if (!this.startDate || !this.endDate) {
+      this.filteredTotalAmount = 0;
+      this.totalFilteredInvoicesCount = 0;
+      return;
+    }
+
+    const start = new Date(this.startDate).getTime();
+    const end = new Date(this.endDate).getTime();
+    const endTime = end + (24 * 60 * 60 * 1000) - 1; 
+
+    const matchedInvoices = this.invoices.filter(inv => {
+      if (!inv.invoice_date) return false;
+      const invDate = new Date(inv.invoice_date).getTime();
+      return invDate >= start && invDate <= endTime;
+    });
+
+    this.totalFilteredInvoicesCount = matchedInvoices.length;
+    this.filteredTotalAmount = matchedInvoices.reduce((sum, inv) => sum + (Number(inv.total_amount) || 0), 0);
   }
 
   clearSearch() {

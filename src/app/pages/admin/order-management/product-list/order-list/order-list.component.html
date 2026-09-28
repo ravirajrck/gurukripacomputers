@@ -1,99 +1,216 @@
-<div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
-  <!-- Header bar -->
-  <div class="px-6 py-5 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
-    <h3 class="text-sm font-semibold text-slate-900 uppercase tracking-widest">
-      Store Orders: <span class="text-[#FF7620] text-lg font-semibold ml-1">{{ ordersList.length }}</span>
-    </h3>
+<div class="space-y-6">
+  <!-- Search Bar -->
+  <div
+    class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 bg-white border border-slate-200/80 rounded-2xl p-5 shadow-2xs"
+  >
+    <div class="flex items-center gap-3 w-full lg:w-auto flex-1">
+      <div class="relative flex items-center w-full md:max-w-md group">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="filterOrders()"
+          placeholder="Search orders..."
+          class="w-full bg-slate-50/50 border border-slate-200 rounded-xl pl-11 pr-10 py-2 text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all"
+        />
+        <div
+          class="absolute left-4 text-slate-600 group-focus-within:text-blue-600 pointer-events-none"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            ></path>
+          </svg>
+        </div>
+        <button
+          *ngIf="searchTerm"
+          (click)="clearSearch()"
+          class="absolute right-4 text-slate-600 hover:text-slate-800 font-medium text-lg cursor-pointer"
+        >
+          &times;
+        </button>
+      </div>
+    </div>
   </div>
 
-  <!-- Table Container -->
-  <div class="overflow-x-auto">
-    <table class="w-full text-left text-sm text-slate-600 table-fixed min-w-[950px]">
-      <thead>
-        <tr class="border-b border-slate-100 text-xs font-semibold uppercase text-slate-400 tracking-widest bg-slate-50/50">
-          <th class="py-4 px-4 w-[6%] text-center">No.</th>
-          <th class="py-4 px-6 w-[22%]">Order ID & Customer</th>
-          <th class="py-4 px-6 w-[28%]">Items & Address</th>
-          <th class="py-4 px-6 w-[14%] text-right">Total Amount</th>
-          <th class="py-4 px-6 w-[16%] text-center">Status</th>
-          <th class="py-4 px-6 w-[14%] text-center">Actions</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-slate-100">
-        
-        <!-- Loading State -->
-        <ng-container *ngIf="loadingOrders">
-          <tr *ngFor="let item of [1, 2]" class="animate-pulse">
-            <td colspan="6" class="py-4 px-4 text-center"><div class="h-6 bg-slate-100 rounded w-full"></div></td>
+  <!-- Orders Table -->
+  <div
+    class="bg-white border border-slate-200/80 rounded-2xl shadow-2xs overflow-hidden"
+  >
+    <div
+      class="px-5 py-3 border-b border-slate-100 bg-slate-50/50 flex items-center space-x-4"
+    >
+      <h3 class="text-sm font-medium text-slate-800 uppercase tracking-wider">
+        Store Orders:
+        <span class="text-blue-600 font-normal ml-1">{{
+          filteredOrders.length
+        }}</span>
+      </h3>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table
+        class="w-full text-left text-sm text-slate-800 table-fixed min-w-[1050px]"
+      >
+        <thead>
+          <tr
+            class="border-b border-slate-100 font-medium uppercase text-slate-600 tracking-wider bg-slate-50/50 text-[11px] rounded-lg overflow-hidden"
+          >
+            <th class="py-2.5 px-2 w-[4%] text-center rounded-l-lg font-medium">No.</th>
+            <th class="py-2.5 px-3 w-[11%] font-medium">Order ID</th>
+            <th class="py-2.5 px-3 w-[14%] font-medium">Client Name</th>
+            <th class="py-2.5 px-3 w-[11%] font-medium">Mobile No.</th>
+            <th class="py-2.5 px-3 w-[20%] font-medium">Items & Address</th>
+            <th class="py-2.5 px-3 w-[10%] font-medium">Amount</th>
+            <th class="py-2.5 px-3 w-[10%] font-medium">Date</th>
+            <th class="py-2.5 px-3 w-[10%] text-center font-medium">Status</th>
+            <th class="py-2.5 px-2 w-[6%] text-center rounded-r-lg font-medium">Actions</th>
           </tr>
-        </ng-container>
-
-        <!-- Orders Data Row -->
-        <tr *ngFor="let ord of ordersList; let i = index" class="hover:bg-slate-50 transition-colors">
-          <td class="py-4 px-4 text-center align-top">
-            <span class="font-bold text-slate-500 text-xs font-mono">{{ i + 1 }}</span>
-          </td>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
           
-          <td class="py-4 px-6 align-top">
-            <p class="font-black text-slate-900 text-xs font-mono bg-slate-100 px-2 py-0.5 rounded inline-block">{{ ord.id }}</p>
-            <p class="font-semibold text-slate-900 text-sm mt-1.5 truncate">{{ ord.customerName }}</p>
-            <p class="text-xs text-slate-500 mt-0.5">📞 {{ ord.phone }}</p>
-            <p class="text-[11px] text-slate-400 mt-0.5">💳 {{ ord.paymentMethod }}</p>
-          </td>
+          <!-- Loading State -->
+          <ng-container *ngIf="loadingOrders">
+            <tr *ngFor="let item of [1, 2]" class="animate-pulse">
+              <td colspan="9" class="py-3 px-3 text-center"><div class="h-5 bg-slate-100 rounded w-full"></div></td>
+            </tr>
+          </ng-container>
 
-          <td class="py-4 px-6 align-top">
-            <div class="space-y-1 mb-2">
-              <div *ngFor="let item of ord.items" class="text-xs font-semibold text-slate-800">
-                • {{ item.name }} <span class="text-slate-500 font-normal">(x{{ item.quantity }})</span>
+          <!-- Orders Data Row -->
+          <tr
+            *ngFor="let ord of filteredOrders; let i = index"
+            class="hover:bg-slate-50/60 transition-colors"
+          >
+            <!-- No. Column -->
+            <td class="py-2.5 px-2 text-center align-middle">
+              <span class="font-medium text-slate-600 font-mono text-[11px]">{{ i + 1 }}</span>
+            </td>
+
+            <!-- Order ID Column -->
+            <td class="py-2.5 px-3 align-middle">
+              <span class="font-medium text-slate-800 text-[11px] font-mono bg-slate-100 px-1.5 py-0.5 rounded inline-block truncate max-w-full" title="{{ ord.id }}">
+                {{ ord.id }}
+              </span>
+            </td>
+
+            <!-- Client Name Column -->
+            <td class="py-2.5 px-3 align-middle">
+              <p class="font-medium text-slate-800 text-sm truncate" title="{{ ord.customerName }}">
+                {{ ord.customerName || "N/A" }}
+              </p>
+              <p class="text-[10px] font-medium text-slate-400 truncate mt-0.5">
+                {{ ord.paymentMethod || "WhatsApp Order" }}
+              </p>
+            </td>
+
+            <!-- Mobile No. Column -->
+            <td class="py-2.5 px-3 align-middle">
+              <span class="font-mono text-sm font-medium text-slate-700">
+                {{ ord.phone || "No contact" }}
+              </span>
+            </td>
+
+            <!-- Items & Address Column -->
+            <td class="py-2.5 px-3 align-middle">
+              <div class="space-y-0.5 mb-1">
+                <div *ngFor="let item of ord.items" class="text-[11px] font-medium text-slate-800 truncate" title="{{ item.name }}">
+                  • {{ item.name }} <span class="text-slate-400 font-normal">(x{{ item.quantity }})</span>
+                </div>
               </div>
-            </div>
-            <p class="text-xs text-slate-600 bg-slate-50 border border-slate-100 p-1.5 rounded-lg truncate">📍 {{ ord.address }}</p>
-            <p class="text-[10px] text-slate-400 mt-1">📅 {{ ord.orderDate | date: 'mediumDate' }}</p>
-          </td>
+              <span
+                class="text-[10px] font-medium text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md inline-block max-w-full truncate"
+                title="{{ ord.address || 'No address' }}"
+              >
+                {{ ord.address || "No address" }}
+              </span>
+            </td>
 
-          <td class="py-4 px-6 text-right align-top font-mono">
-            <span class="text-[#FF7620] font-black text-base">
-              <i class="fa-solid fa-indian-rupee-sign text-xs"></i>{{ ord.totalAmount }}
-            </span>
-          </td>
+            <!-- Total Amount Column -->
+            <td class="py-2.5 px-3 align-middle font-mono">
+              <span class="text-slate-800 font-bold text-sm flex items-center">
+                <i class="fa-solid fa-indian-rupee-sign text-[9px] mr-0.5"></i>{{ ord.totalAmount }}
+              </span>
+            </td>
 
-          <td class="py-4 px-6 text-center align-top">
-            <select
-              [(ngModel)]="ord.orderStatus"
-              (change)="updateOrderStatus(ord)"
-              class="text-xs font-bold px-3 py-1.5 rounded-lg border cursor-pointer outline-none shadow-sm transition-all"
-              [ngClass]="{
-                'bg-amber-50 text-amber-700 border-amber-200': ord.orderStatus === 'Pending',
-                'bg-blue-50 text-blue-700 border-blue-200': ord.orderStatus === 'Processing',
-                'bg-emerald-50 text-emerald-700 border-emerald-200': ord.orderStatus === 'Delivered',
-                'bg-rose-50 text-rose-700 border-rose-200': ord.orderStatus === 'Cancelled'
-              }"
+            <!-- Date Column -->
+            <td class="py-2.5 px-3 align-middle">
+              <span class="text-[11px] font-medium text-blue-600 whitespace-nowrap">
+                {{ (ord.orderDate | date: "mediumDate") || "Not specified" }}
+              </span>
+            </td>
+
+            <!-- Status Column -->
+            <td class="py-2.5 px-3 text-center align-middle">
+              <select
+                [(ngModel)]="ord.orderStatus"
+                (change)="updateOrderStatus(ord)"
+                class="text-[11px] font-medium px-2 py-1 rounded-md border transition-all cursor-pointer outline-none shadow-2xs"
+                [ngClass]="{
+                  'bg-amber-50/80 text-amber-700 border-amber-200':
+                    ord.orderStatus === 'Pending',
+                  'bg-blue-50/80 text-blue-700 border-blue-200':
+                    ord.orderStatus === 'Processing',
+                  'bg-emerald-50/80 text-emerald-700 border-emerald-200':
+                    ord.orderStatus === 'Delivered',
+                  'bg-rose-50/80 text-rose-700 border-rose-200':
+                    ord.orderStatus === 'Cancelled'
+                }"
+              >
+                <option value="Pending">Pending</option>
+                <option value="Processing">Processing</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </td>
+
+            <!-- Actions Column -->
+            <td class="py-2.5 px-2 text-center align-middle">
+              <button
+                [matMenuTriggerFor]="orderMenu"
+                aria-label="Order actions"
+                class="w-7 h-7 rounded-lg bg-slate-50 hover:bg-blue-50 text-slate-500 hover:text-blue-600 border border-slate-200/80 hover:border-blue-200 inline-flex items-center justify-center transition-all duration-200 cursor-pointer shadow-2xs"
+              >
+                <i class="fa-solid fa-ellipsis-vertical text-sm"></i>
+              </button>
+
+              <mat-menu
+                #orderMenu="matMenu"
+                xPosition="before"
+                class="custom-admin-menu"
+              >
+                <button
+                  mat-menu-item
+                  (click)="removeOrder(ord.id)"
+                  class="!flex !items-center !gap-3 !px-3 text-sm !font-medium text-slate-700 hover:!bg-rose-50 hover:!text-rose-600 transition-colors group !h-9 !leading-none"
+                >
+                  <mat-icon
+                    class="!text-slate-400 group-hover:!text-rose-500 !text-base !w-4 !h-4 !inline-flex !items-center !justify-center !m-0 transition-colors"
+                    >delete</mat-icon
+                  >
+                  <span class="inline-flex items-center">Delete</span>
+                </button>
+              </mat-menu>
+            </td>
+          </tr>
+
+          <!-- Empty State -->
+          <tr *ngIf="!loadingOrders && filteredOrders.length === 0">
+            <td
+              colspan="9"
+              class="text-center py-12 text-slate-600 text-sm font-medium tracking-wider uppercase font-mono"
             >
-              <option value="Pending">Pending</option>
-              <option value="Processing">Processing</option>
-              <option value="Delivered">Delivered</option>
-              <option value="Cancelled">Cancelled</option>
-            </select>
-          </td>
-
-          <td class="py-4 px-6 text-center align-top">
-            <button 
-              (click)="removeOrder(ord.id)" 
-              class="text-[10px] font-semibold bg-red-50 hover:bg-red-100 text-red-600 px-3 py-2 rounded-lg uppercase cursor-pointer transition-colors"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-
-        <!-- Empty State -->
-        <tr *ngIf="!loadingOrders && ordersList.length === 0">
-          <td colspan="6" class="text-center py-16 text-slate-400 text-xs font-mono uppercase tracking-widest">
-            No orders found.
-          </td>
-        </tr>
-
-      </tbody>
-    </table>
+              No orders found.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

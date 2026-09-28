@@ -5,10 +5,21 @@ import { RouterLink, Router, RouterModule } from '@angular/router';
 import { DataService } from '../../../../core/services/data.service';
 import { AuthService } from '../../../../core/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-list',
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatIconModule,
+  ],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css',
 })
@@ -27,6 +38,7 @@ export class ProductListComponent {
   searchTerm: string = '';
   loadingData: boolean = false;
   categoriesList: any[] = [];
+
   ngOnInit(): void {
     this.loadingData = true;
 
@@ -42,9 +54,8 @@ export class ProductListComponent {
     this.dataService.getProducts().subscribe({
       next: (data: any) => {
         console.log(data);
-        // Yahan data ko apne array me assign karein
         this.productsList = data;
-        this.filteredProducts = [...this.productsList]; // Data milte hi filter list bhi update karein
+        this.filteredProducts = [...this.productsList];
         this.loadingData = false;
       },
       error: (err) => {
@@ -54,17 +65,6 @@ export class ProductListComponent {
     });
   }
 
-  //   get filteredProducts() {
-  //   if (!this.searchTerm.trim()) {
-  //     return this.productsList;
-  //   }
-  //   const term = this.searchTerm.toLowerCase().trim();
-  //   return this.productsList.filter(
-  //     (prod) =>
-  //       (prod.name && prod.name.toLowerCase().includes(term)) ||
-  //       (prod.description && prod.description.toLowerCase().includes(term)),
-  //   );
-  // }
   // Search filter implementation
   filterProducts(): void {
     if (!this.searchTerm.trim()) {
@@ -93,19 +93,44 @@ export class ProductListComponent {
       queryParams: { type: 'dashboard' },
     });
   }
+
   async removeProduct(id: string, name: string) {
-    if (confirm(`Are you sure you want to delete the product "${name}"?`)) {
+    const result = await Swal.fire({
+      html: `
+        <div class="text-center pt-2 pb-1">
+          <h3 class="text-slate-800 font-medium text-base mb-2">Delete ${name}</h3>
+          <p class="text-slate-600 text-sm font-medium leading-relaxed">
+            Are you sure you want to delete ${name}? This action cannot be undone.
+          </p>
+        </div>
+      `,
+      showCancelButton: true,
+      buttonsStyling: false,
+      reverseButtons: true,
+      confirmButtonText: 'Yes, Delete',
+      cancelButtonText: 'Cancel',
+      customClass: {
+        popup:
+          'bg-white rounded-2xl border border-slate-200 shadow-2xl p-6 font-sans max-w-md w-full',
+        actions: 'flex items-center gap-3 w-full mt-6 mb-0',
+        confirmButton:
+          'flex-1 px-5 py-3 rounded-xl text-sm font-medium bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white shadow-md shadow-blue-500/20 transition-all cursor-pointer whitespace-nowrap',
+        cancelButton:
+          'flex-1 px-5 py-3 rounded-xl text-sm font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all cursor-pointer whitespace-nowrap',
+      },
+    });
+
+    if (result.isConfirmed) {
       try {
-        // 1. Product delete karein
         await this.dataService.deleteProduct(id);
-
-        // 2. Dashboard counter me totalProducts ko -1 karein
         await this.dataService.updateDashboardCounter('totalProducts', -1);
-
         this.toastr.success('Product deleted successfully!', 'Success');
 
-        // Agar aap local list se bhi turant hatana chahte hain toh ye line add kar sakte hain:
-        // this.productsList = this.productsList.filter(p => p.id !== id);
+        // Local list se turant hatane ke liye
+        this.productsList = this.productsList.filter((p) => p.id !== id);
+        this.filteredProducts = this.filteredProducts.filter(
+          (p) => p.id !== id,
+        );
       } catch (err) {
         console.error(err);
         this.toastr.error(
@@ -133,9 +158,6 @@ export class ProductListComponent {
   }
 
   onImageError(event: any) {
-    event.target.src = 'noimage.png';
+    event.target.src = 'assets/noimage.png';
   }
-  // onImageError(event: any): void {
-  //   event.target.src = 'assets/noimage.png';
-  // }
 }

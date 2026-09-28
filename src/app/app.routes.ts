@@ -21,6 +21,9 @@ import { OrderListComponent } from './pages/admin/order-management/product-list/
 import { ServiceListComponent } from './pages/admin/service-management/service-list/service-list.component';
 import { CategoriesListComponent } from './pages/admin/category-management/categories-list/categories-list.component';
 import { ProductListComponent } from './pages/admin/product-management/product-list/product-list.component';
+import { InvoiceListComponent } from './pages/admin/invoices-management/invoice-list/invoice-list.component';
+import { InvoiceDetailComponent } from './pages/admin/invoices-management/invoice-detail/invoice-detail.component';
+import { AddEditInvoiceComponent } from './pages/admin/invoices-management/add-edit-invoice/add-edit-invoice.component';
 
 export const routes: Routes = [
   {
@@ -56,6 +59,11 @@ export const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'manage-product', component: AddProductComponent },
       { path: 'manage-product/:id', component: AddProductComponent },
+      { path: 'invoices', component: InvoiceListComponent },
+
+      { path: 'invoice-details/:id', component: InvoiceDetailComponent },
+      { path: 'invoices/manage', component: AddEditInvoiceComponent },
+      { path: 'invoices/manage/:id', component: AddEditInvoiceComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },

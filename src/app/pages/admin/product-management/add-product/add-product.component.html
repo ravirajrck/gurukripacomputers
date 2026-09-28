@@ -1,29 +1,28 @@
-<div
-  class="min-h-screen bg-cyber-bg text-gray-100 p-6 md:p-6 relative overflow-hidden"
->
-  <div
-    class="absolute top-[-10%] left-1/4 w-[600px] h-[600px] bg-cyber-primary/10 rounded-full blur-[160px] pointer-events-none"
-  ></div>
+<div class="min-h-screen bg-slate-50 text-slate-800 p-6 md:p-6 relative overflow-hidden">
+  <!-- Subtle Light AI Blue Ambient Glow Effects -->
+  <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+  <div class="absolute -bottom-20 -right-20 w-80 h-80 bg-cyan-400/5 rounded-full blur-[90px] pointer-events-none"></div>
 
+  <!-- Back Button -->
   <div class="max-w-6xl mx-auto mb-8 relative z-10">
     <button
       (click)="goBack()"
-      class="group flex items-center gap-3 text-slate-500 hover:text-[#FF7620] transition-all duration-300 cursor-pointer"
+      class="group flex items-center gap-3 text-slate-500 hover:text-blue-600 transition-all duration-300 cursor-pointer"
     >
-      <div
-        class="w-10 h-10 rounded-full border border-slate-300 flex items-center justify-center group-hover:bg-[#FF7620]/10 group-hover:border-[#FF7620] transition-all shrink-0 relative"
-      >
+      <div class="w-10 h-10 rounded-full border border-slate-300 flex items-center justify-center group-hover:bg-blue-50 group-hover:border-blue-600 transition-all shrink-0 relative shadow-xs">
         <div class="absolute inset-0 flex items-center justify-center pb-0">
-          <i class="fa-solid fa-arrow-left text-sm"></i>
+          <i class="fa-solid fa-arrow-left text-sm text-slate-600 group-hover:text-blue-600"></i>
         </div>
       </div>
       <span class="font-bold tracking-widest text-sm">Back to Dashboard</span>
     </button>
   </div>
 
+  <!-- Page Header Title -->
   <div class="max-w-6xl mx-auto mb-8 relative z-10">
-    <h1 class="text-3xl font-bold text-slate-900 tracking-wider uppercase">
-      {{ isEditing ? "Edit Product" : "Add New Product" }}
+    <h1 class="text-3xl font-black text-slate-900 tracking-tight uppercase flex items-center gap-3">
+      <span>{{ isEditing ? "Edit Product" : "Add New Product" }}</span>
+      <span class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></span>
     </h1>
     <p class="text-sm font-medium text-slate-500 mt-1">
       {{
@@ -34,104 +33,93 @@
     </p>
   </div>
 
-  <!-- SHIMMER LOADER (Jab tak data load ho raha hai) -->
+  <!-- SHIMMER LOADER -->
   <div
     *ngIf="isLoading"
-    class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 animate-pulse"
+    class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 animate-pulse relative z-10"
   >
     <div class="lg:col-span-2 space-y-6">
-      <div
-        class="bg-white border border-slate-200 p-8 rounded-2xl shadow-xl space-y-6"
-      >
-        <!-- Title & Category Shimmer -->
+      <div class="bg-white/90 backdrop-blur-xl border border-blue-500/15 p-8 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.03)] space-y-6">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div class="h-14 bg-slate-200 rounded-xl"></div>
-          <div class="h-14 bg-slate-200 rounded-xl"></div>
+          <div class="h-14 bg-slate-100 rounded-2xl"></div>
+          <div class="h-14 bg-slate-100 rounded-2xl"></div>
         </div>
-        <!-- Prices Shimmer -->
         <div class="grid grid-cols-2 gap-6">
-          <div class="h-14 bg-slate-200 rounded-xl"></div>
-          <div class="h-14 bg-slate-200 rounded-xl"></div>
+          <div class="h-14 bg-slate-100 rounded-2xl"></div>
+          <div class="h-14 bg-slate-100 rounded-2xl"></div>
         </div>
-        <!-- Stock Shimmer -->
-        <div class="h-14 bg-slate-200 rounded-xl"></div>
-        <!-- Description Shimmer -->
-        <div class="h-32 bg-slate-200 rounded-xl"></div>
-        <!-- Image Box Shimmer -->
-        <div class="h-28 bg-slate-200 rounded-xl"></div>
-        <!-- Button Shimmer -->
-        <div class="h-14 bg-slate-300 rounded-xl"></div>
+        <div class="h-14 bg-slate-100 rounded-2xl"></div>
+        <div class="h-32 bg-slate-100 rounded-2xl"></div>
+        <div class="h-28 bg-slate-100 rounded-2xl"></div>
+        <div class="h-14 bg-slate-200 rounded-2xl"></div>
       </div>
     </div>
   </div>
 
-  <!-- REAL FORM (Data load hone ke baad dikhega) -->
+  <!-- REAL FORM -->
   <form
     *ngIf="!isLoading"
     [formGroup]="productForm"
     (ngSubmit)="onSaveProduct()"
-    class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8"
+    class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10"
   >
     <div class="lg:col-span-2 space-y-6">
-      <div
-        class="bg-white glass-panel bg-cyber-card/70 border border-white/5 p-8 rounded-2xl shadow-2xl"
-      >
+      <div class="bg-white/90 backdrop-blur-xl border border-blue-500/15 p-8 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.03)]">
+        
+        <!-- Name & Category -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
-            <label class="block text-base font-bold text-slate-700 mb-2">
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">
               Product Name *
             </label>
             <input
               formControlName="name"
               type="text"
               placeholder="Enter product name (e.g., Wireless Mouse)"
-              class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-4 text-slate-900 focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] outline-none transition-all"
+              class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all"
             />
-
             <div
               *ngIf="
                 productForm.get('name')?.invalid &&
                 productForm.get('name')?.touched
               "
-              class="text-red-500 text-sm mt-1"
+              class="text-rose-500 text-xs font-medium mt-1.5"
             >
               Product name is required.
             </div>
           </div>
+
           <div>
-            <label class="block text-base font-bold text-slate-700 mb-2">
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">
               Category *
             </label>
             <select
               formControlName="categoryId"
-              class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-4 text-slate-900 focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] outline-none appearance-none transition-all"
+              class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-sm font-medium text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none appearance-none transition-all cursor-pointer"
             >
               <option value="" disabled selected>Select Category</option>
-
               <option *ngFor="let cat of categoriesList" [value]="cat.id">
                 {{ cat.name }}
               </option>
             </select>
-
             <div
               *ngIf="
                 productForm.get('categoryId')?.invalid &&
                 productForm.get('categoryId')?.touched
               "
-              class="text-red-500 text-sm mt-1"
+              class="text-rose-500 text-xs font-medium mt-1.5"
             >
               Please select a category.
             </div>
           </div>
         </div>
 
+        <!-- Prices -->
         <div class="grid grid-cols-2 gap-6 mt-6">
           <div>
-            <label
-              class="text-base font-bold text-slate-700 mb-2 flex items-center gap-1.5"
-            >
+            <label class="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2 flex items-center gap-1.5">
               <span>M.R.P</span>
-              (<i class="fa-solid fa-indian-rupee-sign text-sm"></i>)*
+              (<i class="fa-solid fa-indian-rupee-sign text-xs"></i>)*
             </label>
             <input
               step="0"
@@ -140,25 +128,23 @@
               placeholder="0,000"
               min="1"
               (keypress)="onlyNumbers($event)"
-              class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-4 text-slate-900 focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] outline-none transition-all"
+              class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all font-mono"
             />
-
             <div
               *ngIf="
                 productForm.get('originalPrice')?.invalid &&
                 productForm.get('originalPrice')?.touched
               "
-              class="text-red-500 text-sm mt-1"
+              class="text-rose-500 text-xs font-medium mt-1.5"
             >
               Please enter a valid price.
             </div>
           </div>
+
           <div>
-            <label
-              class="text-base font-bold text-slate-700 mb-2 flex items-center gap-1.5"
-            >
-              <span> Selling Price</span>
-              ( <i class="fa-solid fa-indian-rupee-sign text-sm"></i>)*
+            <label class="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <span>Selling Price</span>
+              (<i class="fa-solid fa-indian-rupee-sign text-xs"></i>)*
             </label>
             <input
               type="number"
@@ -166,14 +152,14 @@
               placeholder="0,000"
               min="1"
               (keypress)="onlyNumbers($event)"
-              class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-4 text-slate-900 focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] outline-none transition-all"
+              class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all font-mono"
             />
             <div
               *ngIf="
                 productForm.get('price')?.invalid &&
                 productForm.get('price')?.touched
               "
-              class="text-red-500 text-sm mt-1"
+              class="text-rose-500 text-xs font-medium mt-1.5"
             >
               Please enter a valid price.
             </div>
@@ -182,180 +168,155 @@
 
         <!-- Stock Status (Radio Buttons) -->
         <div class="mt-6">
-          <label class="block text-base font-bold text-slate-700 mb-2">
+          <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">
             Stock Status *
           </label>
-          <div
-            class="flex items-center gap-6 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5"
-          >
-            <label class="flex items-center gap-2 cursor-pointer">
+          <div class="flex items-center gap-6 bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3">
+            <label class="flex items-center gap-2.5 cursor-pointer">
               <input
                 type="radio"
                 formControlName="inStock"
                 [value]="true"
-                class="w-4 h-4 text-[#FF7620] focus:ring-[#FF7620]"
+                class="w-4 h-4 text-blue-600 focus:ring-blue-500 accent-blue-600 cursor-pointer"
               />
-              <span class="text-slate-900 font-semibold text-sm">In Stock</span>
+              <span class="text-slate-800 font-semibold text-sm">In Stock</span>
             </label>
 
-            <label class="flex items-center gap-2 cursor-pointer">
+            <label class="flex items-center gap-2.5 cursor-pointer">
               <input
                 type="radio"
                 formControlName="inStock"
                 [value]="false"
-                class="w-4 h-4 text-[#FF7620] focus:ring-[#FF7620]"
+                class="w-4 h-4 text-blue-600 focus:ring-blue-500 accent-blue-600 cursor-pointer"
               />
-              <span class="text-slate-900 font-semibold text-sm"
-                >Out of Stock</span
-              >
+              <span class="text-slate-800 font-semibold text-sm">Out of Stock</span>
             </label>
           </div>
-
           <div
             *ngIf="
               productForm.get('inStock')?.invalid &&
               productForm.get('inStock')?.touched
             "
-            class="text-red-500 text-sm mt-1"
+            class="text-rose-500 text-xs font-medium mt-1.5"
           >
             Please select stock status.
           </div>
         </div>
 
+        <!-- Description -->
         <div class="mt-6">
-          <label class="block text-base font-bold text-slate-700 mb-2">
-            Description*
+          <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">
+            Description *
           </label>
           <textarea
             formControlName="description"
             rows="4"
             placeholder="Write a detailed product description..."
             maxlength="2000"
-            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-4 text-slate-900 focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] outline-none resize-none transition-all"
+            class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none resize-none transition-all"
           ></textarea>
           <div
             *ngIf="
               productForm.get('description')?.invalid &&
               productForm.get('description')?.touched
             "
-            class="text-red-500 text-sm mt-1"
+            class="text-rose-500 text-xs font-medium mt-1.5"
           >
-            <span *ngIf="productForm.get('description')?.errors?.['required']"
-              >Description is required.</span
-            >
-            <span *ngIf="productForm.get('description')?.errors?.['minlength']"
-              >Description must be at least 10 characters long.</span
-            >
+            <span *ngIf="productForm.get('description')?.errors?.['required']">Description is required.</span>
+            <span *ngIf="productForm.get('description')?.errors?.['minlength']">Description must be at least 10 characters long.</span>
           </div>
-          <div class="text-right text-xs text-slate-400 mt-1 font-bold">
+          <div class="text-right text-xs text-slate-400 mt-1.5 font-medium font-mono">
             {{ productForm.get("description")?.value?.length || 0 }}/2000
           </div>
         </div>
 
+        <!-- Images Section -->
         <div class="space-y-6 mt-6">
-          <div>
-            <div formArrayName="images" class="space-y-4">
-              <div
-                *ngFor="let img of imageArray.controls; let i = index"
-                [formGroupName]="i"
-                class="bg-slate-50 p-4 rounded-2xl border border-slate-100 overflow-hidden"
-              >
-                <label class="block text-base font-bold text-slate-700 mb-4"
-                  >Product Images ({{ i + 1 }})*</label
+          <div formArrayName="images" class="space-y-4">
+            <div
+              *ngFor="let img of imageArray.controls; let i = index"
+              [formGroupName]="i"
+              class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 overflow-hidden shadow-2xs"
+            >
+              <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-3">
+                Product Image ({{ i + 1 }}) *
+              </label>
+              
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <input
+                  type="text"
+                  formControlName="url"
+                  placeholder="Paste image URL here..."
+                  class="w-full sm:flex-1 bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all"
+                />
+
+                <button
+                  *ngIf="!img.get('url')?.value"
+                  type="button"
+                  (click)="uploadImage(i)"
+                  class="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider cursor-pointer hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md shadow-blue-500/20 shrink-0 flex items-center justify-center gap-2"
                 >
-                <div
-                  class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2"
-                >
-                  <input
-                    type="text"
-                    formControlName="url"
-                    placeholder="Paste image URL here..."
-                    class="w-full sm:flex-1 bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] outline-none transition-all text-sm"
-                  />
+                  <i class="fa-solid fa-cloud-arrow-up text-sm"></i>
+                  <span>Upload</span>
+                </button>
 
-                  <button
-                    *ngIf="!img.get('url')?.value"
-                    type="button"
-                    (click)="uploadImage(i)"
-                    class="w-full sm:w-auto bg-[#FF7620] text-white px-5 py-3 rounded-xl font-bold cursor-pointer hover:bg-orange-600 transition-all shrink-0 flex items-center justify-center gap-2"
-                  >
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                    <span>Upload</span>
-                  </button>
-
-                  <button
-                    *ngIf="img.get('url')?.value"
-                    type="button"
-                    (click)="uploadImage(i)"
-                    class="w-full sm:w-auto bg-slate-800 text-white px-5 py-3 rounded-xl font-bold cursor-pointer hover:bg-slate-900 transition-all shrink-0 flex items-center justify-center gap-2"
-                  >
-                    <i class="fa-solid fa-rotate"></i>
-                    <span>Change</span>
-                  </button>
-                </div>
-
-                <div
-                  *ngIf="img.get('url')?.invalid && img.get('url')?.touched"
-                  class="text-red-500 text-sm mt-1"
-                >
-                  Please provide a valid image URL or upload an image.
-                </div>
-
-                <div
+                <button
                   *ngIf="img.get('url')?.value"
-                  class="relative w-28 h-28 mt-4"
+                  type="button"
+                  (click)="uploadImage(i)"
+                  class="w-full sm:w-auto bg-slate-800 text-white px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider cursor-pointer hover:bg-slate-900 transition-all shrink-0 flex items-center justify-center gap-2 shadow-sm"
                 >
-                  <div
-                    class="w-full h-full border border-slate-200 rounded-lg overflow-hidden bg-white shadow-sm"
-                  >
-                    <img
-                      [src]="img.get('url')?.value"
-                      class="w-full h-full object-cover"
-                    />
-                  </div>
+                  <i class="fa-solid fa-rotate text-sm"></i>
+                  <span>Change</span>
+                </button>
+              </div>
 
-                  <button
-                    type="button"
-                    (click)="removeImage(i)"
-                    class="absolute -top-3 -right-3 bg-red-500 text-white rounded-full w-7 h-7 flex items-center justify-center font-black text-sm border-2 border-white shadow-lg hover:scale-110 cursor-pointer transition-all"
-                  >
-                    ×
-                  </button>
+              <div
+                *ngIf="img.get('url')?.invalid && img.get('url')?.touched"
+                class="text-rose-500 text-xs font-medium mt-1.5"
+              >
+                Please provide a valid image URL or upload an image.
+              </div>
+
+              <!-- Image Preview Box -->
+              <div *ngIf="img.get('url')?.value" class="relative w-28 h-28 mt-4">
+                <div class="w-full h-full border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm">
+                  <img
+                    [src]="img.get('url')?.value"
+                    class="w-full h-full object-cover"
+                  />
                 </div>
+
+                <button
+                  type="button"
+                  (click)="removeImage(i)"
+                  class="absolute -top-2.5 -right-2.5 bg-rose-500 text-white rounded-full w-7 h-7 flex items-center justify-center font-black text-xs border-2 border-white shadow-md hover:scale-110 cursor-pointer transition-all"
+                >
+                  ×
+                </button>
               </div>
             </div>
           </div>
 
-          <button
-            type="submit"
-            [disabled]="isSaving"
-            [class.opacity-50]="isSaving"
-            class="w-full bg-[#FF7620] text-white font-black uppercase text-base tracking-widest py-4 rounded-xl shadow-lg shadow-orange-100 hover:bg-orange-600 transition-all duration-300 flex items-center justify-center cursor-pointer"
-          >
-            <span *ngIf="isSaving" class="flex items-center">
-              <svg
-                class="animate-spin h-5 w-5 mr-3 text-white"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  class="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                ></circle>
-                <path
-                  class="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v8H4z"
-                ></path>
-              </svg>
-              Saving Product...
-            </span>
+          <!-- Submit Button -->
+          <div class="pt-4">
+            <button
+              type="submit"
+              [disabled]="isSaving"
+              [class.opacity-50]="isSaving"
+              class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold uppercase text-xs tracking-widest py-4 rounded-2xl shadow-lg shadow-blue-500/25 hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 flex items-center justify-center cursor-pointer"
+            >
+              <span *ngIf="isSaving" class="flex items-center gap-2">
+                <svg class="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                </svg>
+                <span>Saving Product...</span>
+              </span>
 
-            <span *ngIf="!isSaving">Save Product</span>
-          </button>
+              <span *ngIf="!isSaving">Save Product</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

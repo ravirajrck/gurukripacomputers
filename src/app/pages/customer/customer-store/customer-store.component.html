@@ -1,34 +1,37 @@
 <main
-  class="max-w-[1600px] w-full mx-auto px-6 py-8 flex-1 flex flex-col relative z-10"
+  class="max-w-[1600px] w-full mx-auto px-6 py-8 flex-1 flex flex-1 flex-col relative z-10"
 >
-  <!-- Header & Search Bar -->
+  <!-- Header & Search Bar (Clean & Minimalist Vibe) -->
   <div
-    class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10 bg-cyber-card p-1 rounded-2xl"
+    class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 bg-white/80 backdrop-blur-xl px-6 py-5 rounded-2xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.02)] relative z-10"
   >
     <div>
-      <h1 class="text-3xl font-bold text-slate-900 tracking-wider uppercase">
-        Explore Catalog
+      <h1
+        class="text-xl font-bold text-slate-800 tracking-tight flex items-center gap-2.5"
+      >
+        <span>Explore Catalog</span>
+
       </h1>
-      <p class="text-sm font-medium text-slate-500 mt-1">
-        Explore our latest arrivals and exclusive collections today.
+      <p class="text-xs font-normal text-slate-500 mt-0.5">
+        Discover our latest arrivals and exclusive collections.
       </p>
     </div>
 
-    <div class="relative flex items-center w-full md:max-w-md group">
+    <div class="relative flex items-center w-full md:max-w-sm group">
       <input
         type="text"
         [(ngModel)]="searchQuery"
         name="custSearch"
         placeholder="Search products..."
-        class="w-full bg-white border border-slate-200 rounded-xl pl-11 pr-10 py-3.5 text-base text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#FF7620] focus:ring-1 focus:ring-[#FF7620] transition-all duration-300 shadow-sm"
+        class="w-full bg-slate-50 border border-slate-200/90 rounded-xl pl-10 pr-9 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:bg-white focus:ring-3 focus:ring-blue-600/10 transition-all duration-200 shadow-2xs"
       />
 
       <!-- Icon -->
       <div
-        class="absolute left-4 text-slate-400 group-focus-within:text-[#FF7620] transition-colors duration-300 pointer-events-none"
+        class="absolute left-3.5 text-slate-400 group-focus-within:text-blue-600 transition-colors duration-200 pointer-events-none"
       >
         <svg
-          class="w-5 h-5"
+          class="w-4 h-4"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -36,7 +39,7 @@
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
-            stroke-width="2.5"
+            stroke-width="2"
             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
           ></path>
         </svg>
@@ -47,7 +50,7 @@
         type="button"
         *ngIf="searchQuery"
         (click)="searchQuery = ''"
-        class="absolute right-4 text-slate-400 hover:text-[#FF7620] transition-colors font-bold text-xl cursor-pointer"
+        class="absolute right-3 text-slate-400 hover:text-slate-600 transition-colors font-medium text-lg cursor-pointer"
       >
         &times;
       </button>
@@ -59,38 +62,51 @@
     <!-- Toggle Button -->
     <button
       type="button"
-      (click)="isCategoryDropdownOpen = !isCategoryDropdownOpen"
-      class="px-5 py-3 bg-white border border-slate-200 hover:border-[#FF7620] text-slate-700 hover:text-[#FF7620] rounded-xl text-sm font-bold tracking-wide uppercase transition-all duration-300 cursor-pointer inline-flex items-center gap-3 shadow-sm"
+      (click)="
+        isCategoryDropdownOpen = !isCategoryDropdownOpen;
+        $event.stopPropagation()
+      "
+      class="px-4 py-2.5 bg-white border border-slate-200 hover:border-blue-500 text-slate-700 hover:text-blue-600 rounded-xl text-xs font-bold tracking-wide uppercase transition-all duration-200 cursor-pointer inline-flex items-center gap-2.5 shadow-2xs"
     >
       <span class="flex items-center gap-2">
-        <i class="fa-solid fa-filter text-[#FF7620]"></i>
+        <i class="fa-solid fa-filter text-blue-600"></i>
         Category:
-        <span class="text-[#FF7620]">
-          {{ selectedCategory === 'all' ? 'All Categories' : getSelectedCategoryName() }}
+        <span class="text-blue-600 font-semibold">
+          {{
+            selectedCategory === "all"
+              ? "All Categories"
+              : getSelectedCategoryName()
+          }}
         </span>
       </span>
-      <i class="fa-solid fa-chevron-down text-xs transition-transform duration-300" [ngClass]="{'rotate-180': isCategoryDropdownOpen}"></i>
+      <i
+        class="fa-solid fa-chevron-down text-[10px] transition-transform duration-300"
+        [ngClass]="{ 'rotate-180': isCategoryDropdownOpen }"
+      ></i>
     </button>
 
     <!-- Popup Dropdown List -->
     <div
       *ngIf="isCategoryDropdownOpen"
-      class="absolute left-0 mt-2 w-72 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 overflow-hidden py-2 animate-in fade-in slide-in-from-top-2 duration-200"
+      class="absolute left-0 mt-2 w-64 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 overflow-hidden py-2 animate-in fade-in slide-in-from-top-2 duration-200"
     >
-      <div class="max-h-64 overflow-y-auto px-2 space-y-1 custom-scrollbar">
+      <div class="max-h-60 overflow-y-auto px-2 space-y-1 custom-scrollbar">
         <!-- All Items Option -->
         <button
           type="button"
           (click)="selectedCategory = 'all'; isCategoryDropdownOpen = false"
-          class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-between"
+          class="w-full text-left px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-between"
           [ngClass]="
             selectedCategory === 'all'
-              ? 'bg-[#FF7620] text-white shadow-sm'
-              : 'text-slate-600 hover:bg-slate-50 hover:text-[#FF7620]'
+              ? 'bg-blue-600 text-white shadow-xs shadow-blue-500/20'
+              : 'text-slate-600 hover:bg-blue-50 hover:text-blue-600'
           "
         >
           <span>All Categories</span>
-          <i *ngIf="selectedCategory === 'all'" class="fa-solid fa-check text-xs"></i>
+          <i
+            *ngIf="selectedCategory === 'all'"
+            class="fa-solid fa-check text-xs"
+          ></i>
         </button>
 
         <!-- Category Options -->
@@ -98,15 +114,18 @@
           type="button"
           *ngFor="let cat of categoriesList"
           (click)="selectedCategory = cat.id; isCategoryDropdownOpen = false"
-          class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-between"
+          class="w-full text-left px-3.5 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-between"
           [ngClass]="
             selectedCategory === cat.id
-              ? 'bg-[#FF7620] text-white shadow-sm'
-              : 'text-slate-600 hover:bg-slate-50 hover:text-[#FF7620]'
+              ? 'bg-blue-600 text-white shadow-xs shadow-blue-500/20'
+              : 'text-slate-600 hover:bg-blue-50 hover:text-blue-600'
           "
         >
           <span class="truncate pr-2">{{ cat.name }}</span>
-          <i *ngIf="selectedCategory === cat.id" class="fa-solid fa-check text-xs shrink-0"></i>
+          <i
+            *ngIf="selectedCategory === cat.id"
+            class="fa-solid fa-check text-xs shrink-0"
+          ></i>
         </button>
       </div>
     </div>
@@ -119,14 +138,14 @@
   >
     <div
       *ngFor="let placeholder of [1, 2, 3, 4, 5, 6]"
-      class="bg-white border border-slate-100 rounded-2xl p-4 overflow-hidden space-y-4 animate-pulse shadow-sm"
+      class="bg-white border border-blue-500/10 rounded-2xl p-4 overflow-hidden space-y-4 animate-pulse shadow-xs"
     >
-      <div class="aspect-square w-full bg-slate-200 rounded-xl"></div>
-      <div class="h-4 bg-slate-200 rounded w-2/3"></div>
-      <div class="h-3 bg-slate-100 rounded w-full"></div>
+      <div class="aspect-square w-full bg-slate-100 rounded-xl"></div>
+      <div class="h-4 bg-slate-100 rounded w-2/3"></div>
+      <div class="h-3 bg-slate-50 rounded w-full"></div>
       <div class="flex justify-between items-center pt-2">
-        <div class="h-5 bg-slate-200 rounded w-1/4"></div>
-        <div class="h-7 bg-slate-200 rounded w-1/3"></div>
+        <div class="h-5 bg-slate-100 rounded w-1/4"></div>
+        <div class="h-7 bg-slate-100 rounded w-1/3"></div>
       </div>
     </div>
   </div>

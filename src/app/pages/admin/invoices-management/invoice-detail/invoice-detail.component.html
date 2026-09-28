@@ -1,0 +1,194 @@
+<div class="max-w-6xl mx-auto bg-slate-100 border border-slate-200/80 rounded-2xl p-6 relative font-sans text-slate-800">
+  
+  <!-- Loader Overlay -->
+  <div *ngIf="isLoading" class="absolute inset-0 bg-white/80 backdrop-blur-xs z-10 flex items-center justify-center rounded-2xl">
+    <div class="flex items-center gap-2.5 text-sm font-medium text-slate-800">
+      <i class="fa-solid fa-spinner fa-spin text-base text-blue-600"></i>
+      Loading Invoice...
+    </div>
+  </div>
+
+  <!-- Header / Action Bar (Print hone par yeh chup jayega) -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-6 print:hidden">
+    <div>
+      <h2 class="text-lg font-semibold text-slate-900 tracking-tight flex items-center gap-2">
+        <span>Invoice Details</span>
+      </h2>
+      <p class="text-sm font-medium text-slate-500 mt-0.5">
+        View, print or download your GST tax invoice.
+      </p>
+    </div>
+    <div class="flex items-center gap-3">
+      <a 
+        routerLink="/admin/invoices"
+        class="px-4 py-2.5 rounded-xl text-sm font-medium bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 transition-all cursor-pointer no-underline whitespace-nowrap inline-flex items-center justify-center shadow-xs"
+      >
+        <i class="fa-solid fa-arrow-left text-xs mr-2"></i> Back
+      </a>
+      
+      <!-- Direct Print Button -->
+      <button 
+        type="button"
+        (click)="printInvoice()"
+        class="px-4 py-2.5 rounded-xl text-sm font-medium bg-slate-800 hover:bg-slate-900 text-white transition-all cursor-pointer whitespace-nowrap inline-flex items-center justify-center shadow-xs"
+      >
+        <i class="fa-solid fa-print text-sm mr-2"></i> Print
+      </button>
+
+      <!-- Download PDF Button -->
+      <button 
+        type="button"
+        (click)="downloadPDF()"
+        class="px-5 py-2.5 rounded-xl text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-all cursor-pointer whitespace-nowrap inline-flex items-center justify-center"
+      >
+        <i class="fa-solid fa-file-pdf text-sm mr-2"></i> Download PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- EXACT A4 PAPER CONTAINER FOR PREVIEW        -->
+  <!-- ========================================== -->
+  <div class="flex justify-center overflow-x-auto py-4">
+    <div *ngIf="!isLoading" class="w-[210mm] min-h-[297mm] bg-white border border-slate-300 p-[12mm] shadow-xl rounded-sm text-slate-900 text-[11px] box-border relative flex flex-col justify-between">
+      
+      <div>
+        <!-- Seller Header -->
+        <div class="text-center border-b border-slate-900 pb-3 mb-3">
+          <h1 class="text-base font-bold uppercase tracking-wider text-slate-900">{{ invoice.seller.name }}</h1>
+          <p class="text-slate-600 mt-0.5 font-medium text-[10px]">{{ invoice.seller.address }} | Mob: {{ invoice.seller.phone }}</p>
+          <p class="text-slate-700 mt-0.5 font-semibold text-[10px]">GSTIN: {{ invoice.seller.gstin }}</p>
+          <div class="inline-block mt-2 px-3 py-0.5 bg-slate-900 text-white font-bold rounded text-[10px] uppercase tracking-widest">
+            TAX INVOICE
+          </div>
+        </div>
+
+        <!-- Customer Billed To -->
+        <div class="border border-slate-800 p-2.5 rounded mb-3 bg-slate-50/40">
+          <p class="font-bold text-slate-800 mb-1 flex items-center gap-1 text-[10px]">
+            <i class="fa-solid fa-user-tag text-blue-600"></i> Billed To (Customer):
+          </p>
+          <div class="grid grid-cols-2 gap-1 text-slate-800 text-[10.5px]">
+            <p class="font-semibold">Name: <span class="font-normal">{{ invoice.customer.name }}</span></p>
+            <p class="font-semibold">Phone: <span class="font-normal">{{ invoice.customer.phone }}</span></p>
+            <p class="font-semibold col-span-2">Address: <span class="font-normal">{{ invoice.customer.address || 'N/A' }}</span></p>
+          </div>
+        </div>
+
+        <!-- Invoice Meta (No, Date, Place of Supply) -->
+        <div class="grid grid-cols-3 border border-slate-800 rounded overflow-hidden mb-3 text-center font-semibold text-[10px] bg-slate-50/20">
+          <div class="p-2 border-r border-slate-800">
+            <span class="text-slate-500 block text-[9px]">Invoice Number</span>
+            <span class="text-slate-900 font-bold">{{ invoice.invoice_no }}</span>
+          </div>
+          <div class="p-2 border-r border-slate-800">
+            <span class="text-slate-500 block text-[9px]">Invoice Date</span>
+            <span class="text-slate-900 font-bold">{{ invoice.invoice_date }}</span>
+          </div>
+          <div class="p-2">
+            <span class="text-slate-500 block text-[9px]">Place of Supply</span>
+            <span class="text-slate-900 font-bold">{{ invoice.place_of_supply }}</span>
+          </div>
+        </div>
+
+        <!-- Items Table -->
+        <div class="border border-slate-800 rounded overflow-hidden mb-3 bg-white">
+          <table class="w-full border-collapse text-[10.5px]">
+            <thead>
+              <tr class="bg-slate-200 text-slate-800 text-center font-bold border-b border-slate-800">
+                <th class="p-1.5 w-10 border-r border-slate-800">S.No.</th>
+                <th class="p-1.5 text-left border-r border-slate-800">Item Description</th>
+                <th class="p-1.5 w-20 border-r border-slate-800">HSN Code</th>
+                <th class="p-1.5 w-12 border-r border-slate-800">Qty</th>
+                <th class="p-1.5 w-14 border-r border-slate-800">Unit</th>
+                <th class="p-1.5 w-20 text-right border-r border-slate-800">Rate (₹)</th>
+                <th class="p-1.5 w-24 text-right">Amount (₹)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-300">
+              <tr *ngFor="let item of filledItemsForDisplay; let i = index">
+                <td class="p-1.5 text-center border-r border-slate-300 text-slate-600">{{ item.description ? i + 1 : '' }}</td>
+                <td class="p-1.5 text-left border-r border-slate-300 font-medium text-slate-900">{{ item.description }}</td>
+                <td class="p-1.5 text-center border-r border-slate-300 text-slate-700">{{ item.hsn_code }}</td>
+                <td class="p-1.5 text-center border-r border-slate-300 text-slate-800">{{ item.quantity }}</td>
+                <td class="p-1.5 text-center border-r border-slate-300 text-slate-700">{{ item.unit }}</td>
+                <td class="p-1.5 text-right border-r border-slate-300 text-slate-800">{{ item.rate }}</td>
+                <td class="p-1.5 text-right font-semibold text-slate-900">{{ getItemAmount(item) !== '' ? '₹ ' + getItemAmount(item) : '' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Footer Summary Section -->
+        <div class="grid grid-cols-12 border border-slate-800 rounded overflow-hidden mb-4 bg-slate-50/10">
+          
+          <!-- Left Info: Amount in words & Bank details -->
+          <div class="col-span-7 p-2.5 border-r border-slate-800 flex flex-col justify-between text-[10px] space-y-2">
+            <div>
+              <p class="font-bold text-slate-800 mb-0.5">Amount in Words:</p>
+              <p class="italic text-slate-800 font-medium bg-white p-1.5 rounded border border-slate-200">{{ getAmountInWords(grandTotal) }}</p>
+            </div>
+
+            <div>
+              <p class="font-bold text-slate-800 mb-0.5">Bank Details for Payment:</p>
+              <p class="text-slate-700"><span class="font-semibold text-slate-900">A/c Name:</span> {{ invoice.bank_details.account_name }}</p>
+              <p class="text-slate-700"><span class="font-semibold text-slate-900">A/c No:</span> {{ invoice.bank_details.account_number }} | <span class="font-semibold text-slate-900">IFSC:</span> {{ invoice.bank_details.ifsc_code }}</p>
+              <p class="text-slate-700"><span class="font-semibold text-slate-900">Bank:</span> {{ invoice.bank_details.bank_name }}, <span class="font-semibold text-slate-900">Branch:</span> {{ invoice.bank_details.branch }}</p>
+            </div>
+
+            <div>
+              <p class="font-bold text-slate-800 mb-0.5">Terms & Conditions:</p>
+              <p class="text-slate-600 text-[9.5px] leading-tight">{{ invoice.notes }}</p>
+            </div>
+          </div>
+
+          <!-- Right Calculation Table -->
+          <div class="col-span-5 text-[10.5px] bg-white flex flex-col justify-between">
+            <div class="divide-y divide-slate-300">
+              <div class="flex justify-between p-1.5 font-medium text-slate-700">
+                <span>Subtotal:</span>
+                <span class="text-slate-900 font-semibold">₹ {{ subtotal }}</span>
+              </div>
+              <div class="flex justify-between p-1.5 font-medium text-slate-700" *ngIf="invoice.discount">
+                <span>Discount:</span>
+                <span class="text-rose-600 font-semibold">(-) ₹ {{ invoice.discount }}</span>
+              </div>
+              <div class="flex justify-between p-1.5 font-bold text-slate-800 bg-slate-100">
+                <span>Taxable Value:</span>
+                <span>₹ {{ taxableValue }}</span>
+              </div>
+              <div class="flex justify-between p-1.5 font-medium text-slate-700">
+                <span>CGST (9%):</span>
+                <span class="text-slate-900">₹ {{ cgst }}</span>
+              </div>
+              <div class="flex justify-between p-1.5 font-medium text-slate-700">
+                <span>SGST (9%):</span>
+                <span class="text-slate-900">₹ {{ sgst }}</span>
+              </div>
+            </div>
+            <div class="flex justify-between p-2 font-bold text-xs bg-slate-900 text-white">
+              <span>Grand Total:</span>
+              <span class="text-blue-300">₹ {{ grandTotal }}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Sign-off Section -->
+      <div class="grid grid-cols-2 border-t border-slate-800 pt-3 text-[10.5px] items-end mt-auto">
+        <div class="italic text-slate-600">
+          <p class="font-medium text-slate-800">Thank you for your business!</p>
+          <p class="mt-0.5">धन्यवाद! आपकी सेवा में सदैव तत्पर।</p>
+        </div>
+        <div class="text-right font-semibold text-slate-900">
+          <p>For <span class="font-bold">{{ invoice.seller.name }}</span></p>
+          <div class="h-8"></div>
+          <p class="border-t border-slate-600 pt-1 inline-block min-w-[140px]">Authorized Signatory</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

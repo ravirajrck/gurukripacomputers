@@ -1,0 +1,376 @@
+<div
+  class="max-w-6xl mx-auto bg-white border border-slate-200/80 rounded-2xl p-5 shadow-2xs relative font-sans text-slate-800"
+>
+  <!-- Loader Overlay -->
+  <div
+    *ngIf="isLoading"
+    class="absolute inset-0 bg-white/80 backdrop-blur-xs z-10 flex items-center justify-center rounded-3xl"
+  >
+    <div class="flex items-center gap-2.5 text-sm font-medium text-slate-800">
+      <i class="fa-solid fa-spinner fa-spin text-base text-blue-600"></i>
+      Processing...
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div
+    class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 mb-6"
+  >
+    <div>
+      <h2
+        class="text-lg font-semibold text-slate-900 tracking-tight flex items-center gap-2"
+      >
+        <span>{{ isEditMode ? "Edit Invoice" : "Create New Invoice" }}</span>
+      </h2>
+      <p class="text-sm font-medium text-slate-500 mt-0.5">
+        {{
+          isEditMode
+            ? "Modify and save changes to this invoice."
+            : "Generate a professional GST invoice with valid details."
+        }}
+      </p>
+    </div>
+    <div class="flex items-center gap-3">
+      <a
+        routerLink="/admin/invoices"
+        class="px-5 py-2.5 rounded-xl text-sm font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all cursor-pointer no-underline whitespace-nowrap inline-flex items-center justify-center"
+      >
+        Cancel
+      </a>
+      <button
+        type="button"
+        (click)="saveInvoice(invoiceForm)"
+        class="px-5 py-2.5 rounded-xl text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-all cursor-pointer whitespace-nowrap inline-flex items-center justify-center"
+      >
+        {{ isEditMode ? "Update Invoice" : "Save & Generate" }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <form #invoiceForm="ngForm" class="space-y-6" novalidate *ngIf="invoice && invoice.customer">
+    <!-- Row 1: Invoice Meta & GST Settings -->
+    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-slate-600 mb-1.5"
+          >Invoice Number *</label
+        >
+        <input
+          type="text"
+          [(ngModel)]="invoice.invoice_no"
+          name="invoice_no"
+          required
+          #invNo="ngModel"
+          class="w-full bg-slate-50/50 border rounded-xl px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 outline-none focus:border-blue-600 focus:bg-white transition-all font-medium"
+          [ngClass]="{
+            'border-rose-300 focus:border-rose-500': invNo.invalid && submitted,
+            'border-slate-200': !(invNo.invalid && submitted),
+          }"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-600 mb-1.5"
+          >Invoice Date *</label
+        >
+        <input
+          type="date"
+          [(ngModel)]="invoice.invoice_date"
+          name="invoice_date"
+          required
+          [max]="todayDate"
+          #invDate="ngModel"
+          class="w-full bg-slate-50/50 border rounded-xl px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 outline-none focus:border-blue-600 focus:bg-white transition-all font-medium"
+          [ngClass]="{
+            'border-rose-300 focus:border-rose-500':
+              invDate.invalid && submitted,
+            'border-slate-200': !(invDate.invalid && submitted),
+          }"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-600 mb-1.5"
+          >GST Type *</label
+        >
+        <select
+          [(ngModel)]="invoice.gst_type"
+          name="gst_type"
+          class="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-800 outline-none focus:border-blue-600 focus:bg-white transition-all font-medium cursor-pointer"
+        >
+          <option value="intra">Intra-State (CGST + SGST)</option>
+          <option value="inter">Inter-State (IGST)</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-600 mb-1.5"
+          >GST Rate (%) *</label
+        >
+        <select
+          [(ngModel)]="invoice.gst_rate"
+          name="gst_rate"
+          class="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-800 outline-none focus:border-blue-600 focus:bg-white transition-all font-medium cursor-pointer"
+        >
+          <option [value]="0">0%</option>
+          <option [value]="5">5%</option>
+          <option [value]="12">12%</option>
+          <option [value]="18">18%</option>
+          <option [value]="28">28%</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Row 2: Customer Details -->
+    <div
+      class="p-5 bg-slate-50/50 border border-slate-200 rounded-2xl space-y-4"
+    >
+      <h3 class="text-sm font-medium text-slate-700 flex items-center gap-2">
+        <i class="fa-solid fa-user-tag text-blue-600"></i> Customer Information
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+        <!-- Customer Name -->
+        <div class="md:col-span-4">
+          <label class="block text-sm font-medium text-slate-600 mb-1.5"
+            >Customer Name *</label
+          >
+          <input
+            type="text"
+            [(ngModel)]="invoice.customer.name"
+            name="cust_name"
+            required
+            #custName="ngModel"
+            placeholder="Enter full customer name"
+            class="w-full bg-white border rounded-xl px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 outline-none focus:border-blue-600 transition-all font-medium"
+            [ngClass]="{
+              'border-rose-300 focus:border-rose-500':
+                custName.invalid && submitted,
+              'border-slate-200': !(custName.invalid && submitted),
+            }"
+          />
+        </div>
+
+        <!-- Phone Number -->
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium text-slate-600 mb-1.5"
+            >Phone Number *</label
+          >
+          <input
+            type="text"
+            [(ngModel)]="invoice.customer.phone"
+            name="cust_phone"
+            required
+            pattern="[0-9]{10}"
+            #custPhone="ngModel"
+            placeholder="Mobile number"
+            class="w-full bg-white border rounded-xl px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 outline-none focus:border-blue-600 transition-all font-medium"
+            [ngClass]="{
+              'border-rose-300 focus:border-rose-500':
+                custPhone.invalid && submitted,
+              'border-slate-200': !(custPhone.invalid && submitted),
+            }"
+          />
+        </div>
+
+        <!-- Address -->
+        <div class="md:col-span-4">
+          <label class="block text-sm font-medium text-slate-600 mb-1.5"
+            >Address</label
+          >
+          <input
+            type="text"
+            [(ngModel)]="invoice.customer.address"
+            name="cust_address"
+            placeholder="Enter complete address with landmark/city"
+            class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 outline-none focus:border-blue-600 transition-all font-medium"
+          />
+        </div>
+
+        <!-- Customer GSTIN -->
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium text-slate-600 mb-1.5"
+            >Customer GSTIN</label
+          >
+          <input
+            type="text"
+            [(ngModel)]="invoice.customer.gstin"
+            name="cust_gstin"
+            placeholder="GSTIN (Optional)"
+            class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 uppercase outline-none focus:border-blue-600 transition-all font-medium"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3: Items Table -->
+    <div class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-medium text-slate-700 flex items-center gap-2">
+          <i class="fa-solid fa-boxes-stacked text-blue-600"></i> Item Details
+        </h3>
+        <button
+          type="button"
+          (click)="addItem()"
+          class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm cursor-pointer transition-all inline-flex items-center gap-1.5"
+        >
+          <i class="fa-solid fa-plus text-xs"></i> Add Item
+        </button>
+      </div>
+
+      <div class="border border-slate-200 rounded-2xl overflow-x-auto bg-white">
+        <table class="w-full text-left border-collapse text-sm min-w-[700px]">
+          <thead>
+            <tr
+              class="bg-slate-50 text-slate-600 border-b border-slate-200 font-medium"
+            >
+              <th class="p-3.5 w-2/5">Product / Item Description *</th>
+              <th class="p-3.5 w-28">HSN Code</th>
+              <th class="p-3.5 w-20 text-center">Qty *</th>
+              <th class="p-3.5 w-24 text-center">Unit</th>
+              <th class="p-3.5 w-28 text-right">Rate (₹) *</th>
+              <th class="p-3.5 w-28 text-right">Amount (₹)</th>
+              <th class="p-3.5 w-12 text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr
+              *ngFor="let item of invoice.items; let i = index"
+              class="hover:bg-slate-50/50 transition-colors"
+            >
+              <td class="p-3">
+                <input
+                  type="text"
+                  [(ngModel)]="item.description"
+                  [name]="'desc_' + i"
+                  required
+                  #itemDesc="ngModel"
+                  placeholder="Enter product description"
+                  class="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-sm font-medium text-slate-800 outline-none focus:border-blue-600 bg-white transition-all"
+                  [ngClass]="{
+                    'border-rose-300 focus:border-rose-500':
+                      itemDesc.invalid && submitted,
+                  }"
+                />
+              </td>
+              <td class="p-3">
+                <input
+                  type="text"
+                  [(ngModel)]="item.hsn_code"
+                  [name]="'hsn_' + i"
+                  placeholder="HSN"
+                  class="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-800 placeholder-slate-400 outline-none focus:border-blue-600 transition-all font-medium"
+                />
+              </td>
+              <td class="p-3">
+                <input
+                  type="number"
+                  [(ngModel)]="item.quantity"
+                  [name]="'qty_' + i"
+                  required
+                  min="1"
+                  (input)="calculateAmount(item)"
+                  class="w-full border border-slate-200 rounded-xl px-2.5 py-2 text-center font-medium text-slate-800 outline-none focus:border-blue-600 bg-white transition-all"
+                />
+              </td>
+              <td class="p-3">
+                <select
+                  [(ngModel)]="item.unit"
+                  [name]="'unit_' + i"
+                  class="w-full border border-slate-200 rounded-xl px-2.5 py-2 text-sm font-medium text-slate-800 outline-none focus:border-blue-600 bg-white transition-all cursor-pointer"
+                >
+                  <option value="Pcs">Pcs</option>
+                  <option value="Nos">Nos</option>
+                  <option value="Set">Set</option>
+                  <option value="Serv">Serv</option>
+                  <option value="Hours">Hours</option>
+                </select>
+              </td>
+              <td class="p-3">
+                <input
+                  type="number"
+                  [(ngModel)]="item.rate"
+                  [name]="'rate_' + i"
+                  required
+                  min="0"
+                  (input)="calculateAmount(item)"
+                  placeholder="0.00"
+                  class="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-right font-medium text-slate-800 outline-none focus:border-blue-600 bg-white transition-all"
+                />
+              </td>
+              <td class="p-3 text-right font-medium text-slate-900">
+                ₹ {{ item.amount !== "" ? item.amount : 0 }}
+              </td>
+              <td class="p-3 text-center">
+                <button
+                  type="button"
+                  (click)="removeItem(i)"
+                  class="w-9 h-9 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 inline-flex items-center justify-center cursor-pointer transition-all border border-slate-200 hover:border-rose-200"
+                >
+                  <i class="fa-solid fa-trash text-sm"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Row 4: Totals & Notes -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+      <div>
+        <label class="block text-sm font-medium text-slate-600 mb-1.5"
+          >Terms, Notes & Bank Details</label
+        >
+        <textarea
+          [(ngModel)]="invoice.notes"
+          name="notes"
+          rows="4"
+          placeholder="Enter bank account details, UPI ID, or payment terms..."
+          class="w-full border border-slate-200 rounded-xl p-3.5 text-sm font-medium text-slate-800 outline-none focus:border-blue-600 resize-none bg-white"
+        ></textarea>
+      </div>
+
+      <div
+        class="bg-slate-50/50 border border-slate-200 p-5 rounded-2xl space-y-3 text-sm"
+      >
+        <div
+          class="flex justify-between py-1.5 border-b border-slate-200 font-medium text-slate-600"
+        >
+          <span>Subtotal:</span>
+          <span class="font-medium text-slate-800">₹ {{ subtotal }}</span>
+        </div>
+
+        <ng-container *ngIf="invoice.gst_type === 'intra'">
+          <div
+            class="flex justify-between py-1.5 border-b border-slate-200 font-medium text-slate-600"
+          >
+            <span>CGST ({{ invoice.gst_rate / 2 }}%):</span>
+            <span class="font-medium text-slate-800">₹ {{ cgst }}</span>
+          </div>
+          <div
+            class="files-container flex justify-between py-1.5 border-b border-slate-200 font-medium text-slate-600"
+          >
+            <span>SGST ({{ invoice.gst_rate / 2 }}%):</span>
+            <span class="font-medium text-slate-800">₹ {{ sgst }}</span>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="invoice.gst_type === 'inter'">
+          <div
+            class="flex justify-between py-1.5 border-b border-slate-200 font-medium text-slate-600"
+          >
+            <span>IGST ({{ invoice.gst_rate }}%):</span>
+            <span class="font-medium text-slate-800">₹ {{ igst }}</span>
+          </div>
+        </ng-container>
+
+        <div
+          class="flex justify-between py-2 text-base font-semibold text-slate-900 border-t border-slate-300 mt-1"
+        >
+          <span>Grand Total:</span>
+          <span class="text-blue-600">₹ {{ grandTotal }}</span>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

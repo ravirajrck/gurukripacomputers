@@ -1,13 +1,14 @@
 <!-- MOBILE BOTTOM NAVIGATION -->
 <nav
-  class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-2 py-2 pb-safe flex justify-around items-center z-50 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]"
+  class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-blue-500/20 px-2 py-2 pb-safe flex justify-around items-center z-50 shadow-[0_-4px_20px_rgba(37,99,235,0.06)]"
 >
   <!-- Home -->
   <a
     routerLink="/"
     routerLinkActive="active-tab"
-     [routerLinkActiveOptions]="{ exact: true }"
-    class="flex flex-col items-center gap-1 text-slate-400 hover:text-[#FF7620] transition-all duration-300 p-2 cursor-pointer active:scale-95 group"
+    [routerLinkActiveOptions]="{ exact: true }"
+    routerLinkActive="text-blue-600 font-bold"
+    class="flex flex-col items-center gap-1 text-slate-400 hover:text-blue-600 transition-all duration-300 p-2 cursor-pointer active:scale-95 group"
   >
     <svg
       class="w-6 h-6 transition-all duration-300 group-hover:scale-110"
@@ -27,12 +28,14 @@
       >Home</span
     >
   </a>
+
   <!-- Store -->
   <a
     routerLink="/store"
     routerLinkActive="active-tab"
     [routerLinkActiveOptions]="{ exact: true }"
-    class="flex flex-col items-center gap-1 text-slate-400 hover:text-[#FF7620] transition-all duration-300 p-2 cursor-pointer active:scale-95 group"
+    routerLinkActive="text-blue-600 font-bold"
+    class="flex flex-col items-center gap-1 text-slate-400 hover:text-blue-600 transition-all duration-300 p-2 cursor-pointer active:scale-95 group"
   >
     <svg
       class="w-6 h-6 transition-all duration-300 group-hover:scale-110"
@@ -53,12 +56,13 @@
     >
   </a>
 
-  <!-- Services (Added in Mobile Nav) -->
+  <!-- Services -->
   <a
     routerLink="/services"
     routerLinkActive="active-tab"
-     [routerLinkActiveOptions]="{ exact: true }"
-    class="flex flex-col items-center gap-1 text-slate-400 hover:text-[#FF7620] transition-all duration-300 p-2 cursor-pointer active:scale-95 group"
+    [routerLinkActiveOptions]="{ exact: true }"
+    routerLinkActive="text-blue-600 font-bold"
+    class="flex flex-col items-center gap-1 text-slate-400 hover:text-blue-600 transition-all duration-300 p-2 cursor-pointer active:scale-95 group"
   >
     <svg
       class="w-6 h-6 transition-all duration-300 group-hover:scale-110"
@@ -88,8 +92,9 @@
   <a
     routerLink="/store/saved"
     routerLinkActive="active-tab"
-     [routerLinkActiveOptions]="{ exact: true }"
-    class="flex flex-col items-center gap-1 text-slate-400 hover:text-[#FF7620] transition-all duration-300 p-2 cursor-pointer active:scale-95 group"
+    [routerLinkActiveOptions]="{ exact: true }"
+    routerLinkActive="text-blue-600 font-bold"
+    class="flex flex-col items-center gap-1 text-slate-400 hover:text-blue-600 transition-all duration-300 p-2 cursor-pointer active:scale-95 group"
   >
     <svg
       class="w-6 h-6 transition-all duration-300 group-hover:scale-110"
@@ -112,15 +117,24 @@
 </nav>
 
 <!-- 7. DETAILED FOOTER (Responsive & Functional) -->
-<footer class="hidden md:block bg-slate-900 text-white pt-20 pb-10 px-6">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+<footer
+  class="hidden md:block bg-slate-950 text-white pt-20 pb-10 px-6 border-t border-blue-500/20 relative overflow-hidden"
+>
+  <!-- Subtle background glow -->
+  <div
+    class="absolute bottom-0 right-0 w-96 h-96 bg-blue-600/5 rounded-full blur-[120px] pointer-events-none"
+  ></div>
+
+  <div
+    class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 relative z-10"
+  >
     <!-- Brand -->
     <div>
       <h2 class="text-2xl font-black">
-        <span class="text-[#FF7620]">SANATAN</span>
+        <span class="text-blue-500">GURU KRIPA</span>
       </h2>
-      <h2 class="text-2xl font-black mb-2">
-        <span class="text-white">INFOTECH</span>
+      <h2 class="text-2xl font-black mb-3">
+        <span class="text-white">COMPUTER</span>
       </h2>
       <p class="text-slate-400 text-sm leading-relaxed">
         Empowering Khargone with cutting-edge technology. Your trusted partner
@@ -129,36 +143,39 @@
       </p>
     </div>
 
-    <!-- Quick Links (Router Links) -->
+    <!-- Quick Links -->
     <div>
-      <h4 class="font-semibold mb-4 uppercase tracking-widest">Quick Links</h4>
-      <ul class="text-slate-400 space-y-2">
+      <h4
+        class="font-bold mb-4 uppercase tracking-widest text-xs text-blue-400"
+      >
+        Quick Links
+      </h4>
+      <ul class="text-slate-400 space-y-2.5 text-sm">
         <li>
           <a
             routerLink="/"
-            class="hover:text-[#FF7620] transition-colors cursor-pointer"
+            class="hover:text-blue-400 transition-colors cursor-pointer"
             >Home</a
           >
         </li>
         <li>
           <a
             routerLink="/store"
-            class="hover:text-[#FF7620] transition-colors cursor-pointer"
+            class="hover:text-blue-400 transition-colors cursor-pointer"
             >Store</a
           >
         </li>
-        <!-- Services (Added in Quick Links) -->
         <li>
           <a
             routerLink="/services"
-            class="hover:text-[#FF7620] transition-colors cursor-pointer"
+            class="hover:text-blue-400 transition-colors cursor-pointer"
             >Services</a
           >
         </li>
         <li>
           <a
             routerLink="/store/saved"
-            class="hover:text-[#FF7620] transition-colors cursor-pointer"
+            class="hover:text-blue-400 transition-colors cursor-pointer"
             >Saved</a
           >
         </li>
@@ -167,15 +184,16 @@
 
     <!-- Important Pages -->
     <div>
-      <h4 class="font-semibold mb-4 uppercase tracking-widest">
+      <h4
+        class="font-bold mb-4 uppercase tracking-widest text-xs text-blue-400"
+      >
         Important Pages
       </h4>
-
-      <ul class="text-slate-400 space-y-3">
+      <ul class="text-slate-400 space-y-2.5 text-sm">
         <li>
           <a
             routerLink="/about"
-            class="hover:text-[#FF7620] hover:translate-x-1 transition-all inline-block cursor-pointer"
+            class="hover:text-blue-400 hover:translate-x-1 transition-all inline-block cursor-pointer"
           >
             About Us
           </a>
@@ -183,7 +201,7 @@
         <li>
           <a
             routerLink="/privacy"
-            class="hover:text-[#FF7620] hover:translate-x-1 transition-all inline-block cursor-pointer"
+            class="hover:text-blue-400 hover:translate-x-1 transition-all inline-block cursor-pointer"
           >
             Privacy Policy
           </a>
@@ -191,7 +209,7 @@
         <li>
           <a
             routerLink="/terms"
-            class="hover:text-[#FF7620] hover:translate-x-1 transition-all inline-block cursor-pointer"
+            class="hover:text-blue-400 hover:translate-x-1 transition-all inline-block cursor-pointer"
           >
             Terms & Conditions
           </a>
@@ -199,7 +217,7 @@
         <li>
           <a
             routerLink="/contact"
-            class="hover:text-[#FF7620] hover:translate-x-1 transition-all inline-block cursor-pointer"
+            class="hover:text-blue-400 hover:translate-x-1 transition-all inline-block cursor-pointer"
           >
             Contact Us
           </a>
@@ -209,42 +227,48 @@
 
     <!-- Contact Details -->
     <div>
-      <h4 class="font-semibold mb-4 uppercase tracking-widest">Contact</h4>
-      <ul class="text-slate-400 space-y-3">
+      <h4
+        class="font-bold mb-4 uppercase tracking-widest text-xs text-blue-400"
+      >
+        Contact
+      </h4>
+      <ul class="text-slate-400 space-y-3 text-sm">
         <li>
           <a
-            href="tel:+919876543210"
-            class="hover:text-[#FF7620] transition-colors flex items-center gap-2"
+            [href]="'tel:' + siteData?.phone"
+            class="hover:text-blue-400 transition-colors flex items-center gap-2"
           >
+            <i class="fa-solid fa-phone text-blue-500 text-xs"></i>
             {{ siteData?.phone }}
           </a>
         </li>
         <li>
           <a
-            href="https://www.sanataninfotech.in"
-            target="_blank"
-            class="hover:text-[#FF7620] transition-colors flex items-center gap-2"
+            [href]="'mailto:' + siteData?.email"
+            class="hover:text-blue-400 transition-colors flex items-center gap-2"
           >
+            <i class="fa-regular fa-envelope text-blue-500 text-xs"></i>
             {{ siteData?.email }}
           </a>
         </li>
-        <li>{{ siteData?.address }}</li>
+        <li class="flex items-start gap-2">
+          <i class="fa-solid fa-location-dot text-blue-500 text-xs mt-1"></i>
+          <span>{{ siteData?.address }}</span>
+        </li>
       </ul>
     </div>
   </div>
 
   <!-- Bottom Bar -->
   <div
-    class="text-center text-slate-600 border-t border-slate-800 pt-8 text-xs font-medium"
+    class="text-center text-slate-500 border-t border-slate-800 pt-8 text-xs font-medium relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4"
   >
-    <p class="mb-2">
-      &copy; {{ currentYear }} SANATAN INFOTECH. All rights reserved.
-    </p>
+    <p>&copy; {{ currentYear }} Guru Kripa Computer. All rights reserved.</p>
     <p>
-      DEVELOPED BY <span class="text-[#636363] font-bold">RCK DIGITECH</span>
+      DEVELOPED BY <span class="text-blue-400 font-bold">RCK DIGITECH</span>
     </p>
-    <p>
-      Disclaimer: All product names, logos, and brands are the property of their
+    <p class="text-[11px] text-slate-600">
+      Disclaimer: All product names, logos, and brands are property of
       respective owners.
     </p>
   </div>

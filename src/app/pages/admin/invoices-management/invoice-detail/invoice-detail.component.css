@@ -1,0 +1,13 @@
+@media print {
+  body {
+    background: white !important;
+  }
+  .print\:hidden {
+    display: none !important;
+  }
+  /* Page margins ko zero karein taaki exact A4 print aaye */
+  @page {
+    size: A4;
+    margin: 0mm;
+  }
+}

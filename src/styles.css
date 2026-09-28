@@ -125,3 +125,32 @@ body {
 
 
 
+/* Custom Styling for Angular Material Menu to match app theme */
+::ng-deep .custom-admin-menu {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important; /* border-slate-200/80 */
+  border-radius: 1rem !important; /* rounded-2xl equivalent */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+  padding: 4px !important;
+}
+
+::ng-deep .custom-admin-menu .mat-mdc-menu-item {
+  min-height: 36px !important;
+  line-height: 36px !important;
+  border-radius: 0.5rem !important;
+  margin-bottom: 2px !important;
+  transition: all 0.2s ease !important;
+}
+
+::ng-deep .custom-admin-menu .mat-mdc-menu-item:last-child {
+  margin-bottom: 0 !important;
+}
+
+::ng-deep .custom-admin-menu .mat-mdc-menu-item .mat-icon {
+  margin-right: 8px !important;
+  width: 16px !important;
+  height: 16px !important;
+  font-size: 16px !important;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

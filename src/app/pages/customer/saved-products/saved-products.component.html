@@ -1,46 +1,44 @@
 <main
-  class="max-w-[1600px] w-full mx-auto px-6 py-8 flex-1 flex flex-col relative z-10"
+  class="max-w-[1600px] w-full mx-auto px-6 py-8 flex-1 flex flex-1 flex-col relative z-10"
 >
+  <!-- Header (Clean & Minimalist Vibe) -->
   <div
-    class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10 bg-cyber-card p-1 rounded-2xl"
+    class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 bg-white/80 backdrop-blur-xl px-6 py-5 rounded-2xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.02)] relative z-10"
   >
     <div>
-      <h1 class="text-3xl font-bold text-slate-900 tracking-wider uppercase">
-        Saved Items ( {{ savedProducts.length }} )
+      <h1
+        class="text-xl font-bold text-slate-800 tracking-tight flex items-center gap-2.5"
+      >
+        <span>Saved Items ( {{ savedProducts.length }} )</span>
       </h1>
-      <p class="text-sm font-medium text-slate-500 mt-1">
+      <p class="text-xs font-normal text-slate-500 mt-0.5">
         Review your hand-picked items and favorites.
       </p>
     </div>
   </div>
 
+  <!-- Loading State (Single Clean Grid) -->
   <div
     *ngIf="isLoading"
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5 items-stretch"
+    class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-5"
   >
     <div
       *ngFor="let placeholder of [1, 2, 3, 4, 5, 6]"
-      class="bg-white border border-slate-100 rounded-2xl p-4 overflow-hidden space-y-4 animate-pulse shadow-sm"
+      class="bg-white border border-blue-500/10 rounded-2xl p-4 overflow-hidden space-y-4 animate-pulse shadow-xs"
     >
-      <!-- Image Placeholder -->
-      <div class="aspect-square w-full bg-slate-200 rounded-xl"></div>
-
-      <!-- Title Placeholder -->
-      <div class="h-4 bg-slate-200 rounded w-2/3"></div>
-
-      <!-- Description Placeholder -->
-      <div class="h-3 bg-slate-100 rounded w-full"></div>
-
-      <!-- Footer/Price Placeholder -->
+      <div class="aspect-square w-full bg-slate-100 rounded-xl"></div>
+      <div class="h-4 bg-slate-100 rounded w-2/3"></div>
+      <div class="h-3 bg-slate-50 rounded w-full"></div>
       <div class="flex justify-between items-center pt-2">
-        <div class="h-5 bg-slate-200 rounded w-1/4"></div>
-        <div class="h-7 bg-slate-200 rounded w-1/3"></div>
+        <div class="h-5 bg-slate-100 rounded w-1/4"></div>
+        <div class="h-7 bg-slate-100 rounded w-1/3"></div>
       </div>
     </div>
   </div>
 
+  <!-- Products Grid -->
   <div
-    *ngIf="!isLoading && savedProducts.length > 0; else noDataLayout"
+    *ngIf="!isLoading && savedProducts.length > 0"
     class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-5 flex-1"
   >
     <div *ngFor="let prod of savedProducts" class="h-full">
@@ -54,12 +52,11 @@
     </div>
   </div>
 
-  <ng-template #noDataLayout>
-    <app-no-data
-      *ngIf="!isLoading"
-      title="No Saved Items"
-      subtitle="Your collection is empty. Start exploring our catalog."
-    >
-    </app-no-data>
-  </ng-template>
+  <!-- No Data State -->
+  <app-no-data
+    *ngIf="!isLoading && savedProducts.length === 0"
+    title="No Saved Items"
+    subtitle="Your collection is empty. Start exploring our catalog."
+  >
+  </app-no-data>
 </main>

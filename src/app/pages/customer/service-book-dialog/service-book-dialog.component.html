@@ -1,0 +1,189 @@
+<!-- Material UI Dialog Header -->
+<div
+  class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50 shrink-0"
+>
+  <div>
+    <span class="text-[10px] font-bold text-blue-600 uppercase tracking-widest"
+      >Service Booking Request</span
+    >
+    <h2
+      class="text-base sm:text-lg font-black text-slate-900 tracking-wider mt-0.5 line-clamp-1"
+    >
+      {{ data?.title }}
+    </h2>
+  </div>
+  <button
+    type="button"
+    (click)="closeDialog()"
+    class="text-slate-400 hover:text-slate-900 text-2xl font-black w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-200 transition-all cursor-pointer shrink-0"
+  >
+    &times;
+  </button>
+</div>
+
+<!-- Material UI Dialog Form Body (Scrollable) -->
+<form
+  [formGroup]="inquiryForm"
+  (ngSubmit)="submitInquiry()"
+  class="flex flex-col flex-1 overflow-y-auto max-h-[75vh]"
+>
+  <div class="p-5 sm:p-6 space-y-4">
+    <!-- User Name -->
+    <div>
+      <label
+        class="block text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1"
+        >Your Name *</label
+      >
+      <input
+        type="text"
+        formControlName="name"
+        placeholder="Enter your full name"
+        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-all"
+      />
+      <div
+        *ngIf="
+          inquiryForm.get('name')?.invalid && inquiryForm.get('name')?.touched
+        "
+        class="text-rose-500 text-xs mt-1 font-medium"
+      >
+        Name is required.
+      </div>
+    </div>
+
+    <!-- Phone / Email -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label
+          class="block text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1"
+          >Phone Number *</label
+        >
+        <input
+          type="tel"
+          formControlName="phone"
+          placeholder="Enter your mobile number"
+          class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-all"
+        />
+        <div
+          *ngIf="
+            inquiryForm.get('phone')?.invalid &&
+            inquiryForm.get('phone')?.touched
+          "
+          class="text-rose-500 text-xs mt-1 font-medium"
+        >
+          Valid 10-digit number required.
+        </div>
+      </div>
+
+      <div>
+        <label
+          class="block text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1"
+          >Email Address</label
+        >
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="name@example.com"
+          class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-all"
+        />
+      </div>
+    </div>
+
+    <!-- Address Field -->
+    <div>
+      <label
+        class="block text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1"
+        >Installation / Service Address *</label
+      >
+      <textarea
+        formControlName="address"
+        rows="2"
+        placeholder="Enter complete address (Area, City, Landmark)..."
+        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none resize-none transition-all"
+      ></textarea>
+      <div
+        *ngIf="
+          inquiryForm.get('address')?.invalid &&
+          inquiryForm.get('address')?.touched
+        "
+        class="text-rose-500 text-xs mt-1 font-medium"
+      >
+        Address is required (at least 5 characters).
+      </div>
+    </div>
+
+    <!-- Preferred Service Date -->
+    <div>
+      <label
+        class="block text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1"
+        >Preferred Service Date *</label
+      >
+      <input
+        type="date"
+        formControlName="serviceDate"
+        [min]="minDate"
+        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-sm text-slate-900 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-all"
+      />
+      <div
+        *ngIf="
+          inquiryForm.get('serviceDate')?.invalid &&
+          inquiryForm.get('serviceDate')?.touched
+        "
+        class="text-rose-500 text-xs mt-1 font-medium"
+      >
+        Please select a valid service date.
+      </div>
+    </div>
+
+    <!-- Problem / Requirements -->
+    <div>
+      <label
+        class="block text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1"
+        >Describe Your Requirement / Problem *</label
+      >
+      <textarea
+        formControlName="message"
+        rows="2"
+        placeholder="E.g., Need 4 cameras installed, or DVR not recording / offline issue..."
+        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none resize-none transition-all"
+      ></textarea>
+      <div
+        *ngIf="
+          inquiryForm.get('message')?.invalid &&
+          inquiryForm.get('message')?.touched
+        "
+        class="text-rose-500 text-xs mt-1 font-medium"
+      >
+        Please provide details (at least 10 characters).
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Footer with Submit Button -->
+  <div class="p-4 bg-slate-50 border-t border-slate-100 mt-auto shrink-0">
+    <button
+      type="submit"
+      [disabled]="isSubmitting"
+      class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-black uppercase text-xs tracking-widest py-3.5 sm:py-4 rounded-xl shadow-lg shadow-blue-500/20 transition-all duration-300 flex items-center justify-center cursor-pointer disabled:opacity-50"
+    >
+      <span *ngIf="isSubmitting" class="flex items-center gap-2">
+        <svg class="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24">
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v8H4z"
+          ></path>
+        </svg>
+        Submitting Request...
+      </span>
+      <span *ngIf="!isSubmitting">Submit Service Request</span>
+    </button>
+  </div>
+</form>

@@ -1,113 +1,70 @@
-<main class="max-w-[1600px] w-full mx-auto px-6 py-8 flex-1 flex flex-col relative z-10">
-  <div>
-    <h1 class="text-3xl font-bold text-slate-900 tracking-wider uppercase">
-      Admin Dashboard
-    </h1>
-    <p class="text-sm font-medium text-slate-500 mt-1">
-      Seamlessly manage store operations, inventory, categories, orders, and
-      service requests from one place.
-    </p>
-  </div>
+<main
+  class="w-full h-full mx-auto flex flex-row relative z-10 overflow-hidden bg-slate-50/50"
+>
+  <!-- Admin Sidebar Component -->
+  <app-admin-sidebar class="h-full flex shrink-0"></app-admin-sidebar>
 
-  <!-- Main Grid Layout: Left Sidebar Navigation & Right Content Area -->
-  <div class="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
-    
-    <!-- 📱 MOBILE VIEW: Premium Custom Dropdown Select Box (Visible only on mobile/tablet) -->
-    <div class="w-full block lg:hidden">
-      <div class="bg-white border border-slate-200/80 p-3.5 rounded-2xl shadow-sm">
-        <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">
-          Navigation Menu
-        </label>
-        
-        <div class="relative">
-          <select 
-            (change)="onMobileNavChange($event)"
-            class="w-full bg-slate-50 border border-slate-200/80 text-slate-900 text-xs font-bold uppercase tracking-wider rounded-xl px-4 py-3.5 appearance-none outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 transition-all cursor-pointer shadow-sm"
-          >
-            <option value="/admin/dashboard" [selected]="router.url === '/admin/dashboard'">📊 Dashboard</option>
-            <option value="/admin/products" [selected]="router.url === '/admin/products'">📦 Products</option>
-            <option value="/admin/categories" [selected]="router.url === '/admin/categories'">📂 Categories</option>
-            <option value="/admin/orders" [selected]="router.url === '/admin/orders'">🛍️ Orders</option>
-            <option value="/admin/services" [selected]="router.url === '/admin/services'">🛠️ Services</option>
-          </select>
-
-          <!-- Custom Dropdown Arrow Icon -->
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
-            <i class="fa-solid fa-chevron-down text-xs"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 💻 DESKTOP VIEW: Sidebar Navigation List (Hidden on mobile, visible on lg screens) -->
-    <aside
-      class="w-full lg:col-span-3 bg-white border border-slate-200/80 p-3 rounded-3xl shadow-sm hidden lg:flex flex-col gap-1.5 lg:sticky lg:top-6 relative z-0"
+  <!-- Right Side: Main Content Area -->
+  <div class="flex-1 flex flex-col h-full overflow-hidden">
+    <!-- Top Header inside Admin Area (Matching Thin Fonts, Gradient Touch & Clean Borders) -->
+    <header
+      class="flex items-center justify-between gap-4 px-6 py-4 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-[0_2px_15px_rgba(37,99,235,0.02)] w-full m-0 rounded-none shrink-0"
     >
-      <div
-        class="px-4 py-2 text-[10px] font-black uppercase tracking-widest text-slate-400"
-      >
-        Navigation Menu
+      <div>
+        <div class="flex items-center gap-3">
+      <h1 class="text-lg md:text-xl font-semibold tracking-normal text-slate-800 uppercase">
+  {{ pageTitle }}
+</h1>
+          <!-- <span
+            class="px-2.5 py-0.5 bg-blue-50 text-blue-600 text-[10px] font-semibold uppercase tracking-wider rounded-md border border-blue-100 shadow-2xs"
+            >Control Center</span
+          > -->
+        </div>
+        <!-- <p class="text-xs font-normal text-slate-500 mt-0.5">
+          Seamlessly manage store operations, products, categories, orders & services from your desktop.
+        </p> -->
       </div>
 
-      <a
-        routerLink="/admin/dashboard"
-        routerLinkActive="bg-slate-900 text-white shadow-md shadow-slate-900/10 font-bold"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="flex items-center gap-3 px-4 py-3 rounded-2xl text-xs uppercase tracking-wider text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 transition-all cursor-pointer no-underline group"
-      >
-        <i
-          class="fa-solid fa-chart-pie text-sm group-hover:text-[#FF7620] transition-colors"
-        ></i>
-        <span>Dashboard</span>
-      </a>
+      <!-- Back to Store Action Button (Matching Login Button Gradient Style) -->
+      <div class="flex items-center gap-3 shrink-0">
+        <a
+          routerLink="/store"
+          [ngClass]="
+            router.url.startsWith('/admin')
+              ? 'text-blue-600 font-bold'
+              : 'text-slate-600 font-semibold'
+          "
+          class="flex items-center font-bold space-x-2 text-xs uppercase tracking-widest text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 px-4 py-2 rounded-2xl hover:shadow-xs transition-all cursor-pointer active:scale-95 shadow-2xs"
+        >
+          <span>STORE</span>
+        </a>
 
-      <a
-        routerLink="/admin/products"
-        routerLinkActive="bg-slate-900 text-white shadow-md shadow-slate-900/10 font-bold"
-        class="flex items-center gap-3 px-4 py-3 rounded-2xl text-xs uppercase tracking-wider text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 transition-all cursor-pointer no-underline group"
-      >
-        <i
-          class="fa-solid fa-box-open text-sm group-hover:text-[#FF7620] transition-colors"
-        ></i>
-        <span>Products</span>
-      </a>
+        <!-- Logout Button -->
+        <a
+          *ngIf="isLoggedIn$ | async"
+          (click)="onLogout()"
+          class="flex items-center font-bold space-x-2 text-xs uppercase tracking-widest text-rose-600 bg-rose-50/80 border border-rose-200 px-4 py-2 rounded-2xl hover:bg-rose-100 hover:shadow-xs transition-all cursor-pointer active:scale-95 shadow-2xs"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+            ></path>
+          </svg>
+          <span>Logout</span>
+        </a>
+      </div>
+    </header>
 
-      <a
-        routerLink="/admin/categories"
-        routerLinkActive="bg-slate-900 text-white shadow-md shadow-slate-900/10 font-bold"
-        class="flex items-center gap-3 px-4 py-3 rounded-2xl text-xs uppercase tracking-wider text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 transition-all cursor-pointer no-underline group"
-      >
-        <i
-          class="fa-solid fa-layer-group text-sm group-hover:text-[#FF7620] transition-colors"
-        ></i>
-        <span>Categories</span>
-      </a>
-
-      <a
-        routerLink="/admin/orders"
-        routerLinkActive="bg-slate-900 text-white shadow-md shadow-slate-900/10 font-bold"
-        class="flex items-center gap-3 px-4 py-3 rounded-2xl text-xs uppercase tracking-wider text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 transition-all cursor-pointer no-underline group"
-      >
-        <i
-          class="fa-solid fa-shopping-bag text-sm group-hover:text-[#FF7620] transition-colors"
-        ></i>
-        <span>Orders</span>
-      </a>
-
-      <a
-        routerLink="/admin/services"
-        routerLinkActive="bg-slate-900 text-white shadow-md shadow-slate-900/10 font-bold"
-        class="flex items-center gap-3 px-4 py-3 rounded-2xl text-xs uppercase tracking-wider text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 transition-all cursor-pointer no-underline group"
-      >
-        <i
-          class="fa-solid fa-screwdriver-wrench text-sm group-hover:text-[#FF7620] transition-colors"
-        ></i>
-        <span>Services</span>
-      </a>
-    </aside>
-
-    <!-- Right Side Dynamic Content View Container (Takes 9 Columns) -->
-    <div class="w-full lg:col-span-9 relative z-0">
+    <!-- Dynamic Router Outlet for Sub-Pages (Products, Orders, etc. - Scrollable Workspace) -->
+    <div class="w-full flex-1 relative z-0 p-6 overflow-y-auto bg-slate-50/30">
       <router-outlet></router-outlet>
     </div>
   </div>

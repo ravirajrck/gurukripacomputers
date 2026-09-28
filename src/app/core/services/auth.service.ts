@@ -59,4 +59,5 @@ async login(email: string, pass: string) {
   async isAdminLoggedIn(): Promise<boolean> {
     return !!this.auth.currentUser;
   }
+
 }

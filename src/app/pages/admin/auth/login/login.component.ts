@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  email = 'deep@gmail.com';
+  email = 'rck@gmail.com';
   password = 'rck@96446gfx';
   isLoading: boolean = false;
   private authService = inject(AuthService);

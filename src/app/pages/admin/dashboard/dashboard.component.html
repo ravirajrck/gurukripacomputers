@@ -1,73 +1,135 @@
 <div class="space-y-6">
   
   <!-- Error Banner -->
-  <div *ngIf="errorMessage" class="bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-2xl flex items-center justify-between text-xs font-semibold">
+  <div *ngIf="errorMessage" class="bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-2xl flex items-center justify-between text-xs font-medium shadow-2xs">
     <span>⚠️ {{ errorMessage }}</span>
     <button (click)="fetchStats()" class="underline hover:text-rose-900 cursor-pointer">Retry</button>
   </div>
 
   <!-- Dashboard Cards Grid -->
-  <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
     
     <!-- Total Products -->
-    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
-      <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Total Products</h4>
-      
-      <!-- Actual Data -->
-      <p *ngIf="!loadingData" class="text-3xl font-black text-slate-900 mt-2">
-        {{ totalProductsCount }}
-      </p>
-      
-      <!-- Shimmer Skeleton Loader -->
-      <div *ngIf="loadingData" class="mt-3">
-        <div class="h-8 w-16 bg-slate-200 rounded-lg animate-pulse"></div>
+    <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs relative overflow-hidden group hover:border-[#FF7620]/40 transition-all duration-300">
+      <div class="flex items-center justify-between">
+        <div>
+          <h4 class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Products</h4>
+          <p *ngIf="!loadingData" class="text-3xl font-semibold text-slate-800 mt-2">{{ totalProductsCount }}</p>
+          <div *ngIf="loadingData" class="mt-3"><div class="h-8 w-16 bg-slate-100 rounded-lg animate-pulse"></div></div>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center text-xl group-hover:bg-[#FF7620]/10 group-hover:text-[#FF7620] transition-colors">
+          <i class="fa-solid fa-box-open"></i>
+        </div>
       </div>
     </div>
 
     <!-- Total Orders -->
-    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
-      <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Total Orders</h4>
-      
-      <!-- Actual Data -->
-      <p *ngIf="!loadingData" class="text-3xl font-black text-[#FF7620] mt-2">
-        {{ totalOrdersCount }}
-      </p>
-      
-      <!-- Shimmer Skeleton Loader -->
-      <div *ngIf="loadingData" class="mt-3">
-        <div class="h-8 w-16 bg-slate-200 rounded-lg animate-pulse"></div>
+    <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs relative overflow-hidden group hover:border-[#FF7620]/40 transition-all duration-300">
+      <div class="flex items-center justify-between">
+        <div>
+          <h4 class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Orders</h4>
+          <p *ngIf="!loadingData" class="text-3xl font-semibold text-[#FF7620] mt-2">{{ totalOrdersCount }}</p>
+          <div *ngIf="loadingData" class="mt-3"><div class="h-8 w-16 bg-slate-100 rounded-lg animate-pulse"></div></div>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-orange-50 text-[#FF7620] flex items-center justify-center text-xl">
+          <i class="fa-solid fa-bag-shopping"></i>
+        </div>
       </div>
     </div>
 
     <!-- Service Requests -->
-    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
-      <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Service Requests</h4>
-      
-      <!-- Actual Data -->
-      <p *ngIf="!loadingData" class="text-3xl font-black text-blue-600 mt-2">
-        {{ totalServicesCount }}
-      </p>
-      
-      <!-- Shimmer Skeleton Loader -->
-      <div *ngIf="loadingData" class="mt-3">
-        <div class="h-8 w-16 bg-slate-200 rounded-lg animate-pulse"></div>
+    <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs relative overflow-hidden group hover:border-blue-300 transition-all duration-300">
+      <div class="flex items-center justify-between">
+        <div>
+          <h4 class="text-xs font-medium text-slate-400 uppercase tracking-wider">Service Requests</h4>
+          <p *ngIf="!loadingData" class="text-3xl font-semibold text-blue-600 mt-2">{{ totalServicesCount }}</p>
+          <div *ngIf="loadingData" class="mt-3"><div class="h-8 w-16 bg-slate-100 rounded-lg animate-pulse"></div></div>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
+          <i class="fa-solid fa-screwdriver-wrench"></i>
+        </div>
       </div>
     </div>
 
     <!-- Total Categories -->
-    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
-      <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Total Categories</h4>
-      
-      <!-- Actual Data -->
-      <p *ngIf="!loadingData" class="text-3xl font-black text-emerald-600 mt-2">
-        {{ totalCategoriesCount }}
-      </p>
-      
-      <!-- Shimmer Skeleton Loader -->
-      <div *ngIf="loadingData" class="mt-3">
-        <div class="h-8 w-16 bg-slate-200 rounded-lg animate-pulse"></div>
+    <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs relative overflow-hidden group hover:border-emerald-300 transition-all duration-300">
+      <div class="flex items-center justify-between">
+        <div>
+          <h4 class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Categories</h4>
+          <p *ngIf="!loadingData" class="text-3xl font-semibold text-emerald-600 mt-2">{{ totalCategoriesCount }}</p>
+          <div *ngIf="loadingData" class="mt-3"><div class="h-8 w-16 bg-slate-100 rounded-lg animate-pulse"></div></div>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
+          <i class="fa-solid fa-layer-group"></i>
+        </div>
       </div>
     </div>
 
   </div>
+
+  <!-- Clean & Spacious Date Range Invoice Summary Card -->
+  <div class="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-2xs">
+    
+    <!-- Top Header & Date Filters -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-5 border-b border-slate-100">
+      <div>
+        <h3 class="text-sm font-semibold text-slate-800 uppercase tracking-wide">Date Range Invoice Summary</h3>
+        <p class="text-xs text-slate-400 mt-0.5">Select start and end dates to filter and calculate total revenue.</p>
+      </div>
+      
+      <!-- Date Inputs Section -->
+      <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+        <div class="flex flex-col">
+          <label class="text-[10px] font-medium uppercase tracking-wider text-slate-400 mb-1">Start Date</label>
+          <input 
+            type="date" 
+            [(ngModel)]="startDate" 
+            (change)="calculateDateRangeTotal()"
+            class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-normal text-slate-700 focus:outline-none focus:border-[#FF7620] transition-all"
+          />
+        </div>
+
+        <div class="flex flex-col">
+          <label class="text-[10px] font-medium uppercase tracking-wider text-slate-400 mb-1">End Date</label>
+          <input 
+            type="date" 
+            [(ngModel)]="endDate" 
+            (change)="calculateDateRangeTotal()"
+            class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-normal text-slate-700 focus:outline-none focus:border-[#FF7620] transition-all"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Result Display Boxes (Spacious, Clear & Well-structured) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-5">
+      
+      <!-- Total Invoices Box -->
+      <div class="bg-slate-50/70 border border-slate-100 rounded-2xl p-5 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Invoices Found</span>
+          <h4 class="text-2xl font-semibold text-slate-800 mt-1.5">{{ totalFilteredInvoicesCount }}</h4>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg font-medium shadow-2xs">
+          <i class="fa-solid fa-file-invoice"></i>
+        </div>
+      </div>
+
+      <!-- Total Amount Box -->
+      <div class="bg-orange-50/40 border border-orange-100/80 rounded-2xl p-5 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-medium text-orange-400 uppercase tracking-wider">Total Revenue Amount</span>
+          <h4 class="text-2xl font-semibold text-[#FF7620] mt-1.5 font-mono">
+            <i class="fa-solid fa-indian-rupee-sign text-sm mr-0.5"></i>{{ filteredTotalAmount | number:'1.2-2' }}
+          </h4>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-[#FF7620]/10 text-[#FF7620] flex items-center justify-center text-lg font-medium shadow-2xs">
+          <i class="fa-solid fa-wallet"></i>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
 </div>

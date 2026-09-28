@@ -15,13 +15,13 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideServiceWorker } from '@angular/service-worker';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBVBuGH4sbA4D0xJjYDz8Tq7M9ZJX6kdoc',
-  authDomain: 'product-catelouge.firebaseapp.com',
-  projectId: 'product-catelouge',
-  storageBucket: 'product-catelouge.firebasestorage.app',
-  messagingSenderId: '938871231946',
-  appId: '1:938871231946:web:e890079e4cd107c5c66b33',
-  measurementId: 'G-LFDX1LGDYX',
+  apiKey: "AIzaSyASwsh_NIYV6W4CV23wGQeKVnXn0IySnsM",
+  authDomain: "gurukripa-shop.firebaseapp.com",
+  projectId: "gurukripa-shop",
+  storageBucket: "gurukripa-shop.firebasestorage.app",
+  messagingSenderId: "651970426363",
+  appId: "1:651970426363:web:19523cd9980af283a0c75e",
+  measurementId: "G-QM8D2DGZVB"
 };
 
 export const appConfig: ApplicationConfig = {

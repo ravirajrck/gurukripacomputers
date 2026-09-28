@@ -4,6 +4,8 @@ import {
   OnInit,
   OnDestroy,
   HostListener,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +17,8 @@ import { ProductCardComponent } from '../../../core/components/shared/product-ca
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
 import { SITE_CONFIG } from '../../../config/site-config';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmOrderComponent } from '../confirm-order/confirm-order.component';
 
 @Component({
   selector: 'app-customer-store',
@@ -39,10 +43,14 @@ export class CustomerStoreComponent implements OnInit, OnDestroy {
   // Category Popup Dropdown State
   isCategoryDropdownOpen: boolean = false;
 
+  // Dropdown Container Reference for Outside Click
+  @ViewChild('categoryDropdownContainer') categoryDropdownContainer!: ElementRef;
+
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private toastr = inject(ToastrService);
   private dataService = inject(DataService);
+  private dialog = inject(MatDialog); // MatDialog Inject किया गया
   private destroy$ = new Subject<void>();
 
   constructor(private firestore: Firestore) {}
@@ -113,8 +121,10 @@ export class CustomerStoreComponent implements OnInit, OnDestroy {
   // Close dropdown when clicking outside
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.relative')) {
+    if (
+      this.categoryDropdownContainer &&
+      !this.categoryDropdownContainer.nativeElement.contains(event.target)
+    ) {
       this.isCategoryDropdownOpen = false;
     }
   }
@@ -134,7 +144,6 @@ export class CustomerStoreComponent implements OnInit, OnDestroy {
           (prod) => prod.isPopular === true || prod.popular === true,
         );
       } else {
-        // Yahan product ke 'categoryId' ko URL se aayi hui 'selectedCategory' (ID) se match kar rahe hain
         output = output.filter(
           (prod) =>
             String(prod.categoryId).trim() ===
@@ -156,8 +165,17 @@ export class CustomerStoreComponent implements OnInit, OnDestroy {
     return output;
   }
 
+  // Updated: Open ConfirmOrderComponent Dialog instead of direct WhatsApp call
   onOrderNow(product: any): void {
-    this.dataService.sendProductOnWhatsApp(product);
+    this.dialog.open(ConfirmOrderComponent, {
+      width: '420px',
+      panelClass: 'custom-dialog-container',
+      data: { 
+        productName: product.name,
+        product: product // पूरा प्रोडक्ट ऑब्जेक्ट पास कर रहे हैं ताकि डायलॉग Firebase में सही डेटा सेव कर सके
+      },
+      disableClose: true
+    });
   }
 
   // Navigate to Product Details

@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { EnvironmentInjector, Injectable, inject, runInInjectionContext } from '@angular/core';
 import {
   Firestore,
   collection,
@@ -25,6 +25,7 @@ import { SITE_CONFIG } from '../../config/site-config';
 })
 export class DataService {
   private firestore = inject(Firestore);
+  private injector = inject(EnvironmentInjector);
   siteData = SITE_CONFIG;
 
   // ====== CATEGORIES CRUD ======
@@ -191,11 +192,8 @@ export class DataService {
     );
   }
 
-  // ====== POPULAR PRODUCTS (Using Category ID) ======
   getPopularProducts(categoryId: string): Observable<any[]> {
     const productsRef = collection(this.firestore, 'products');
-
-    // Yahan 'categoryId' field ke sath '==' karke us ID se match karenge
     const q = query(
       productsRef,
       where('categoryId', '==', categoryId),
@@ -233,14 +231,11 @@ ${product.description}`
 }
 Please let me know about the availability!`;
 
-    // Service me stored phone ya parameter wala phone use karein
     const targetPhone = this.siteData?.phone || '9644692189';
-
     const whatsappUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(textMessage)}`;
     window.open(whatsappUrl, '_blank');
   }
 
-  // 1. Get Dashboard Stats Counts from 'metadata/stats'
   getDashboardStats(): Observable<any> {
     const statsRef = doc(this.firestore, 'metadata', 'sO9nMovK2da5JT6DFgZ9');
     return from(getDoc(statsRef)).pipe(
@@ -253,7 +248,6 @@ Please let me know about the availability!`;
     );
   }
 
-  // 2. Generic Counter Update Method (For Add: +1, For Delete: -1)
   async updateDashboardCounter(
     field:
       | 'totalProducts'
@@ -272,5 +266,93 @@ Please let me know about the availability!`;
       console.error(`Error updating counter for ${field}:`, error);
       return false;
     }
+  }
+
+  private collectionName = 'invoices';
+
+  getInvoices(): Observable<any[]> {
+    const invoicesRef = collection(this.firestore, this.collectionName);
+    return collectionData(invoicesRef, { idField: 'id' }) as Observable<any[]>;
+  }
+
+  // ====== NEW: Firebase Filtered Invoices Method ======
+  getFilteredInvoices(searchTerm: string, status: string): Observable<any[]> {
+    const invoicesRef = collection(this.firestore, this.collectionName);
+    let q = query(invoicesRef);
+
+    if (status && status.trim() !== '') {
+      q = query(invoicesRef, where('payment_status', '==', status));
+    }
+
+    return from(getDocs(q)).pipe(
+      map(snapshot => {
+        let results = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        
+        if (searchTerm && searchTerm.trim() !== '') {
+          const term = searchTerm.toLowerCase().trim();
+          results = results.filter((inv: any) => 
+            (inv.invoice_no && inv.invoice_no.toLowerCase().includes(term)) ||
+            (inv.customer?.name && inv.customer.name.toLowerCase().includes(term)) ||
+            (inv.customer?.phone && inv.customer.phone.toLowerCase().includes(term))
+          );
+        }
+
+        return results;
+      })
+    );
+  }
+
+  async getInvoiceById(id: string) {
+    return runInInjectionContext(this.injector, async () => {
+      const docRef = doc(this.firestore, 'invoices', id);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        return { id: docSnap.id, ...docSnap.data() };
+      }
+      return null;
+    });
+  }
+
+  addInvoice(invoiceData: any) {
+    const invoicesRef = collection(this.firestore, this.collectionName);
+    return from(addDoc(invoicesRef, invoiceData));
+  }
+
+  updateInvoice(id: string, invoiceData: Partial<any>) {
+    const docRef = doc(this.firestore, `${this.collectionName}/${id}`);
+    return from(updateDoc(docRef, invoiceData));
+  }
+
+  deleteInvoice(id: string) {
+    const docRef = doc(this.firestore, `${this.collectionName}/${id}`);
+    return from(deleteDoc(docRef));
+  }
+
+  // 1. Get Orders
+  getOrders() {
+    const ordersRef = collection(this.firestore, 'orders');
+    return from(
+      getDocs(ordersRef).then((snapshot) =>
+        snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })),
+      ),
+    );
+  }
+
+  // 2. Update Order Status
+  updateOrderStatus(orderId: string, status: string) {
+    const orderRef = doc(this.firestore, 'orders', orderId);
+    return updateDoc(orderRef, { orderStatus: status });
+  }
+
+  // 3. Delete Order
+  deleteOrder(orderId: string) {
+    const orderRef = doc(this.firestore, 'orders', orderId);
+    return deleteDoc(orderRef);
+  }
+
+  // addOrder method inside DataService:
+  async addOrder(orderData: any) {
+    const ordersRef = collection(this.firestore, 'orders');
+    return await addDoc(ordersRef, orderData);
   }
 }

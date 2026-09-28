@@ -10,46 +10,46 @@
 .animate-shimmer {
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.05) 25%,
-    rgba(255, 255, 255, 0.1) 50%,
-    rgba(255, 255, 255, 0.05) 75%
+    rgba(37, 99, 235, 0.03) 25%,
+    rgba(37, 99, 235, 0.08) 50%,
+    rgba(37, 99, 235, 0.03) 75%
   );
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite linear;
 }
 
-/* Cyber Button Glow Effect */
+/* Cyber Button Glow Effect (Blue Vibe) */
 .cyber-btn-glow {
   transition: all 0.3s ease;
-  border: 1px solid rgba(0, 240, 255, 0.2);
+  border: 1px solid rgba(37, 99, 235, 0.2);
 }
 
 .cyber-btn-glow:hover {
-  box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
-  border-color: rgba(0, 240, 255, 0.6);
+  box-shadow: 0 0 15px rgba(37, 99, 235, 0.3);
+  border-color: rgba(37, 99, 235, 0.5);
 }
 
 /* Jab saved ho jaye */
 .is-saved {
-  background: rgba(0, 240, 255, 0.1);
-  border-color: #00f0ff !important;
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+  background: rgba(37, 99, 235, 0.08);
+  border-color: #2563eb !important;
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.2);
 }
 
 .cyber-action-btn {
-  cursor: pointer; /* Yaha se pointer cursor aayega */
+  cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .cyber-action-btn:hover {
   transform: translateY(-2px);
-  border-color: rgba(0, 240, 255, 0.5);
+  border-color: rgba(37, 99, 235, 0.4);
 }
 
-/* Swiper Theme Colors */
+/* Swiper Theme Colors (Updated to Blue Vibe) */
 swiper-container {
-  --swiper-navigation-color: #ff7620;
-  --swiper-pagination-color: #ff7620;
+  --swiper-navigation-color: #2563eb;
+  --swiper-pagination-color: #2563eb;
 }
 
 /* Arrow Box ka size chota kiya (30px x 30px) */
@@ -60,7 +60,7 @@ swiper-container::part(button-next) {
   width: 30px !important;
   height: 30px !important;
   border-radius: 8px !important;
-  color: #ff7620 !important;
+  color: #2563eb !important;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease;
 }
@@ -68,9 +68,9 @@ swiper-container::part(button-next) {
 /* Hover effect */
 swiper-container::part(button-prev):hover,
 swiper-container::part(button-next):hover {
-  background-color: #ff7620 !important;
+  background-color: #2563eb !important;
   color: #ffffff !important;
-  border-color: #ff7620 !important;
+  border-color: #2563eb !important;
 }
 
 /* Arrow ke andar ke icon ka size chota kiya (12px) */

@@ -8,6 +8,8 @@ import { NoDataComponent } from '../../../core/components/shared/no-data/no-data
 import { ProductCardComponent } from '../../../core/components/shared/product-card/product-card.component';
 import { ToastrService } from 'ngx-toastr';
 import { SITE_CONFIG } from '../../../config/site-config';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmOrderComponent } from '../confirm-order/confirm-order.component';
 
 @Component({
   selector: 'app-saved-products',
@@ -20,10 +22,12 @@ export class SavedProductsComponent {
   private location = inject(Location);
   private dataService = inject(DataService);
   private toastr = inject(ToastrService);
+  private dialog = inject(MatDialog); // MatDialog Inject किया गया
+  private router = inject(Router);
+
   savedProducts: any[] = [];
   isLoading = true;
 
-  private router = inject(Router);
   async ngOnInit() {
     await this.loadSavedData();
   }
@@ -50,8 +54,17 @@ export class SavedProductsComponent {
     this.loadSavedData(); // List ko turant refresh karega
   }
 
+  // Updated: Open ConfirmOrderComponent Dialog instead of direct WhatsApp call
   onOrderNow(product: any): void {
-    this.dataService.sendProductOnWhatsApp(product);
+    this.dialog.open(ConfirmOrderComponent, {
+      width: '420px',
+      panelClass: 'custom-dialog-container',
+      data: { 
+        productName: product.name,
+        product: product // पूरा प्रोडक्ट ऑब्जेक्ट पास कर रहे हैं ताकि डायलॉग Firebase में सही डेटा सेव कर सके
+      },
+      disableClose: true
+    });
   }
 
   // Navigate karne ka function
@@ -65,6 +78,7 @@ export class SavedProductsComponent {
     // अगर इमेज लोड नहीं हो पाती, तो उसे 'noimage.png' से रिप्लेस कर दें
     event.target.src = 'noimage.png';
   }
+
   goBack() {
     this.location.back();
   }

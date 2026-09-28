@@ -7,46 +7,79 @@
   <!-- Backdrop -->
   <div
     (click)="sidebarService.close()"
-    class="absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300"
+    class="absolute inset-0 bg-slate-950/50 backdrop-blur-xs transition-opacity duration-300"
     [class.opacity-100]="sidebarService.sidebarOpen$ | async"
     [class.opacity-0]="!(sidebarService.sidebarOpen$ | async)"
   ></div>
 
   <!-- Sidebar Container -->
   <div
-    class="absolute left-0 top-0 h-full w-[280px] bg-white border-r border-orange-100 p-4 shadow-2xl flex flex-col overflow-y-auto"
+    class="absolute left-0 top-0 h-full w-[284px] bg-white border-r border-slate-200/80 shadow-2xl flex flex-col overflow-y-auto select-none"
     [class.animate-in]="sidebarService.sidebarOpen$ | async"
     [class.animate-out]="sidebarService.isAnimating"
   >
-    <!-- Top: Close Button -->
-    <div class="flex justify-end mb-1">
+    <!-- Top Header (Logo Centered & Pushed Down slightly) -->
+    <div
+      class="flex flex-col items-center justify-center pt-5 pb-4 px-5 border-b border-slate-100 bg-slate-50/50 relative"
+    >
       <button
         (click)="sidebarService.close()"
-        class="text-slate-500 hover:text-[#FF7620] font-semibold text-lg cursor-pointer"
+        class="absolute right-4 top-4 w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-all cursor-pointer"
       >
-        ✕
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2.5"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
       </button>
-    </div>
 
-    <!-- Logo (Center) -->
-    <div class="flex flex-col items-start justify-center mb-8">
-      <a href="/" class="block w-[200px] cursor-pointer">
-        <img src="SANATAN3LOGO.svg" alt="Logo" class="w-full h-auto" />
+      <a
+        routerLink="/"
+        (click)="sidebarService.close()"
+        class="flex flex-col items-center gap-2 cursor-pointer text-center"
+      >
+        <!-- Logo Increased Size -->
+        <div
+          class="w-26 h-26 flex items-center justify-center overflow-hidden shrink-0"
+        >
+          <img src="logo.svg" alt="Logo" class="w-full h-full object-cover" />
+        </div>
+        <!-- <div class="flex flex-col items-center">
+          <span
+            class="text-sm font-bold text-slate-900 tracking-tight leading-tight"
+            >RCK App</span
+          >
+          <span class="text-[11px] font-medium text-slate-400">Workspace</span>
+        </div> -->
       </a>
     </div>
 
-    <!-- Main Links (Middle) -->
-    <div class="mt-6 pt-4 border-t border-slate-100 flex flex-col space-y-0.5">
+    <!-- Main Navigation Links -->
+    <div class="px-3 py-4 flex flex-col space-y-1.5">
+      <div
+        class="px-3 pb-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase"
+      >
+        Menu
+      </div>
+
       <!-- Home -->
       <a
-        routerLink=""
-        routerLinkActive="active-tab"
+        routerLink="/"
+        routerLinkActive="bg-blue-50/80 font-semibold text-blue-600 [&_svg]:text-blue-600 [&_span]:text-blue-600"
         [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
-        class="flex items-center gap-3 text-s font-semibold text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
+        class="group flex items-center gap-3 text-xs font-medium tracking-wide uppercase transition-all duration-200 cursor-pointer py-2.5 px-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-blue-600"
       >
         <svg
-          class="w-5 h-5"
+          class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -58,20 +91,20 @@
             d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
           ></path>
         </svg>
-        Home
+        <span>Home</span>
       </a>
 
-      <!-- Dashboard -->
+      <!-- Admin -->
       <a
         *ngIf="isLoggedIn$ | async"
-        routerLink="/admin/dashboard"
-        routerLinkActive="active-tab"
+        routerLink="/admin"
+        routerLinkActive="bg-blue-50/80 font-semibold text-blue-600 [&_svg]:text-blue-600 [&_span]:text-blue-600"
         [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
-        class="flex items-center gap-3 text-s font-semibold text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
+        class="group flex items-center gap-3 text-xs font-medium tracking-wide uppercase transition-all duration-200 cursor-pointer py-2.5 px-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-blue-600"
       >
         <svg
-          class="w-5 h-5"
+          class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -83,19 +116,19 @@
             d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
           ></path>
         </svg>
-        Dashboard
+        <span>Admin</span>
       </a>
 
       <!-- Store -->
       <a
         routerLink="/store"
-        routerLinkActive="active-tab"
+        routerLinkActive="bg-blue-50/80 font-semibold text-blue-600 [&_svg]:text-blue-600 [&_span]:text-blue-600"
         [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
-        class="flex items-center gap-3 text-s font-semibold text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
+        class="group flex items-center gap-3 text-xs font-medium tracking-wide uppercase transition-all duration-200 cursor-pointer py-2.5 px-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-blue-600"
       >
         <svg
-          class="w-5 h-5"
+          class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -107,19 +140,19 @@
             d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
           ></path>
         </svg>
-        Store
+        <span>Store</span>
       </a>
 
-      <!-- Services (Added right after Store) -->
+      <!-- Services -->
       <a
         routerLink="/services"
-        routerLinkActive="active-tab"
+        routerLinkActive="bg-blue-50/80 font-semibold text-blue-600 [&_svg]:text-blue-600 [&_span]:text-blue-600"
         [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
-        class="flex items-center gap-3 text-s font-semibold text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
+        class="group flex items-center gap-3 text-xs font-medium tracking-wide uppercase transition-all duration-200 cursor-pointer py-2.5 px-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-blue-600"
       >
         <svg
-          class="w-5 h-5"
+          class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -137,19 +170,19 @@
             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
           ></path>
         </svg>
-        Services
+        <span>Services</span>
       </a>
 
       <!-- Saved -->
       <a
         routerLink="/store/saved"
-        routerLinkActive="active-tab"
+        routerLinkActive="bg-blue-50/80 font-semibold text-blue-600 [&_svg]:text-blue-600 [&_span]:text-blue-600"
         [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
-        class="flex items-center gap-3 text-s font-semibold text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
+        class="group flex items-center gap-3 text-xs font-medium tracking-wide uppercase transition-all duration-200 cursor-pointer py-2.5 px-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-blue-600"
       >
         <svg
-          class="w-5 h-5"
+          class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -161,17 +194,17 @@
             d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
           ></path>
         </svg>
-        Saved
+        <span>Saved</span>
       </a>
 
       <!-- Logout -->
       <a
         *ngIf="isLoggedIn$ | async"
         (click)="onLogout(); sidebarService.close()"
-        class="flex items-center gap-3 text-s font-semibold text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
+        class="group flex items-center gap-3 text-xs font-semibold tracking-wide text-rose-600 uppercase hover:text-rose-700 transition-all duration-200 cursor-pointer py-2.5 px-3 rounded-xl hover:bg-rose-50/60 mt-3"
       >
         <svg
-          class="w-5 h-5"
+          class="w-4 h-4 text-rose-500 group-hover:scale-110 transition-transform"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -183,76 +216,148 @@
             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
           ></path>
         </svg>
-        Logout
+        <span>Logout</span>
       </a>
     </div>
 
-    <!-- Policy Links -->
-    <div class="mt-6 pt-4 border-t border-slate-100 flex flex-col space-y-0.5">
+    <!-- Support & Legal -->
+    <div
+      class="px-3 py-3 border-t border-slate-100 flex flex-col space-y-1 bg-slate-50/30"
+    >
+      <div
+        class="px-3 pt-1 pb-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase"
+      >
+        Support & Legal
+      </div>
+
       <a
         routerLink="/about"
-        routerLinkActive="active-tab"
+        routerLinkActive="bg-slate-100 text-slate-900 font-semibold"
         [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
-        class="flex items-center justify-between text-s text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
+        class="flex items-center justify-between text-xs font-medium uppercase transition-colors cursor-pointer py-2 px-3 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-slate-50"
       >
         About Us
       </a>
+
       <a
         routerLink="/privacy"
-        routerLinkActive="active-tab"
+        routerLinkActive="bg-slate-100 text-slate-900 font-semibold"
         [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
-        class="flex items-center justify-between text-s text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
+        class="flex items-center justify-between text-xs font-medium uppercase transition-colors cursor-pointer py-2 px-3 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-slate-50"
       >
         Privacy Policy
       </a>
+
       <a
         routerLink="/terms"
-        routerLinkActive="active-tab"
+        routerLinkActive="bg-slate-100 text-slate-900 font-semibold"
         [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
-        class="flex items-center justify-between text-s text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
+        class="flex items-center justify-between text-xs font-medium uppercase transition-colors cursor-pointer py-2 px-3 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-slate-50"
       >
         Terms & Conditions
       </a>
+
       <a
         routerLink="/contact"
-        routerLinkActive="active-tab"
+        routerLinkActive="bg-slate-100 text-slate-900 font-semibold"
         [routerLinkActiveOptions]="{ exact: true }"
         (click)="sidebarService.close()"
-        class="flex items-center justify-between text-s text-slate-600 uppercase hover:text-[#FF7620] transition-colors cursor-pointer py-1"
+        class="flex items-center justify-between text-xs font-medium uppercase transition-colors cursor-pointer py-2 px-3 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-slate-50"
       >
         Support Center
       </a>
     </div>
 
-    <!-- Bottom: Contact Info -->
-    <div class="mt-6 pt-4 border-t border-slate-100 flex flex-col space-y-0.5">
-      <span class="text-slate-400">Helpline Number</span>
+    <!-- Helpline Footer Info -->
+    <div
+      class="mt-auto p-4 bg-slate-100/80 border-t border-slate-200/60 flex flex-col space-y-2.5 text-xs"
+    >
+      <div class="flex items-center justify-between mb-0.5">
+        <span
+          class="text-slate-400 font-bold tracking-wider uppercase text-[10px]"
+          >Helpline Support</span
+        >
+        <span
+          class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"
+        ></span>
+      </div>
+
       <a
         [href]="'tel:' + siteData?.phone"
-        class="text-slate-700 font-semibold hover:text-[#FF7620] transition-colors"
+        class="flex items-center gap-2.5 text-slate-700 font-bold hover:text-blue-600 transition-colors text-xs"
       >
+        <span
+          class="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0"
+        >
+          <svg
+            class="w-3.5 h-3.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+            ></path>
+          </svg>
+        </span>
         {{ siteData?.phone }}
       </a>
+
       <a
         [href]="'mailto:' + siteData?.email"
-        class="text-slate-500 hover:text-[#FF7620] transition-colors"
+        class="flex items-center gap-2.5 text-slate-600 hover:text-blue-600 transition-colors font-medium text-[11px]"
       >
-        {{ siteData?.email }}
-      </a>
-      <a
-        [href]="'https://' + siteData?.web"
-        target="_blank"
-        class="text-slate-500 hover:text-[#FF7620] transition-colors"
-      >
-        <span class="text-slate-400"> {{ siteData?.web }}</span>
-      </a>
-      <div class="flex flex-col items-start pt-2 gap-0.5">
-        <span class="text-slate-400 leading-normal">
-          {{ siteData?.address }}
+        <span
+          class="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0"
+        >
+          <svg
+            class="w-3.5 h-3.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+            ></path>
+          </svg>
         </span>
+        <span class="truncate">{{ siteData?.email }}</span>
+      </a>
+
+      <div class="flex items-start gap-2.5 pt-1 text-slate-500 text-[11px]">
+        <span
+          class="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5"
+        >
+          <svg
+            class="w-3.5 h-3.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+            ></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+            ></path>
+          </svg>
+        </span>
+        <span>{{ siteData?.address }}</span>
       </div>
     </div>
   </div>
