@@ -28,7 +28,6 @@
     "@tailwindcss/postcss": "^4.3.2",
     "chart.js": "^4.5.1",
     "git": "^0.1.5",
-    "ng2-charts": "^10.0.0",
     "ng2-pdfjs-viewer": "^26.4.2",
     "ngx-toastr": "^18.0.0",
     "pdfjs-dist": "^6.3.289",
