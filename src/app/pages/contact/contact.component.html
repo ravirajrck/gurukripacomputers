@@ -14,7 +14,7 @@
 
       <div class="space-y-6">
         <a
-          [href]="'tel:' + siteData?.phone"
+          [href]="'tel:' + siteData.phone"
           class="flex items-center gap-4 group p-3 rounded-2xl transition-all hover:bg-blue-50/50 border border-transparent hover:border-blue-100"
         >
           <div
@@ -24,12 +24,12 @@
           </div>
           <div>
             <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Call Us</p>
-            <p class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">{{ siteData?.phone }}</p>
+            <p class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">{{ siteData.phone }}</p>
           </div>
         </a>
 
         <a
-          [href]="'mailto:' + siteData?.email"
+          [href]="'mailto:' + siteData.email"
           class="flex items-center gap-4 group p-3 rounded-2xl transition-all hover:bg-blue-50/50 border border-transparent hover:border-blue-100"
         >
           <div
@@ -39,7 +39,7 @@
           </div>
           <div>
             <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Email Us</p>
-            <p class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">{{ siteData?.email }}</p>
+            <p class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">{{ siteData.email }}</p>
           </div>
         </a>
       </div>
@@ -50,7 +50,7 @@
           <i class="fa-solid fa-location-dot"></i> Store Location
         </p>
         <p class="font-medium text-sm leading-relaxed text-slate-300">
-          {{ siteData?.address }}
+          {{ siteData.address }}
         </p>
       </div>
     </div>

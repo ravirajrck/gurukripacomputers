@@ -84,7 +84,7 @@ ${currentUrl}
 Please let me know about the availability and delivery details!`;
 
         window.open(
-          `https://wa.me/${this.siteData?.phone}?text=${encodeURIComponent(textMessage)}`,
+          `https://wa.me/${this.siteData.phone}?text=${encodeURIComponent(textMessage)}`,
           '_blank',
         );
 

@@ -286,7 +286,7 @@
       </div>
 
       <a
-        [href]="'tel:' + siteData?.phone"
+        [href]="'tel:' + siteData.phone"
         class="flex items-center gap-2.5 text-slate-700 font-bold hover:text-blue-600 transition-colors text-xs"
       >
         <span
@@ -306,11 +306,11 @@
             ></path>
           </svg>
         </span>
-        {{ siteData?.phone }}
+        {{ siteData.phone }}
       </a>
 
       <a
-        [href]="'mailto:' + siteData?.email"
+        [href]="'mailto:' + siteData.email"
         class="flex items-center gap-2.5 text-slate-600 hover:text-blue-600 transition-colors font-medium text-[11px]"
       >
         <span
@@ -330,7 +330,7 @@
             ></path>
           </svg>
         </span>
-        <span class="truncate">{{ siteData?.email }}</span>
+        <span class="truncate">{{ siteData.email }}</span>
       </a>
 
       <div class="flex items-start gap-2.5 pt-1 text-slate-500 text-[11px]">
@@ -357,7 +357,7 @@
             ></path>
           </svg>
         </span>
-        <span>{{ siteData?.address }}</span>
+        <span>{{ siteData.address }}</span>
       </div>
     </div>
   </div>

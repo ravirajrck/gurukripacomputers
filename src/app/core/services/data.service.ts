@@ -231,7 +231,7 @@ ${product.description}`
 }
 Please let me know about the availability!`;
 
-    const targetPhone = this.siteData?.phone || '9644692189';
+    const targetPhone = this.siteData.phone || '9644692189';
     const whatsappUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(textMessage)}`;
     window.open(whatsappUrl, '_blank');
   }

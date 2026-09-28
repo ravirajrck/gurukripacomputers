@@ -235,25 +235,25 @@
       <ul class="text-slate-400 space-y-3 text-sm">
         <li>
           <a
-            [href]="'tel:' + siteData?.phone"
+            [href]="'tel:' + siteData.phone"
             class="hover:text-blue-400 transition-colors flex items-center gap-2"
           >
             <i class="fa-solid fa-phone text-blue-500 text-xs"></i>
-            {{ siteData?.phone }}
+            {{ siteData.phone }}
           </a>
         </li>
         <li>
           <a
-            [href]="'mailto:' + siteData?.email"
+            [href]="'mailto:' + siteData.email"
             class="hover:text-blue-400 transition-colors flex items-center gap-2"
           >
             <i class="fa-regular fa-envelope text-blue-500 text-xs"></i>
-            {{ siteData?.email }}
+            {{ siteData.email }}
           </a>
         </li>
         <li class="flex items-start gap-2">
           <i class="fa-solid fa-location-dot text-blue-500 text-xs mt-1"></i>
-          <span>{{ siteData?.address }}</span>
+          <span>{{ siteData.address }}</span>
         </li>
       </ul>
     </div>
